@@ -40,19 +40,3 @@
 		{@render children()}
 	</Base>
 </Base>
-
-<style lang="postcss">
-	/* :global(.content.has-header) {
-        margin-top: 64px; 
-    }
-
-    :global(.content.has-sidebar) {
-        margin-inline-start: 0;
-    }
-
-    @media (min-width: 768px) {
-        :global(.content.has-sidebar) {
-            margin-inline-start: 15rem;
-        }
-    }  */
-</style>

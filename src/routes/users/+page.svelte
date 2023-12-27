@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Button from '$lib/core/Button.svelte';
 	import Card from '$lib/core/Card.svelte';
-import Page from '$lib/core/Page.svelte'
+	import Page from '$lib/core/Page.svelte'
 	import PageHeader from '$lib/core/PageHeader.svelte';
 	import Table from '$lib/core/Table.svelte';
 	import TableColumn from '$lib/core/TableColumn.svelte';

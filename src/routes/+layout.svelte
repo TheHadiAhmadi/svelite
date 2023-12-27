@@ -1,15 +1,15 @@
 <script>
-    import Layout from '$lib/core/Layout.svelte'
-    import 'virtual:uno.css'
+    import Header from '$lib/core/Header.svelte';
+import Layout from '$lib/core/Layout.svelte'
+    import '../app.css'
 
     let {children,...restProps} = $props();
 </script>
 
 
-<Layout dir="rtl" theme="dark" {...restProps}>
+<Layout dir="ltr" theme="light" {...restProps}>
     {#snippet header({hasSidebar})}
-        Header
-        hasSidebar: {hasSidebar}
+		Something here {hasSidebar}
     {/snippet}
     {#snippet sidebar()}
         sidebar

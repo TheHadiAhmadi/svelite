@@ -1,42 +1,30 @@
 <script>
 	import Base from './Base.svelte';
+	import Header from './Header.svelte';
+	import LayoutBody from './LayoutBody.svelte';
+	import Sidebar from './Sidebar.svelte';
 
-	const { children, theme = 'light', dir = 'ltr', sidebar, header, ...restProps } = $props();
+	let { children, theme = 'light', dir = 'ltr', sidebar, header, ...restProps } = $props();
+
+	let hasHeader = !!header;
+	let hasSidebar = !!sidebar;
+
+	let themeClass= theme === 'dark' ? "dark" : ""
 </script>
-
-<Base classes="h-full font-[math] {theme === 'dark' ? 'dark' : ''}" {dir}>
-	{#snippet header_snippet(content)}
-		<Base
-			classes="fixed h-16 top-0 left-0 right-0 bg-white dark:bg-gray-800 dark:text-gray-200 border-1 border-b-solid border-gray-200 dark:border-gray-700 shadow-b"
-		>
-			{@render content({ hasSidebar: !!sidebar })}
-		</Base>
-	{/snippet}
-
-	{#snippet sidebar_snippet(content)}
-		<Base
-			classes="fixed {header
-				? 'top-16'
-				: 'top-0'} bg-gray-200 dark:bg-gray-800 dark:text-gray-200 bottom-0 transition-all duration-300 flex ltr:md:left-0 ltr:left-[-15rem] rtl:md:right-0 rtl:right-[-15rem] w-60 border-e border-gray-200dark:border-gray-700 shadow-b"
-		>
-			{@render content()}
-		</Base>
-	{/snippet}
-
-	{#if header}
-		{@render header_snippet(header)}
+<Base classes="h-full font-[math] {themeClass}" {dir}>
+	{#if hasHeader}
+		<Header>
+			{@render header({hasSidebar})}
+		</Header>
 	{/if}
 
-	{#if sidebar}
-		{@render sidebar_snippet(sidebar)}
+	{#if hasSidebar}
+		<Sidebar {hasHeader}>
+		{@render sidebar()}
+		</Sidebar>
 	{/if}
 
-	<Base
-		classes="transition-all overflow-auto duration-300 h-full bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100  {header
-			? 'pt-16'
-			: ''} {sidebar ? 'ms-0 md:ms-60' : ''}"
-		{...restProps}
-	>
+	<LayoutBody {hasSidebar} {hasHeader}>
 		{@render children()}
-	</Base>
+	</LayoutBody>
 </Base>

@@ -31,7 +31,7 @@
 					Hello
 				{/snippet}
 				<Base
-					classes="py-2 px-3 bg-gray-100 dark:bg-gray-900 dark:text-gray-200 border-1 border-solid rounded border-gray-200 dark:border-gray-700 outline-none focus:ring focus:ring-blue-600"
+					classes="py-2 px-3 bg-gray-100 dark:bg-gray-900 dark:text-gray-200 border-1 border rounded border-gray-200 dark:border-gray-700 outline-none focus:ring focus:ring-blue-600"
 					tag="input"
 				/>
 			</FormField>

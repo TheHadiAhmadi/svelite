@@ -4,9 +4,9 @@
 </script>
 
 {#if children}
-<svelte:element this={tag} class="{classes} {klass}" {...restProps}>
-    {@render children()}
-</svelte:element>
+	<svelte:element this={tag} class="{classes} {klass}" {...restProps}>
+		{@render children()}
+	</svelte:element>
 {:else}
-<svelte:element this={tag} class="{classes} {klass}" {...restProps} />
+	<svelte:element this={tag} class="{classes} {klass}" {...restProps} />
 {/if}

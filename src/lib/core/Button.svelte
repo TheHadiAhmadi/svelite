@@ -1,10 +1,11 @@
 <script lang="ts">
 	import Base from "./Base.svelte";
+	import './button.css'
 
 
-    let {children, onclick, href, ...restProps} = $props()
+    let {children, color = "default", size="default", onclick, href, ...restProps} = $props()
 </script>
 
-<Base {onclick} {href} classes="transition inline-flex delay-0 py-2 px-4 shadow-sm shadow-blue rounded border border-blue-600 hover:bg-blue-600 active:bg-blue-500 bg-blue-500 text-white" tag={href ? 'a' : 'button'} {...restProps}>
+<Base {onclick} {href} classes="button button-color-{color} button-size-{size}" tag={href ? 'a' : 'button'} {...restProps}>
     {@render children()}
 </Base>

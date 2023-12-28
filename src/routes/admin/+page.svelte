@@ -6,6 +6,8 @@
 	import Button from '$lib/core/Button.svelte';
 	import FormField from '$lib/core/FormField.svelte';
 
+    let {data} = $props();
+
 	let x = $state(1);
 	let y = $state(1);
 
@@ -42,5 +44,7 @@
 
 	<h1>Welcome to SvelteKit</h1>
 	<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+
+    <pre>{JSON.stringify(data.config, null, 2)}</pre>
 </Page>
 

@@ -1,0 +1,27 @@
+.button {
+	@apply transition inline-flex delay-0 shadow-sm rounded border;
+}
+
+.button-color-default {
+	@apply shadow border border-gray-200 hover:bg-gray-200 active:bg-gray-300 bg-gray-100 text-gray-600;
+}
+
+.button-color-primary {
+	@apply shadow border border-blue-600 hover:bg-blue-600 active:bg-blue-500 bg-blue-500 text-white;
+
+}
+.button-color-danger {
+	@apply shadow border border-red-600 hover:bg-red-600 active:bg-red-500 bg-red-500 text-white;
+}
+
+.button-size-default {
+    @apply py-2 px-4;
+}
+
+.button-size-sm {
+    @apply py-1 px-3 text-xs;
+}
+
+.button-size-lg {
+    @apply py-2.5 px-5 text-lg;
+}

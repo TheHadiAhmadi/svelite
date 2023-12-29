@@ -1,3 +1,4 @@
+import { PUBLIC_BASE_URL } from '$env/static/public'
 function createApi(url: string) {
     async function run(collection: stirng, action: stirng, body: any) {
         const opts = {
@@ -56,4 +57,4 @@ function createApi(url: string) {
     })
 }
 
-export default createApi('http://localhost:5173/api')
+export default createApi(PUBLIC_BASE_URL + '/api')

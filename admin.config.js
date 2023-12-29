@@ -1,5 +1,5 @@
 export default {
-    title: 'Nancy Saedi',
+    title: 'Svelite',
     logo: '/logo.png',
     collections: [
         {

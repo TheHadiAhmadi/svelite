@@ -5,7 +5,7 @@
 	import Page from "$lib/core/Page/Page.svelte";
 
 
-	import Form from "../../[collection]/Form.svelte";
+	import Form from "$lib/admin/Form.svelte";
 
     let {data, ...rest} = $props()
 

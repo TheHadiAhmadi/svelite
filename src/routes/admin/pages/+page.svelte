@@ -2,7 +2,7 @@
 	import Button from "$lib/core/Button/Button.svelte";
 	import Icon from "$lib/core/Icon/Icon.svelte";
 	import Page from "$lib/core/Page/Page.svelte";
-	import Table from "../[collection]/Table.svelte";
+	import Table from "$lib/admin/Table.svelte";
 
     const columns = [
         {name: 'ID', field: 'id', type: 'text'},

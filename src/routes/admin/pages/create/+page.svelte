@@ -4,8 +4,7 @@
 	import Icon from "$lib/core/Icon/Icon.svelte";
 	import Page from "$lib/core/Page/Page.svelte";
 
-
-	import Form from "../../[collection]/Form.svelte";
+	import Form from "$lib/admin/Form.svelte";
 
     const fields = [
         {Label: 'Title', name: 'title', type: 'plain_text', colMd: 6},

@@ -1,0 +1,47 @@
+.button {
+	@apply transition items-center justify-center inline-flex gap-2 delay-0 shadow-sm rounded;
+}
+
+.button-color-default.button-ghost {
+	@apply  hover:text-white active:text-gray-400 text-gray-200;
+}
+.button-color-default:not(.button-ghost) {
+	@apply shadow border border-gray-200 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 active:bg-gray-300 bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-white border;
+}
+
+
+.button-color-primary.button-ghost {
+	@apply  hover:text-blue-700 active:text-blue-400 text-blue-500;
+}
+.button-color-primary:not(.button-ghost) {
+	@apply shadow border border-blue-600 hover:bg-blue-600 active:bg-blue-500 bg-blue-500 text-white border;
+}
+
+.button-color-danger.button-ghost {
+	@apply  hover:text-red-700 active:text-red-400 text-red-500;
+}
+.button-color-danger:not(.button-ghost) {
+	@apply shadow border border-red-600 hover:bg-red-600 active:bg-red-500 bg-red-500 text-white border;
+}
+
+.button-size-default {
+    @apply text-sm h-8 px-4;
+}
+
+.button-size-sm {
+    @apply h-6 px-3 text-xs;
+}
+
+.button-size-lg {
+    @apply py-2.5 px-5 text-lg;
+}
+
+.button > .icon {
+     @apply w-4 h-4;
+}
+.button-size-default.button-icon {
+    @apply px-0 w-8 h-8;
+}
+.button-size-sm.button-icon {
+    @apply px-0 w-6 h-6;
+}

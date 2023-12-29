@@ -1,29 +1,37 @@
 <script lang="ts">
-	import PageHeader from "$lib/core/PageHeader.svelte";
-	import Page from "$lib/core/Page.svelte";
-	import Button from "$lib/core/Button.svelte";
-	import Card from "$lib/core/Card.svelte";
-	import CardBody from "$lib/core/CardBody.svelte";
-	import FormField from "$lib/core/FormField.svelte";
-    import Input from "$lib/core/Input.svelte"; 
-    import Select from "$lib/core/Select.svelte";
-	import Switch from "$lib/core/Switch.svelte";
+    import Page from "$lib/core/Page/Page.svelte";
+	import Button from "$lib/core/Button/Button.svelte";
+	import Card from "$lib/core/Card/Card.svelte";
+	import CardBody from "$lib/core/Card/CardBody.svelte";
+	import FormField from "$lib/core/FormField/FormField.svelte";
+    import Input from "$lib/core/Input/Input.svelte"; 
+    import Select from "$lib/core/Select/Select.svelte";
+	import Switch from "$lib/core/Switch/Switch.svelte";
+	import api from "$lib/api.js";
+	import {goto} from "$app/navigation";
+	import Icon from "$lib/core/Icon/Icon.svelte";
 
 	let value: any = {}
 
-	function onSubmit(e) {
+	async function onSubmit(e) {
+        console.log(e)
 		e.preventDefault()
-		console.log(e)
+        const response = await api(data.collection.slug).insert(value)
+
+
+        console.log(response)
+        goto('/admin/' + data.collection.slug)
 	}
 
     let {data} = $props()
 </script>
-<Page>
-    <PageHeader title="Create {data.collection.name}">
+<Page title="Create {data.collection.name}">
+    {#snippet actions()}
         <Button color="default" href="/admin/{data.collection.slug}">
+            <Icon name="chevron-left"/>
 			Back
 		</Button>
-	</PageHeader>
+    {/snippet}
 	<form onsubmit={onSubmit}>
 		<Card>
 			<CardBody>

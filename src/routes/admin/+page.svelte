@@ -1,10 +1,10 @@
 <script>
-	import Card from '$lib/core/Card.svelte';
-	import Base from '$lib/core/Base.svelte';
-	import Page from '$lib/core/Page.svelte';
+	import Card from '$lib/core/Card/Card.svelte';
+	import Base from '$lib/core/Base/Base.svelte';
+	import Page from '$lib/core/Page/Page.svelte';
 
-	import Button from '$lib/core/Button.svelte';
-	import FormField from '$lib/core/FormField.svelte';
+	import Button from '$lib/core/Button/Button.svelte';
+	import FormField from '$lib/core/FormField/FormField.svelte';
 
     let {data} = $props();
 

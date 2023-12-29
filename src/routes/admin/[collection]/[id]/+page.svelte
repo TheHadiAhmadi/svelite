@@ -1,31 +1,46 @@
 <script lang="ts">
-	import PageHeader from "$lib/core/PageHeader.svelte";
-	import Page from "$lib/core/Page.svelte";
-	import Button from "$lib/core/Button.svelte";
-	import Card from "$lib/core/Card.svelte";
-	import CardBody from "$lib/core/CardBody.svelte";
-	import FormField from "$lib/core/FormField.svelte";
-    import Input from "$lib/core/Input.svelte"; 
-    import Select from "$lib/core/Select.svelte";
-	import Switch from "$lib/core/Switch.svelte";
-
-
-	function onSubmit(e) {
-		e.preventDefault()
-		console.log(e)
-	}
+	import Page from "$lib/core/Page/Page.svelte";
+	import Button from "$lib/core/Button/Button.svelte";
+	import Card from "$lib/core/Card/Card.svelte";
+	import CardBody from "$lib/core/Card/CardBody.svelte";
+	import FormField from "$lib/core/FormField/FormField.svelte";
+    import Input from "$lib/core/Input/Input.svelte"; 
+    import Select from "$lib/core/Select/Select.svelte";
+	import Switch from "$lib/core/Switch/Switch.svelte";
+	import api from "$lib/api.js";
+	import {goto} from "$app/navigation";
+	import {onMount} from "svelte";
 
     let {data} = $props()
+
+    let value = $state({})
+
+    onMount(() => {
+        api(data.collection.slug)
+            .find()
+            .filter("id", "=", data.id)
+            .first()
+            .then(res => value = res.data ?? {})
+    })
+
+	async function onSubmit(e) {
+		e.preventDefault()
+
+        await api(data.collection.slug).update(value)
+
+        goto('/admin/' + data.collection.slug)
+	}
+
     
-	let value: any = data.value
 </script>
 
-<Page>
-    <PageHeader title="Create {data.collection.title}">
+<Page title="Update {data.collection.name}">
+    {#snippet actions()}
         <Button color="default" href="/admin/{data.collection.slug}">
 			Back
 		</Button>
-	</PageHeader>
+    {/snippet}
+
 	<form onsubmit={onSubmit}>
 		<Card>
 			<CardBody>

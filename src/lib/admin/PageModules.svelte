@@ -8,6 +8,7 @@
 	import ModalBody from "$lib/core/Modal/ModalBody.svelte";
 	import FormField from "$lib/core/FormField/FormField.svelte";
 	import Input from "$lib/core/Input/Input.svelte";
+	import AppFormField from "./AppFormField.svelte";
 
     let {value = [], ...rest} = $props()
 
@@ -19,6 +20,7 @@
     }
 
     function onAdd() {
+        console.log(modules)
         console.log('add module', value)
         addModalOpen = true
 //        value = [...value??[], {name: 'new'}]
@@ -29,17 +31,8 @@
 <div>
     {#each value as item}
         <Accordion title={item.name}>
-            {#each modules[item.name].parameters as parameter}
-                <FormField label={parameter.label}>
-                    {#if parameter.type === 'plain_text'}
-
-                        <Input bind:value={item.props[parameter.name]}/>
-                    {:else}
-                        todo
-                    {/if}
-
-                </FormField>
-
+            {#each Object.keys(modules[item.name].props?? {}) as prop}
+                <AppFormField field={modules[item.name].props[prop]} bind:value={item.props[prop]}/>
             {/each}
 
         </Accordion>

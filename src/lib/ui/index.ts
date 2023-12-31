@@ -1,7 +1,11 @@
-import * as Header from "./Header.svelte";
+import * as HelloWorld from "./HelloWorld.svelte";
+import Todos from "./Todos/module";
+import Header from "./Header/module";
 
 const modules = {
-    Header
+    Header,
+    Todos,
+    // HelloWorld
 }
 
 export default modules;

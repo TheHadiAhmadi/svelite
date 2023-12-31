@@ -10,6 +10,7 @@
 	import Select from "$lib/core/Select/Select.svelte";
 	import Switch from "$lib/core/Switch/Switch.svelte";
 	import {onMount} from "svelte";
+	import AppFormField from "./AppFormField.svelte";
 
     let {load, fields, onsubmit, actions, params, ...rest} = $props()
 
@@ -41,21 +42,7 @@
     <Card>
         <CardBody>
             {#each fields as field}
-                <FormField label="{field.name}">
-                    {#if field.type === "plain_text"}
-                        <Input bind:value={value[field.name]} placeholder="something"/>
-                    {:else if field.type === 'select'}
-                        <Select bind:value={value[field.name]} items={field.items} placeholder="Choose a {field.name}..."/>
-                    {:else if field.type === 'switch'}
-                        <Switch bind:value={value[field.name]}/>
-                    {:else if field.type === 'rich_text'}
-                        Rich text editor
-                    {:else if field.type === 'image'}
-                        Image Picker
-                    {:else if field.type === 'custom'}
-                        <svelte:component this={field.component} bind:value={value[field.name]}/>
-                    {/if}
-                </FormField>
+                <AppFormField {field} bind:value={value[field.name]}/>
             {/each}
 
             <div class="flex justify-end gap-2 ms-auto">

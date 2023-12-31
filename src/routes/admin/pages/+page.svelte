@@ -13,6 +13,7 @@
     const tableActions = [
         "remove",
         {icon: 'pencil', color: 'primary', href: '/admin/pages/{id}'},
+        {icon: 'external-link', color: 'success', href: '/{slug}'},
     ]
 
 </script>

@@ -52,7 +52,7 @@
                                     <Icon name="trash"/>
                                 </Button>
                             {:else}
-                                <Button icon ghost href={action.href.replace('{id}', item.id)} color={action.color}>
+                                <Button icon ghost href={action.href.replace('{id}', item.id).replace('{slug}', item.slug)} color={action.color}>
                                     <Icon name={action.icon}/>
                                 </Button>
                             {/if}

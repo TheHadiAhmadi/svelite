@@ -1,5 +1,5 @@
 <script>
-	let {title = "", children, ...rest} = $props();
+	let { title = '', children, ...rest } = $props();
 </script>
 
 <div class="flex justify-between items-center" {...rest}>

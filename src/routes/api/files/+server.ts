@@ -1,8 +1,7 @@
 export async function POST() {
-    // UPLOAD FILE
+	// UPLOAD FILE
 }
 
 export async function GET() {
-    // RETURN LIST OF FILES
-
+	// RETURN LIST OF FILES
 }

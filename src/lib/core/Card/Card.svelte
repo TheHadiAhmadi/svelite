@@ -11,10 +11,10 @@
 	{...restProps}
 >
 	{#if header || title}
-		<CardHeader children={header} {title}/>
+		<CardHeader children={header} {title} />
 	{/if}
 	{#if body}
-		<CardBody children={body}/>
+		<CardBody children={body} />
 	{/if}
 
 	{#if children}

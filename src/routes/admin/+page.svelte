@@ -6,7 +6,7 @@
 	import Button from '$lib/core/Button/Button.svelte';
 	import FormField from '$lib/core/FormField/FormField.svelte';
 
-    let {data} = $props();
+	let { data } = $props();
 
 	let x = $state(1);
 	let y = $state(1);
@@ -19,12 +19,11 @@
 </script>
 
 <Page>
-
 	<Card title="Hello">
-        <!-- {#snippet header()}
+		<!-- {#snippet header()}
             Card Header
         {/snippet} -->
-        {#snippet body()}
+		{#snippet body()}
 			<Button onclick={() => (x = x + 1)}>Increment x</Button>
 			<Button onclick={() => (y = y + 1)}>Increment y</Button>
 
@@ -37,14 +36,12 @@
 					tag="input"
 				/>
 			</FormField>
-            {z}
-
+			{z}
 		{/snippet}
 	</Card>
 
 	<h1>Welcome to SvelteKit</h1>
 	<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
 
-    <pre>{JSON.stringify(data.config, null, 2)}</pre>
+	<pre>{JSON.stringify(data.config, null, 2)}</pre>
 </Page>
-

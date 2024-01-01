@@ -2,30 +2,30 @@
 
 /* Firefox */
 * {
-  scrollbar-width: thin;
-  scrollbar-color: var(--secondary) var(--primary);
+	scrollbar-width: thin;
+	scrollbar-color: var(--secondary) var(--primary);
 }
 
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
-  width: 12px;
+	width: 12px;
 }
 
 *::-webkit-scrollbar-track {
-  background: var(--primary);
-  border-radius: 0px;
+	background: var(--primary);
+	border-radius: 0px;
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: var(--secondary);
-  border: 2px solid var(--primary);
-  border-radius: 4px;
+	background-color: var(--secondary);
+	border: 2px solid var(--primary);
+	border-radius: 4px;
 }
 
 @tailwind components;
 @tailwind utilities;
 
 :root {
-    --secondary: #374151;
-    --primary: #1f2937;
+	--secondary: #374151;
+	--primary: #1f2937;
 }

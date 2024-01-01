@@ -1,11 +1,9 @@
 <script>
-    import '../../styles.css'
-    import '../../styles.app.css'
-	import modules from '$lib/ui';
+	import '../../styles.css';
+	import '../../styles.app.css';
+	import SvPage from '$lib/svelite/SvPage.svelte';
 
-    let {children, data, ...rest} = $props()
+	let { data } = $props();
 </script>
 
-{#each data.page.modules ?? [] as module}
-    <svelte:component this={modules[module.name].component} {...module.props}/>
-{/each}
+<SvPage {data} />

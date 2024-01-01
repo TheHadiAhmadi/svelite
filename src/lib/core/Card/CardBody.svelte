@@ -1,8 +1,7 @@
 <script>
+	import Base from '../Base/Base.svelte';
 
-	import Base from "../Base/Base.svelte";
-
-	let {children, ...rest} = $props();
+	let { children, ...rest } = $props();
 </script>
 
 <Base tag="div" classes="p-3" {...rest}>

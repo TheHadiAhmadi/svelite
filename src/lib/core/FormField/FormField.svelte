@@ -1,9 +1,10 @@
 <script>
-// @ts-nocheck
-	import Base from "../Base/Base.svelte";
+	// @ts-nocheck
+	import Base from '../Base/Base.svelte';
 
-    let {children, label, ...restProps} = $props();
+	let { children, label, ...restProps } = $props();
 </script>
+
 <Base classes="mb-6 flex flex-col gap-2" {...restProps}>
 	{#if label}
 		<label for="">

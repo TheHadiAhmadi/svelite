@@ -1,6 +1,5 @@
 <script lang="ts">
-    let {tag = 'div', children, class: klass = '', classes, ...restProps} = $props();
-
+	let { tag = 'div', children, class: klass = '', classes, ...restProps } = $props();
 </script>
 
 {#if children}

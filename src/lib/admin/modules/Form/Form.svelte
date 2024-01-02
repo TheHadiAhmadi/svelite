@@ -3,12 +3,11 @@
 	import Button from '$lib/core/Button/Button.svelte';
 	import Card from '$lib/core/Card/Card.svelte';
 	import CardBody from '$lib/core/Card/CardBody.svelte';
-	import { onMount } from 'svelte';
 	import AppFormField from '../../components/AppFormField.svelte';
 
 	let { data, load, fields, submit, actions, params, ...rest } = $props();
 
-	let value: any = $state({});
+    let value: any = $state(data.value ?? {});
 
 	async function onSubmit(e) {
 		e.preventDefault();
@@ -19,7 +18,6 @@
 		}
 	}
 </script>
-{JSON.stringify({data})}
 
 <form onsubmit={onSubmit}>
 	<Card>

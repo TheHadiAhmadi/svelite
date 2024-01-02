@@ -17,8 +17,9 @@ function getAdminPages(config: any) {
         name: "AdminLayout",
         props: {
             theme: "light",
-            dir: "rtl"
-        }
+            dir: "ltr"
+        },
+        sidebar: [{title: 'Home', href: '/admin', icon: 'home'}]
     }
 
     let pages: any[] = []
@@ -68,50 +69,85 @@ function getAdminPages(config: any) {
                         {type: 'text', name: 'Title', field: 'title'},
                         {type: 'text', name: 'Slug', field: 'slug'},
 
-                    ], ['remove', {href: '/pages/{slug}', icon: 'edit'}])
+                    ], ['remove', 
+                        {href: '/admin/pages/{id}', icon: 'edit'},
+                        { icon: 'external-link', color: 'success', href: '/{slug}' }
+                    ])
                 ]),
             ]
         }
+
+        const pageFormFields = [
+            {
+                name: 'title', 
+                label: 'Title',
+                type: 'plain_text'
+            },
+            {
+                name: 'slug', 
+                label: 'Slug',
+                type: 'plain_text'
+            },
+            {
+                name: 'modules', 
+                label: "Modules",
+                type: 'custom', 
+                component: PageModules, 
+                props: {
+                    modules
+                }
+            },
+        ]
 
         const createPage = {
             slug: adminPrefix + '/pages/create',
             layout: adminLayout,
             modules: [
                 page("Create Page", ['back'], [
-
-                    {
-                        name: 'Form',
-                        props: {
-                            collection: "pages",
-                            fields: [
-                                {name: 'title', type: 'plain_text'},
-                                {name: 'slug', type: 'plain_text'},
-                                {name: 'modules', type: 'custom', component: PageModules, props: {modules}},
-                            ],
-                            actions: [
-                                "cancel",
-                            ],
-                            submit: {
-                                color: 'primray',
-                                action: "pages:insert",
-                                text: "Create"
-
-                            }
-
-                        }
-                    }
+                    form(pageFormFields, ["cancel"], {
+                        color: 'primray',
+                        action: "pages:insert",
+                        text: "Create"
+                    })
                 ])
             ]
+        }
+
+        function form(fields: any[], actions: any[] = [], submit: any, load = "") {
+
+            return {
+                name: 'Form',
+                props: {
+                    fields,
+                    actions,
+                    submit,
+                    load
+                }
+
+            }
 
         }
 
         const editPage = {
-
+            title: 'Edit Page',
+            slug: 'admin/pages/{id}',
+            layout: adminLayout,
+            modules: [
+                page('Edit Page', ['back'], [
+                    form(pageFormFields, ["cancel"], {
+                        color: 'primray',
+                        action: "pages:update",
+                        text: "Update"
+                    }, "pages:id:=:id")
+                ])
+            ] 
         }
 
         pages.push(listPage)
         pages.push(createPage)
         pages.push(editPage)
+
+        adminLayout.sidebar.push({icon: 'file', title: 'Pages', href: '/admin/pages'})
     }
 
     if(hasAuthPages) {
@@ -128,6 +164,7 @@ function getAdminPages(config: any) {
         // /auth/login
         // /auth/register
         // /auth/forgot
+        adminLayout.sidebar.push({icon: 'logout', title: 'Logout', href: '/auth/logout'})
     }
 
     if(hasDashboard) {

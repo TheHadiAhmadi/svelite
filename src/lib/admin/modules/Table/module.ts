@@ -9,7 +9,7 @@ export default {
     },
 
     async load(props, api) {
-        console.log('load table data')
+        console.log('load table data', props)
         let items = await api.db(props.collection).find().all().then(res => res.data)
 
         return {

@@ -1,0 +1,161 @@
+import modules from "./modules";
+import layouts from "./layouts";
+import PageModules from "./components/PageModules.svelte";
+function getAdminPages(config) {
+    const adminPrefix = config.adminPrefix ?? 'admin';
+    const authPrefix = config.authPrefix ?? 'auth';
+    const hasContentManagement = config.contentManagement !== false;
+    const hasContentTypeManagement = config.contentTypeManagement !== false;
+    const hasPageManagement = config.pageManagement !== false;
+    const hasAuthPages = config.authPages !== false;
+    const hasDashboard = config.dashboard !== false;
+    const collections = config.collections ?? [];
+    let adminLayout = {
+        name: "AdminLayout",
+        props: {
+            theme: "light",
+            dir: "ltr"
+        },
+        sidebar: [{ title: 'Home', href: '/admin', icon: 'home' }]
+    };
+    let pages = [];
+    if (hasContentTypeManagement) {
+        // build dynamic tables (collections + custom tables)... 
+        // and dynamic routes for 
+    }
+    if (hasContentManagement) {
+        // crud for tables (collections)...
+    }
+    function page(title = "page", actions = [], content = []) {
+        return {
+            name: 'Page',
+            props: {
+                title,
+                actions,
+                content
+            }
+        };
+    }
+    function table(collection = '', columns = [], actions = []) {
+        return {
+            name: "Table",
+            props: {
+                collection,
+                columns,
+                actions
+            }
+        };
+    }
+    if (hasPageManagement) {
+        // /admin/files routes and upload/edit/remove from admin panel
+        const listPage = {
+            slug: adminPrefix + '/pages',
+            layout: adminLayout,
+            modules: [
+                page("Page List", [
+                    { text: 'Create Page', color: 'primary', icon: 'plus', href: '/' + adminPrefix + '/pages/create' }
+                ], [
+                    table('pages', [
+                        { type: 'text', name: 'Title', field: 'title' },
+                        { type: 'text', name: 'Slug', field: 'slug' },
+                    ], ['remove',
+                        { href: '/admin/pages/{id}', icon: 'edit' },
+                        { icon: 'external-link', color: 'success', href: '/{slug}' }
+                    ])
+                ]),
+            ]
+        };
+        const pageFormFields = [
+            {
+                name: 'title',
+                label: 'Title',
+                type: 'plain_text'
+            },
+            {
+                name: 'slug',
+                label: 'Slug',
+                type: 'plain_text'
+            },
+            {
+                name: 'modules',
+                label: "Modules",
+                type: 'custom',
+                component: PageModules,
+                props: {
+                    modules
+                }
+            },
+        ];
+        const createPage = {
+            slug: adminPrefix + '/pages/create',
+            layout: adminLayout,
+            modules: [
+                page("Create Page", ['back'], [
+                    form(pageFormFields, ["cancel"], {
+                        color: 'primray',
+                        action: "pages:insert",
+                        text: "Create"
+                    })
+                ])
+            ]
+        };
+        function form(fields, actions = [], submit, load = "") {
+            return {
+                name: 'Form',
+                props: {
+                    fields,
+                    actions,
+                    submit,
+                    load
+                }
+            };
+        }
+        const editPage = {
+            title: 'Edit Page',
+            slug: 'admin/pages/{id}',
+            layout: adminLayout,
+            modules: [
+                page('Edit Page', ['back'], [
+                    form(pageFormFields, ["cancel"], {
+                        color: 'primray',
+                        action: "pages:update",
+                        text: "Update"
+                    }, "pages:id:=:id")
+                ])
+            ]
+        };
+        pages.push(listPage);
+        pages.push(createPage);
+        pages.push(editPage);
+        adminLayout.sidebar.push({ icon: 'file', title: 'Pages', href: '/admin/pages' });
+    }
+    if (hasAuthPages) {
+        const loginPage = {
+            slug: authPrefix + '/login',
+            title: 'Login',
+            layout: { name: "AuthLayout", props: {} },
+            modules: [
+                { name: "Login", props: {} }
+            ]
+        };
+        console.log({ authPrefix });
+        pages.push(loginPage);
+        // /auth/login
+        // /auth/register
+        // /auth/forgot
+        adminLayout.sidebar.push({ icon: 'logout', title: 'Logout', href: '/auth/logout' });
+    }
+    if (hasDashboard) {
+        // /admin route
+    }
+    pages.push({});
+    return pages;
+}
+export function AdminPanelPlugin(config) {
+    const pages = getAdminPages(config);
+    return {
+        modules,
+        pages,
+        layouts
+    };
+}

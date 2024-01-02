@@ -22,8 +22,10 @@ declare const _default: {
     };
     load: (slug: string) => Promise<{
         page?: undefined;
+        modules?: undefined;
     } | {
         page: any;
+        modules: any;
     }>;
 };
 export default _default;

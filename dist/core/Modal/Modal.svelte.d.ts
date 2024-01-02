@@ -3,7 +3,7 @@
 /** @typedef {typeof __propDef.slots}  ModalSlots */
 export default class Modal extends SvelteComponentTyped<{
     [x: string]: unknown;
-    open?: boolean | undefined;
+    open: unknown;
     title: unknown;
     children: unknown;
 }, {
@@ -17,7 +17,7 @@ import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
         [x: string]: unknown;
-        open?: boolean | undefined;
+        open: unknown;
         title: unknown;
         children: unknown;
     };

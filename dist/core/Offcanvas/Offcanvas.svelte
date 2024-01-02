@@ -1,5 +1,5 @@
 <script>
-	let { open = false, children, ...rest } = $props();
+	let { open, children, ...rest } = $props();
 </script>
 
 <div

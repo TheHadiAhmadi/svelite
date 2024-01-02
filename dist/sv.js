@@ -1,8 +1,8 @@
 import { createSvelite } from './svelite';
-import modules from './modules';
-import layouts from './layouts';
+import { AdminPanelPlugin } from './admin/plugin';
 export default createSvelite({
-    modules,
-    layouts,
+    plugins: [
+        AdminPanelPlugin({})
+    ],
     api: 'http://localhost:5173/api'
 });

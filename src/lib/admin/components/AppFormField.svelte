@@ -7,9 +7,10 @@
 	let { field, value, ...rest } = $props();
 </script>
 
-<FormField label={field.name}>
+<FormField label={field.label}>
     {#if field.type === 'custom'}
         {@const {value: _1, component, props = {}, ...rest} = field}
+        {value}
         <svelte:component this={component} bind:value {...props} {...rest} />
     {:else if field.type === 'plain_text'}
 		<Input bind:value placeholder={field.placeholder} />

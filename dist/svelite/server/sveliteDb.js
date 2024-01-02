@@ -78,16 +78,19 @@ export default function createSveliteDb(adapter) {
                 return { filter, all, first, paginate };
             },
             async insert(data) {
+                console.log('insert', data);
                 data.id = 'id_' + Math.random();
                 console.log(data);
                 write(collectionName, [...(await read(collectionName)), data]);
                 return data;
             },
             async remove(id) {
+                console.log('remove', id);
                 const data = await read(collectionName);
                 write(collectionName, data.filter((x) => x.id !== id));
             },
             async update(predicate, data) {
+                console.log('update', data);
                 const items = await read(collectionName);
                 console.log('write', items);
                 write(collectionName, items.map((x, index) => {

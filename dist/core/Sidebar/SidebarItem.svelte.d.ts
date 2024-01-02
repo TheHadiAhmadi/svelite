@@ -5,6 +5,7 @@ export default class SidebarItem extends SvelteComponentTyped<{
     [x: string]: unknown;
     title: unknown;
     href: unknown;
+    icon: unknown;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {}> {
@@ -18,6 +19,7 @@ declare const __propDef: {
         [x: string]: unknown;
         title: unknown;
         href: unknown;
+        icon: unknown;
     };
     events: {
         [evt: string]: CustomEvent<any>;

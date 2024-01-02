@@ -1,5 +1,8 @@
 <script>
+	import SvModule from "./SvModule.svelte";
+
 	let { data } = $props();
+
 </script>
 
 <svelte:head>
@@ -11,7 +14,7 @@
 
 {#if data.page}
     {#each data.page.modules ?? [] as module}
-        <svelte:component this={module.component} {...module.props} />
+        <SvModule component={module.component} properties={module.props}/>
     {/each}
 {:else}
     Svelite Page Not found!

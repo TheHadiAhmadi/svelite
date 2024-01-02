@@ -1,45 +1,7 @@
 // place files you want to import through the `$lib` alias in this folder.
 //
-import AdminLayoutSvelte from '../layouts/AdminLayout/AdminLayout.svelte';
-import AuthLayoutSvelte from '../layouts/AuthLayout/AuthLayout.svelte';
 import { createSveliteLoad } from './create-svelite-load';
 import { customApi, createSveliteApi } from './svelite-api';
-export function createSvelitePlugin() {
-    return (config) => {
-    };
-}
-export const SampleAdminPanelPlugin = (config = { adminPrefix: "admin/", authPrefix: "auth/" }) => {
-    const adminModules = {};
-    const adminLayouts = {
-        "AdminLayout": {
-            name: 'AdminLayout',
-            description: "Admin Panel Layout",
-            component: AdminLayoutSvelte
-        },
-        "AuthLayout": {
-            name: "AuthLayout",
-            description: "Authentication Pages Layout",
-            component: AuthLayoutSvelte
-        }
-    };
-    const adminPages = [
-        {
-            slug: config.authPrefix + 'login',
-            layout: { name: 'AuthLayout', props: {} },
-            modules: []
-        },
-        {
-            slug: config.adminPrefix + 'pages',
-            layout: { name: 'AdminLayout', props: {} },
-            modules: []
-        }
-    ];
-    return {
-        modules: adminModules,
-        pages: adminPages,
-        layouts: adminLayouts
-    };
-};
 export default function createSvelite(config) {
     let api;
     if (config.api) {

@@ -6,21 +6,14 @@
 	import Icon from '$lib/core/Icon/Icon.svelte';
 	import Table from '$lib/core/Table/Table.svelte';
 	import TableColumn from '$lib/core/Table/TableColumn.svelte';
-	import { onMount } from 'svelte';
 
-	let { data, collection = '', columns = [], actions = [], ...rest } = $props();
+	let { data, collection = '', columns = [], actions = [] } = $props();
 
-console.log(data, collection, columns)
 	async function onRemove(item: any) {
         data.remove(item.id)
 	}
-
-	async function reload() {
-        data.reload()
-	}
 </script>
 
-{JSON.stringify(data)}
 <Card>
 	<Table items={data?.items ?? []}>
 		{#snippet row(item)}

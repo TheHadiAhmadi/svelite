@@ -3,7 +3,7 @@
 /** @typedef {typeof __propDef.slots}  OffcanvasSlots */
 export default class Offcanvas extends SvelteComponentTyped<{
     [x: string]: unknown;
-    open?: boolean | undefined;
+    open: unknown;
     children: unknown;
 }, {
     [evt: string]: CustomEvent<any>;
@@ -16,7 +16,7 @@ import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
         [x: string]: unknown;
-        open?: boolean | undefined;
+        open: unknown;
         children: unknown;
     };
     events: {

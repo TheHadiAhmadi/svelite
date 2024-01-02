@@ -8,13 +8,14 @@ export default {
         collection: {type: 'plain_text', label: 'Collection'},
         submit: {type: 'object', label: 'Submit'}
     },
-    async load(props, api) {
+    async load(props, api, params) {
         let result: any = {} 
+        console.log(params)
 
         if(props.load) {
             const [collection, field, op, val] = props.load.split(':')
 
-            const value = api.db(collection).find().filter(field, op, val).first().then(res => res.data)
+            const value = await api.db(collection).find().filter(field, op, params[val]).first().then(res => res.data)
 
 
             result.value = value

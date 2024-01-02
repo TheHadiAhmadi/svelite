@@ -1,5 +1,3 @@
-import AdminLayoutSvelte from '../layouts/AdminLayout/AdminLayout.svelte';
-import AuthLayoutSvelte from '../layouts/AuthLayout/AuthLayout.svelte';
 export type FileManagementConfig = {};
 export type ContentManagementConfig = {};
 export type ContentTypeManagementConfig = {};
@@ -8,10 +6,10 @@ export type ModuleProp = {
 };
 export type ModuleType = {
     name: string;
-    description: string;
     component: any;
-    load: any;
-    props: ModuleProp[];
+    description?: string;
+    load?: any;
+    props?: ModuleProp;
 };
 export type PageModule = {
     name: string;
@@ -19,45 +17,21 @@ export type PageModule = {
 };
 export type SvelitePage = {
     slug: string;
-    layout: PageModule;
     modules: PageModule[];
+    layout?: PageModule;
     title?: string;
 };
 export type SvelitePlugin = {
-    modules: Record<string, ModuleType>;
-    layouts: Record<string, ModuleType>;
-    pages: SvelitePage[];
+    modules?: Record<string, ModuleType>;
+    layouts?: Record<string, ModuleType>;
+    pages?: SvelitePage[];
 };
 export type SveliteConfig = {
-    plugins: SvelitePlugin[];
+    plugins?: SvelitePlugin[];
     api?: string;
-    modules: Record<string, ModuleType>;
-    layouts: Record<string, ModuleType>;
-    pages: SvelitePage[];
-};
-export declare function createSvelitePlugin(): (config: any) => void;
-export declare const SampleAdminPanelPlugin: (config?: any) => {
-    modules: {};
-    pages: {
-        slug: string;
-        layout: {
-            name: string;
-            props: {};
-        };
-        modules: never[];
-    }[];
-    layouts: {
-        AdminLayout: {
-            name: string;
-            description: string;
-            component: typeof AdminLayoutSvelte;
-        };
-        AuthLayout: {
-            name: string;
-            description: string;
-            component: typeof AuthLayoutSvelte;
-        };
-    };
+    modules?: Record<string, ModuleType>;
+    layouts?: Record<string, ModuleType>;
+    pages?: SvelitePage[];
 };
 export default function createSvelite(config: SveliteConfig): {
     api: {
@@ -83,7 +57,9 @@ export default function createSvelite(config: SveliteConfig): {
     };
     load: (slug: string) => Promise<{
         page?: undefined;
+        modules?: undefined;
     } | {
         page: any;
+        modules: any;
     }>;
 };

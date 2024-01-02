@@ -1,11 +1,13 @@
-import sv from '$lib/sv';
+import createSveliteServer from '$lib/svelite/server';
 import config from '../admin.config';
+
+const server = createSveliteServer({});
 
 export function handle({ event, resolve }) {
 	event.locals.config = config;
 
 	if (event.url.pathname.startsWith('/api')) {
-		return sv.apiHandler(event.request);
+        return server(event.request)
 	}
 
 	return resolve(event);

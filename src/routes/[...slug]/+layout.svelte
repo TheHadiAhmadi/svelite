@@ -1,8 +1,8 @@
 <script>
 	import SvLayout from '$lib/svelite/SvLayout.svelte';
 
-	import '../../../styles.css';
-	import '../../../styles.admin.css';
+	import '../../lib/styles.css';
+	import '../../styles.admin.css';
 
 	let { children, data } = $props();
 </script>

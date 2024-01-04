@@ -31,5 +31,6 @@ export default createSvelite({
 			]
 		})
 	],
-	api: 'http://localhost:5173/api'
+    api: 'https://svelite-api.hadiahmadi.dev/api'
+	//api: 'http://localhost:5173/api'
 });

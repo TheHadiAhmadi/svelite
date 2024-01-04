@@ -1,4 +1,4 @@
-import createSveliteDb, {createMemoryAdapter} from './sveliteDb';
+import createSveliteDb, { createMemoryAdapter } from './sveliteDb';
 
 function respond(code = 200, data: any = null, message = 'Success', field = null) {
 	const response: any = {};
@@ -12,8 +12,8 @@ function respond(code = 200, data: any = null, message = 'Success', field = null
 }
 
 export default function createSveliteServer(config) {
-    const dbAdapter = createMemoryAdapter()
-    const db = createSveliteDb(dbAdapter)
+	const dbAdapter = createMemoryAdapter();
+	const db = createSveliteDb(dbAdapter);
 
 	return async (request: Request) => {
 		console.log('request', request.url);
@@ -48,10 +48,10 @@ export default function createSveliteServer(config) {
 
 				case 'update':
 					// Assuming you have a specific identifier for the update (e.g., data.id)
-                    console.log('update', collection.update, data)
+					console.log('update', collection.update, data);
 					await collection.update((value) => value.id === data.id, data);
 					message = 'Data updated successfully';
-                    result = {}
+					result = {};
 					break;
 
 				case 'remove':

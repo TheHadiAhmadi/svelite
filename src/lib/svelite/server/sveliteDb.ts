@@ -101,7 +101,7 @@ export default function createSveliteDb(adapter: DBAdapter) {
 				return { filter, all, first, paginate };
 			},
 			async insert(data: any) {
-                console.log('insert', data)
+				console.log('insert', data);
 				data.id = 'id_' + Math.random();
 
 				console.log(data);
@@ -109,7 +109,7 @@ export default function createSveliteDb(adapter: DBAdapter) {
 				return data;
 			},
 			async remove(id: string) {
-                console.log('remove', id)
+				console.log('remove', id);
 				const data = await read(collectionName);
 
 				write(
@@ -118,10 +118,10 @@ export default function createSveliteDb(adapter: DBAdapter) {
 				);
 			},
 			async update(predicate: (value: any, index: number) => any, data) {
-                console.log('update', data)
+				console.log('update', data);
 				const items = await read(collectionName);
 
-                console.log('write', items)
+				console.log('write', items);
 
 				write(
 					collectionName,
@@ -161,13 +161,13 @@ export default function createSveliteDb(adapter: DBAdapter) {
 }; */
 
 export const createMemoryAdapter = () => {
-    let content = {};
-    return {
-        read(collection) {
-            return content[collection] ?? []
-        }, 
-        write(collection, value) {
-            content[collection] = value
-        }
-    }
-}
+	let content = {};
+	return {
+		read(collection) {
+			return content[collection] ?? [];
+		},
+		write(collection, value) {
+			content[collection] = value;
+		}
+	};
+};

@@ -1,2 +1,2 @@
-export * from './admin/plugin'
-export * from './svelite'
+export * from './admin/plugin';
+export * from './svelite';

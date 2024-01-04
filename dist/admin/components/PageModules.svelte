@@ -45,12 +45,11 @@
 			<div
 				onclick={() => addModule(moduleName)}
 				class="mb-4 block p-4 border border-gray-200 bg-gray-600 dark:border-gray-600"
-
 			>
-            <div class="font-bold text-xl ">{moduleName}</div>
-                <div class="text-gray-300">
-                    {modules[moduleName].description}
-                </div>
+				<div class="font-bold text-xl">{moduleName}</div>
+				<div class="text-gray-300">
+					{modules[moduleName].description}
+				</div>
 			</div>
 		{/each}
 	</ModalBody>

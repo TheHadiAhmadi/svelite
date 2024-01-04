@@ -21,7 +21,7 @@
 					<Icon onclick={toggleSidebar} name="menu-2" />
 				</div>
 			{/if}
-            <img class="logo" src="/files/{logo}"/>
+			<img class="logo" src="/files/{logo}" />
 		</div>
 
 		<div class="hidden md:flex">
@@ -31,7 +31,7 @@
 
 	{#snippet sidebar()}
 		{#each sidebarItems as item}
-            <SidebarItem href={item.href} title={item.title} icon={item.icon}/>
+			<SidebarItem href={item.href} title={item.title} icon={item.icon} />
 		{/each}
 	{/snippet}
 

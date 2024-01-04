@@ -1,13 +1,14 @@
-<script>import Button from "../../../core/Button/Button.svelte";
-import ButtonGroup from "../../../core/Button/ButtonGroup.svelte";
-import Card from "../../../core/Card/Card.svelte";
-import Icon from "../../../core/Icon/Icon.svelte";
-import Table from "../../../core/Table/Table.svelte";
-import TableColumn from "../../../core/Table/TableColumn.svelte";
-let { data, collection = "", columns = [], actions = [] } = $props();
-async function onRemove(item) {
-  data.remove(item.id);
-}
+<script>
+	import Button from '../../../core/Button/Button.svelte';
+	import ButtonGroup from '../../../core/Button/ButtonGroup.svelte';
+	import Card from '../../../core/Card/Card.svelte';
+	import Icon from '../../../core/Icon/Icon.svelte';
+	import Table from '../../../core/Table/Table.svelte';
+	import TableColumn from '../../../core/Table/TableColumn.svelte';
+	let { data, collection = '', columns = [], actions = [] } = $props();
+	async function onRemove(item) {
+		data.remove(item.id);
+	}
 </script>
 
 <Card>

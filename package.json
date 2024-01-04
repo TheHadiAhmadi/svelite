@@ -21,9 +21,9 @@
 			"types": "./dist/index.d.ts",
 			"svelte": "./dist/index.js"
 		},
-        "./dist/styles.css": {
-            "import": "./dist/styles.css"
-        }
+		"./dist/styles.css": {
+			"import": "./dist/styles.css"
+		}
 	},
 	"files": [
 		"dist",

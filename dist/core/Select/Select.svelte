@@ -1,37 +1,37 @@
-<script>let {
-  items = [],
-  multiple = false,
-  placeholder = null,
-  key = "key",
-  text = "text",
-  value,
-  ...rest
-} = $props();
-function getKey(item) {
-  return typeof item === "object" ? item[key] : item;
-}
-function getText(item) {
-  return typeof item === "object" ? item[text] : item;
-}
-function select(item) {
-  console.log("select");
-  if (multiple) {
-    if (!value)
-      value = [];
-    if (value.includes(getKey(item))) {
-      value = value.filter((x) => x !== getKey(item));
-    } else {
-      value = [...value, getKey(item)];
-    }
-  } else {
-    value = getKey(item);
-  }
-}
-function onChange(val) {
-  if (!multiple) {
-    value = val;
-  }
-}
+<script>
+	let {
+		items = [],
+		multiple = false,
+		placeholder = null,
+		key = 'key',
+		text = 'text',
+		value,
+		...rest
+	} = $props();
+	function getKey(item) {
+		return typeof item === 'object' ? item[key] : item;
+	}
+	function getText(item) {
+		return typeof item === 'object' ? item[text] : item;
+	}
+	function select(item) {
+		console.log('select');
+		if (multiple) {
+			if (!value) value = [];
+			if (value.includes(getKey(item))) {
+				value = value.filter((x) => x !== getKey(item));
+			} else {
+				value = [...value, getKey(item)];
+			}
+		} else {
+			value = getKey(item);
+		}
+	}
+	function onChange(val) {
+		if (!multiple) {
+			value = val;
+		}
+	}
 </script>
 
 <select

@@ -7,7 +7,7 @@ export function handle({ event, resolve }) {
 	event.locals.config = config;
 
 	if (event.url.pathname.startsWith('/api')) {
-        return server(event.request)
+		return server(event.request);
 	}
 
 	return resolve(event);

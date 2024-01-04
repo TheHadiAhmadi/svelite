@@ -1,8 +1,8 @@
 import AdminLayout from './AdminLayout.svelte';
 
-/** 
-* @type {import('../../../svelite/create-svelite').ModuleType} 
-* */
+/**
+ * @type {import('../../../svelite/create-svelite').ModuleType}
+ * */
 export default {
 	name: 'Admin Layout',
 	description: 'layout for admin panel',

@@ -1,23 +1,24 @@
-<script>import Page from "../../../core/Page/Page.svelte";
-import Button from "../../../core/Button/Button.svelte";
-import Card from "../../../core/Card/Card.svelte";
-import CardBody from "../../../core/Card/CardBody.svelte";
-import FormField from "../../../core/FormField/FormField.svelte";
-import Input from "../../../core/Input/Input.svelte";
-import Select from "../../../core/Select/Select.svelte";
-import Switch from "../../../core/Switch/Switch.svelte";
-import sv from "../../../sv.js";
-import { goto } from "$app/navigation";
-import Icon from "../../../core/Icon/Icon.svelte";
-let value = {};
-async function onSubmit(e) {
-  console.log(e);
-  e.preventDefault();
-  const response = await sv.api(data.collection.slug).insert(value);
-  console.log(response);
-  goto("/admin/" + data.collection.slug);
-}
-let { data } = $props();
+<script>
+	import Page from '../../../core/Page/Page.svelte';
+	import Button from '../../../core/Button/Button.svelte';
+	import Card from '../../../core/Card/Card.svelte';
+	import CardBody from '../../../core/Card/CardBody.svelte';
+	import FormField from '../../../core/FormField/FormField.svelte';
+	import Input from '../../../core/Input/Input.svelte';
+	import Select from '../../../core/Select/Select.svelte';
+	import Switch from '../../../core/Switch/Switch.svelte';
+	import sv from '../../../sv.js';
+	import { goto } from '$app/navigation';
+	import Icon from '../../../core/Icon/Icon.svelte';
+	let value = {};
+	async function onSubmit(e) {
+		console.log(e);
+		e.preventDefault();
+		const response = await sv.api(data.collection.slug).insert(value);
+		console.log(response);
+		goto('/admin/' + data.collection.slug);
+	}
+	let { data } = $props();
 </script>
 
 <Page title="Create {data.collection.name}">

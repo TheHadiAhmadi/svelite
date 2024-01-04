@@ -4,6 +4,8 @@ import { AdminPanelPlugin } from './admin/plugin';
 export default createSvelite({
 	plugins: [
 		AdminPanelPlugin({
+            logo: 'logo.png',
+            theme: 'dark',
 			collections: [
 				{
 					name: 'Users',
@@ -13,7 +15,17 @@ export default createSvelite({
 						{ name: 'Username', type: 'plain_text' },
 						{ name: 'Status', type: 'select', items: ['active', 'disabled'] }
 					]
+				},
+				{
+					name: 'Blogs',
+					slug: 'blogs',
+					fields: [
+						{ name: 'Title', type: 'plain_text' },
+						{ name: 'Content', type: 'plain_text' },
+						{ name: 'Status', type: 'select', items: ['draft', 'published'] }
+					]
 				}
+
 			]
 		})
 	],

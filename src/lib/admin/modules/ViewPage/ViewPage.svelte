@@ -2,6 +2,7 @@
 	import { SvModule } from '$lib/svelite';
 
 	let { modules, data } = $props();
+
 </script>
 
 <svelte:head>
@@ -12,7 +13,7 @@
 
 {#if data.page}
 	{#each data.page.modules as module}
-		<SvModule component={modules[module.name]} properties={module.props} />
+		<SvModule component={modules[module.name].component} properties={module.props} />
 	{/each}
 {:else}
 	Empty Svelite Page

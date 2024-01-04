@@ -14,10 +14,12 @@ function getAdminPages(config: any) {
 	const collections = config.collections ?? [];
 	const theme = config.theme ?? 'light';
 	const dir = config.dir ?? 'ltr';
+    const logo = config.logo ?? 'logo.png'
 
 	let adminLayout = {
 		name: 'AdminLayout',
 		props: {
+            logo,
 			theme,
 			dir,
 			sidebar: [{ title: 'Home', href: '/admin', icon: 'home' }]

@@ -16,13 +16,11 @@ export default function createSveliteServer(config) {
 	const db = createSveliteDb(dbAdapter);
 
 	return async (request: Request) => {
-		console.log('request', request.url);
 		const url = new URL(request.url);
 		if (url.pathname === '/api/files') {
 			return new Response(JSON.stringify({ success: true }));
 			// FILE UPLOAD
 		} else {
-			console.log(url.pathname);
 			let body;
 			try {
 				body = await request.json();
@@ -37,7 +35,6 @@ export default function createSveliteServer(config) {
 			let result: any = null;
 			let message = 'success';
 
-			console.log({ action, collection, data });
 			switch (action) {
 				case 'insert':
 					const insertedData = await collection.insert(data);
@@ -48,7 +45,6 @@ export default function createSveliteServer(config) {
 
 				case 'update':
 					// Assuming you have a specific identifier for the update (e.g., data.id)
-					console.log('update', collection.update, data);
 					await collection.update((value) => value.id === data.id, data);
 					message = 'Data updated successfully';
 					result = {};

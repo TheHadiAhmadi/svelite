@@ -5,9 +5,7 @@
 	import Icon from '$lib/core/Icon/Icon.svelte';
 	import ModalHeader from '$lib/core/Modal/ModalHeader.svelte';
 	import ModalBody from '$lib/core/Modal/ModalBody.svelte';
-	import FormField from '$lib/core/FormField/FormField.svelte';
-	import Input from '$lib/core/Input/Input.svelte';
-	import AppFormField from './AppFormField.svelte';
+	import AppFormField from '$lib/admin/components/AppFormField.svelte';
 
 	let { value = [], modules, ...rest } = $props();
 

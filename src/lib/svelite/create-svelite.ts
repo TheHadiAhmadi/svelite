@@ -63,10 +63,18 @@ export default function createSvelite(config: SveliteConfig) {
 	let layouts = {};
 	let pages: SvelitePage[] = [];
 
-	for (let plugin of config.plugins ?? []) {
+    function loadPlugin(plugin) {
+        if(plugin.plugins) {
+            plugin.plugins.map(x => loadPlugin(x))
+        }
+
 		modules = { ...modules, ...(plugin.modules ?? {}) };
 		layouts = { ...layouts, ...(plugin.layouts ?? {}) };
 		pages = [...pages, ...(plugin.pages ?? [])];
+    }
+
+	for (let plugin of config.plugins ?? []) {
+        loadPlugin(plugin)
 	}
 
 	modules = { ...modules, ...(config.modules ?? {}) };
@@ -75,6 +83,8 @@ export default function createSvelite(config: SveliteConfig) {
 
 	const load = createSveliteLoad(api, pages, modules, layouts);
 
+
+    console.log(modules, layouts, pages)
 	return {
 		api,
 		load

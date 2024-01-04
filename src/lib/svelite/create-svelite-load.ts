@@ -1,6 +1,18 @@
 import type { PageModule } from '.';
 
 function matchRoute(url, pages) {
+    pages = pages.sort((a, b) => {
+
+        if(a.slug.includes('{...') && !b.slug.includes('{...')) {
+            return 1
+        }
+
+        if(a.slug.includes('{') && !b.slug.includes('{')) {
+            return 1
+        }
+
+        return -1
+    })
 	let result: any = {};
 	for (let page of pages) {
 

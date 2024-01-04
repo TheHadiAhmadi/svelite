@@ -1,11 +1,13 @@
 import { createSvelite } from './svelite';
 import { AdminPanelPlugin } from './admin/plugin';
+import modules from './modules'
 
 export default createSvelite({
 	plugins: [
 		AdminPanelPlugin({
             logo: 'logo.png',
             theme: 'dark',
+            modules,
 			collections: [
 				{
 					name: 'Users',

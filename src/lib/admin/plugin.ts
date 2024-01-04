@@ -59,6 +59,7 @@ export function AdminPanelPlugin(config: any) {
         const pageManagementConfig = {
             layout,
             adminPrefix,
+            uiModules: config.modules ?? {}
         }
         plugins.push(PageManagementPlugin(pageManagementConfig))
 	}

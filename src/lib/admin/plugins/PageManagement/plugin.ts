@@ -7,6 +7,7 @@ export default (config: any) => {
 
     const layout = config.layout;
     const adminPrefix = config.adminPrefix;
+    const uiModules = config.uiModules;
 
     const pages = []
 
@@ -60,7 +61,7 @@ export default (config: any) => {
             type: 'custom',
             component: PageModules,
             props: {
-                modules
+                modules: uiModules
             }
         }
     ];
@@ -120,7 +121,7 @@ export default (config: any) => {
             {
                 name: 'ViewPage',
                 props: {
-                    modules
+                    modules: uiModules
                 }
             }
         ]

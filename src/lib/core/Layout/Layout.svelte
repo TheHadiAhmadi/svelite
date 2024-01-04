@@ -25,10 +25,10 @@
 
 	///  })
 
-	//let themeClass= theme === 'dark' ? "dark" : "" let themeClass = 'dark'
+	let themeClass = theme === 'dark' ? 'dark' : '';
 </script>
 
-<Base classes="h-full overflow-auto font-[math] dark" {dir}>
+<Base classes="h-full overflow-auto font-[math] {themeClass}" {dir}>
 	{#if !!header}
 		<Header>
 			{@render header({ hasSidebar: !!sidebar })}

@@ -12,17 +12,26 @@ function getAdminPages(config: any) {
 	const hasAuthPages = config.authPages !== false;
 	const hasDashboard = config.dashboard !== false;
 	const collections = config.collections ?? [];
+	const theme = config.theme ?? 'light';
+	const dir = config.dir ?? 'ltr';
 
 	let adminLayout = {
 		name: 'AdminLayout',
 		props: {
-			theme: 'light',
-			dir: 'ltr',
+			theme,
+			dir,
 			sidebar: [{ title: 'Home', href: '/admin', icon: 'home' }]
 		}
 	};
 
 	let pages: any[] = [];
+
+	pages.push({
+		slug: adminPrefix,
+		title: 'Admin Panel',
+		layout: adminLayout,
+		modules: []
+	});
 
 	if (hasContentTypeManagement) {
 		// build dynamic tables (collections + custom tables)...
@@ -273,6 +282,21 @@ function getAdminPages(config: any) {
 		pages.push(editPage);
 
 		adminLayout.props.sidebar.push({ icon: 'file', title: 'Pages', href: '/admin/pages' });
+
+		const viewPage = {
+			slug: '{...slug}',
+			title: 'Page',
+			modules: [
+				{
+					name: 'ViewPage',
+					props: {
+						modules
+					}
+				}
+			]
+		};
+
+		pages.push(viewPage);
 	}
 
 	if (hasAuthPages) {
@@ -282,7 +306,14 @@ function getAdminPages(config: any) {
 			layout: { name: 'AuthLayout', props: {} },
 			modules: [{ name: 'Login', props: {} }]
 		};
-		console.log({ authPrefix });
+
+		const registerPage = {
+			slug: authPrefix + '/register',
+			title: 'Register',
+			layout: { name: 'AuthLayout', props: {} },
+			modules: [{ name: 'Register', props: {} }]
+		};
+		pages.push(registerPage);
 		pages.push(loginPage);
 		// /auth/login
 		// /auth/register

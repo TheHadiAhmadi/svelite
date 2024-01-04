@@ -1,25 +1,26 @@
-<script>import { Modal } from "../../../core";
-import Button from "../../../core/Button/Button.svelte";
-import ButtonGroup from "../../../core/Button/ButtonGroup.svelte";
-import Card from "../../../core/Card/Card.svelte";
-import Icon from "../../../core/Icon/Icon.svelte";
-import ModalBody from "../../../core/Modal/ModalBody.svelte";
-import Table from "../../../core/Table/Table.svelte";
-import TableColumn from "../../../core/Table/TableColumn.svelte";
-let { data, collection = "", columns = [], actions = [] } = $props();
-let removeConfirmOpen = $state(false);
-let activeItem = $state(null);
-function openRemove(item) {
-  activeItem = item;
-  removeConfirmOpen = true;
-  console.log("open remove confirm");
-}
-function closeRemoveConfirm() {
-  removeConfirmOpen = false;
-}
-async function onRemove() {
-  data.remove(activeItem.id);
-}
+<script>
+	import { Modal } from '../../../core';
+	import Button from '../../../core/Button/Button.svelte';
+	import ButtonGroup from '../../../core/Button/ButtonGroup.svelte';
+	import Card from '../../../core/Card/Card.svelte';
+	import Icon from '../../../core/Icon/Icon.svelte';
+	import ModalBody from '../../../core/Modal/ModalBody.svelte';
+	import Table from '../../../core/Table/Table.svelte';
+	import TableColumn from '../../../core/Table/TableColumn.svelte';
+	let { data, collection = '', columns = [], actions = [] } = $props();
+	let removeConfirmOpen = $state(false);
+	let activeItem = $state(null);
+	function openRemove(item) {
+		activeItem = item;
+		removeConfirmOpen = true;
+		console.log('open remove confirm');
+	}
+	function closeRemoveConfirm() {
+		removeConfirmOpen = false;
+	}
+	async function onRemove() {
+		data.remove(activeItem.id);
+	}
 </script>
 
 <Card>

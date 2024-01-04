@@ -1,4 +1,5 @@
-<script>let { open = false, children, title, ...rest } = $props();
+<script>
+	let { open = false, children, title, ...rest } = $props();
 </script>
 
 <div class="mb-2 bg-gray-700 border-gray-700 rounded">

@@ -2,7 +2,9 @@ export function customApi(methods) {
 	return {
 		auth: {
 			login: methods.login,
-			register: methods.register
+			register: methods.register,
+			logout: methods.logout,
+			getUser: methods.getUser
 		},
 		db: (collection) => {
 			let filters: any[] = [];
@@ -88,6 +90,12 @@ export function createSveliteApi(url: string) {
 		},
 		async register({ password, username, name, email }) {
 			return console.log('todo register');
+		},
+		async logout() {
+			return console.log('logout');
+		},
+		async getUser() {
+			return { name: 'DEMO', username: 'demo1', email: 'demo@gmail.com', id: 'id_123123131' };
 		}
 	});
 }

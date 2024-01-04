@@ -10,5 +10,14 @@ export default {
 		dir: { type: 'select', items: ['rtl', 'ltr'] },
 		theme: { type: 'select', items: ['dark', 'light'] }
 	},
+	load(props, api) {
+		console.log('load', api);
+		return {
+			logout() {
+				console.log(api);
+				return api.auth.logout();
+			}
+		};
+	},
 	component: AdminLayout
 };

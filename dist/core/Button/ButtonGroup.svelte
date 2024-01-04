@@ -1,4 +1,5 @@
-<script>let { children, ...rest } = $props();
+<script>
+	let { children, ...rest } = $props();
 </script>
 
 <div class="flex items-center justify-center gap-2" {...rest}>

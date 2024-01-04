@@ -1,17 +1,18 @@
-<script>import { goto } from "$app/navigation";
-import Button from "../../../core/Button/Button.svelte";
-import Card from "../../../core/Card/Card.svelte";
-import CardBody from "../../../core/Card/CardBody.svelte";
-import AppFormField from "../../components/AppFormField.svelte";
-let { data, load, fields, submit, actions, params, ...rest } = $props();
-let value = $state(data.value ?? {});
-async function onSubmit(e) {
-  e.preventDefault();
-  if (data.submit) {
-    data.submit(value);
-    goto(".");
-  }
-}
+<script>
+	import { goto } from '$app/navigation';
+	import Button from '../../../core/Button/Button.svelte';
+	import Card from '../../../core/Card/Card.svelte';
+	import CardBody from '../../../core/Card/CardBody.svelte';
+	import AppFormField from '../../components/AppFormField.svelte';
+	let { data, load, fields, submit, actions, params, ...rest } = $props();
+	let value = $state(data.value ?? {});
+	async function onSubmit(e) {
+		e.preventDefault();
+		if (data.submit) {
+			data.submit(value);
+			goto('.');
+		}
+	}
 </script>
 
 <form onsubmit={onSubmit}>

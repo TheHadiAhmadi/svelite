@@ -23,10 +23,22 @@ function matchRoute(url, pages) {
 		for (let index in slugSplitted) {
 			if (urlSplitted[index] !== slugSplitted[index]) {
 				// check if slugSplitted is dynamic
+				if (slugSplitted[index]?.startsWith('{...')) {
+					result.page = page;
+
+					console.log('urlSplitted', urlSplitted.slice(index), index, urlSplitted);
+					params[slugSplitted[index].slice(4, slugSplitted[index].length - 1)] = urlSplitted
+						.slice(index)
+						.join('/');
+					result.params = params;
+
+					break;
+				}
 				if (slugSplitted[index]?.startsWith('{')) {
 					result.page = page;
 					params[slugSplitted[index].slice(1, slugSplitted[index].length - 1)] = urlSplitted[index];
 					result.params = params;
+					break;
 				} else {
 					delete result['page'];
 					break;
@@ -50,17 +62,27 @@ export function createSveliteLoad(api, pages, modules, layouts) {
 			.all()
 			.then((res) => res.data);
 
-		const allPages = [...pages, ...dbpages];
+		//const allPages = [...pages, ...dbpages];
 
-		const matchedRoute = matchRoute(slug, allPages);
+		const matchedRoute = matchRoute(slug, pages);
 
 		console.log('matchedRoute: ', slug, matchedRoute);
 
 		if (!matchedRoute.page) return {};
 		const page = matchedRoute.page;
 
+		let layoutData = {};
 		if (page.layout) {
 			page.layout.component = layouts[page.layout.name].component;
+			if (layouts[page.layout.name].load) {
+				// layout Load
+				page.layout.props ??= {};
+				page.layout.props.data = await layouts[page.layout.name].load(
+					page.layout.props,
+					api,
+					matchedRoute.params
+				);
+			}
 		}
 
 		async function initializeModule(module: PageModule) {

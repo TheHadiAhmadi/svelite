@@ -4,8 +4,8 @@ import Table from './modules/Table/module';
 import Login from './modules/Login/module';
 console.log(Table);
 export default {
-    Form,
-    Page,
-    Table,
-    Login
+	Form,
+	Page,
+	Table,
+	Login
 };

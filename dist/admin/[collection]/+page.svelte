@@ -1,34 +1,33 @@
-<script>
-	import sv from '../../sv.js';
-	import Button from '../../core/Button/Button.svelte';
-	import ButtonGroup from '../../core/Button/ButtonGroup.svelte';
-	import Card from '../../core/Card/Card.svelte';
-	import Icon from '../../core/Icon/Icon.svelte';
-	import Page from '../../core/Page/Page.svelte';
-	import PageHeader from '../../core/Page/PageHeader.svelte';
-	import Table from '../../core/Table/Table.svelte';
-	import TableColumn from '../../core/Table/TableColumn.svelte';
-	import { onMount } from 'svelte';
-	let { data } = $props();
-	let page = $state(1);
-	let perPage = $state(10);
-	let items = $state([]);
-	let filters = $state([]);
-	async function onRemove(item) {
-		console.log('Should confirm');
-		await sv.api(data.collection.slug).remove(item.id);
-		reload();
-	}
-	async function reload() {
-		let query = api(data.collection.slug).find();
-		for (let filter of filters) {
-			query = query.filter(filter.field, filter.operator, filter.value);
-		}
-		items = await query.paginate(page, perPage).then((res) => res.data);
-	}
-	onMount(() => {
-		reload();
-	});
+<script>import sv from "../../sv.js";
+import Button from "../../core/Button/Button.svelte";
+import ButtonGroup from "../../core/Button/ButtonGroup.svelte";
+import Card from "../../core/Card/Card.svelte";
+import Icon from "../../core/Icon/Icon.svelte";
+import Page from "../../core/Page/Page.svelte";
+import PageHeader from "../../core/Page/PageHeader.svelte";
+import Table from "../../core/Table/Table.svelte";
+import TableColumn from "../../core/Table/TableColumn.svelte";
+import { onMount } from "svelte";
+let { data } = $props();
+let page = $state(1);
+let perPage = $state(10);
+let items = $state([]);
+let filters = $state([]);
+async function onRemove(item) {
+  console.log("Should confirm");
+  await sv.api(data.collection.slug).remove(item.id);
+  reload();
+}
+async function reload() {
+  let query = api(data.collection.slug).find();
+  for (let filter of filters) {
+    query = query.filter(filter.field, filter.operator, filter.value);
+  }
+  items = await query.paginate(page, perPage).then((res) => res.data);
+}
+onMount(() => {
+  reload();
+});
 </script>
 
 {#if data.collection}

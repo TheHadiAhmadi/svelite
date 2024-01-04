@@ -1,29 +1,24 @@
-<script>
-	import Page from '../../../core/Page/Page.svelte';
-	import Button from '../../../core/Button/Button.svelte';
-	import Card from '../../../core/Card/Card.svelte';
-	import CardBody from '../../../core/Card/CardBody.svelte';
-	import FormField from '../../../core/FormField/FormField.svelte';
-	import Input from '../../../core/Input/Input.svelte';
-	import Select from '../../../core/Select/Select.svelte';
-	import Switch from '../../../core/Switch/Switch.svelte';
-	import sv from '../../../sv.js';
-	import { goto } from '$app/navigation';
-	import { onMount } from 'svelte';
-	let { data } = $props();
-	let value = $state({});
-	onMount(() => {
-		sv.api(data.collection.slug)
-			.find()
-			.filter('id', '=', data.id)
-			.first()
-			.then((res) => (value = res.data ?? {}));
-	});
-	async function onSubmit(e) {
-		e.preventDefault();
-		await sv.api(data.collection.slug).update(value);
-		goto('/admin/' + data.collection.slug);
-	}
+<script>import Page from "../../../core/Page/Page.svelte";
+import Button from "../../../core/Button/Button.svelte";
+import Card from "../../../core/Card/Card.svelte";
+import CardBody from "../../../core/Card/CardBody.svelte";
+import FormField from "../../../core/FormField/FormField.svelte";
+import Input from "../../../core/Input/Input.svelte";
+import Select from "../../../core/Select/Select.svelte";
+import Switch from "../../../core/Switch/Switch.svelte";
+import sv from "../../../sv.js";
+import { goto } from "$app/navigation";
+import { onMount } from "svelte";
+let { data } = $props();
+let value = $state({});
+onMount(() => {
+  sv.api(data.collection.slug).find().filter("id", "=", data.id).first().then((res) => value = res.data ?? {});
+});
+async function onSubmit(e) {
+  e.preventDefault();
+  await sv.api(data.collection.slug).update(value);
+  goto("/admin/" + data.collection.slug);
+}
 </script>
 
 <Page title="Update {data.collection.name}">

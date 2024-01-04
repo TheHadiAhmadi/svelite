@@ -1,15 +1,17 @@
-<script>
-	import { setContext } from 'svelte';
-	let { items = [], row, ...rest } = $props();
-	let columns = $state([]);
-	let loading = $state(true);
-	function register(name) {
-		console.log('register', name);
-		if (loading) loading = false;
-		if (columns.indexOf(name) == -1) columns = [...columns, name];
-	}
-	function unregister(name) {}
-	setContext('TABLE', { register, unregister });
+<script>import { setContext } from "svelte";
+let { items = [], row, ...rest } = $props();
+let columns = $state([]);
+let loading = $state(true);
+function register(name) {
+  console.log("register", name);
+  if (loading)
+    loading = false;
+  if (columns.indexOf(name) == -1)
+    columns = [...columns, name];
+}
+function unregister(name) {
+}
+setContext("TABLE", { register, unregister });
 </script>
 
 <div class="relative overflow-x-auto" {...rest}>

@@ -1,4 +1,6 @@
 <script>
+	import Icon from '../Icon/Icon.svelte';
+
 	let { title, href, icon, ...rest } = $props();
 </script>
 

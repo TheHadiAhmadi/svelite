@@ -1,8 +1,7 @@
-<script>
-	import Base from '../Base/Base.svelte';
-	import CardBody from './CardBody.svelte';
-	import CardHeader from './CardHeader.svelte';
-	let { children, body, header, title, ...restProps } = $props();
+<script>import Base from "../Base/Base.svelte";
+import CardBody from "./CardBody.svelte";
+import CardHeader from "./CardHeader.svelte";
+let { children, body, header, title, ...restProps } = $props();
 </script>
 
 <Base

@@ -1,16 +1,15 @@
-<script>
-	import Base from '../Base/Base.svelte';
-	import './button.css';
-	let {
-		children,
-		ghost = false,
-		icon = false,
-		color = 'default',
-		size = 'default',
-		onclick,
-		href,
-		...restProps
-	} = $props();
+<script>import Base from "../Base/Base.svelte";
+import "./button.css";
+let {
+  children,
+  ghost = false,
+  icon = false,
+  color = "default",
+  size = "default",
+  onclick,
+  href,
+  ...restProps
+} = $props();
 </script>
 
 <Base

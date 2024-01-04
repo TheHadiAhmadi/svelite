@@ -1,30 +1,27 @@
 /** @typedef {typeof __propDef.props}  SwitchProps */
 /** @typedef {typeof __propDef.events}  SwitchEvents */
 /** @typedef {typeof __propDef.slots}  SwitchSlots */
-export default class Switch extends SvelteComponentTyped<
-	{
-		[x: string]: unknown;
-		text: unknown;
-		value: unknown;
-	},
-	{
-		[evt: string]: CustomEvent<any>;
-	},
-	{}
-> {}
+export default class Switch extends SvelteComponentTyped<{
+    [x: string]: unknown;
+    text: unknown;
+    value: unknown;
+}, {
+    [evt: string]: CustomEvent<any>;
+}, {}> {
+}
 export type SwitchProps = typeof __propDef.props;
 export type SwitchEvents = typeof __propDef.events;
 export type SwitchSlots = typeof __propDef.slots;
-import { SvelteComponentTyped } from 'svelte';
+import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
-	props: {
-		[x: string]: unknown;
-		text: unknown;
-		value: unknown;
-	};
-	events: {
-		[evt: string]: CustomEvent<any>;
-	};
-	slots: {};
+    props: {
+        [x: string]: unknown;
+        text: unknown;
+        value: unknown;
+    };
+    events: {
+        [evt: string]: CustomEvent<any>;
+    };
+    slots: {};
 };
 export {};

@@ -10,12 +10,11 @@ export default {
 
 	async load(props, api) {
 		console.log('load table data', props);
-		let items = await api
-			.db(props.collection)
-			.find()
-			.all()
-			.then((res) => res.data);
+        let response = await api.db(props.collection).find().all()
 
+		let items = response.data
+
+            console.log("load table", {response, items})
 		return {
 			remove(id) {
 				api.db(props.collection).remove(id);

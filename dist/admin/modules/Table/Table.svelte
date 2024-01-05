@@ -1,38 +1,37 @@
-<script>
-	import { Modal } from '../../../core';
-	import Button from '../../../core/Button/Button.svelte';
-	import ButtonGroup from '../../../core/Button/ButtonGroup.svelte';
-	import Card from '../../../core/Card/Card.svelte';
-	import Icon from '../../../core/Icon/Icon.svelte';
-	import ModalBody from '../../../core/Modal/ModalBody.svelte';
-	import Table from '../../../core/Table/Table.svelte';
-	import TableColumn from '../../../core/Table/TableColumn.svelte';
-	let { data, collection = '', columns = [], actions = [] } = $props();
-	let removeConfirmOpen = $state(false);
-	let activeItem = $state(null);
-	function openRemove(item) {
-		activeItem = item;
-		removeConfirmOpen = true;
-		console.log('open remove confirm');
-	}
-	function closeRemoveConfirm() {
-		removeConfirmOpen = false;
-	}
-	async function onRemove() {
-		data.remove(activeItem.id);
-	}
+<script>import { Modal } from "../../../core";
+import Button from "../../../core/Button/Button.svelte";
+import ButtonGroup from "../../../core/Button/ButtonGroup.svelte";
+import Card from "../../../core/Card/Card.svelte";
+import Icon from "../../../core/Icon/Icon.svelte";
+import ModalBody from "../../../core/Modal/ModalBody.svelte";
+import Table from "../../../core/Table/Table.svelte";
+import TableColumn from "../../../core/Table/TableColumn.svelte";
+let { data, collection = "", columns = [], actions = [] } = $props();
+let removeConfirmOpen = $state(false);
+let activeItem = $state(null);
+function openRemove(item) {
+  activeItem = item;
+  removeConfirmOpen = true;
+  console.log("open remove confirm");
+}
+function closeRemoveConfirm() {
+  removeConfirmOpen = false;
+}
+async function onRemove() {
+  data.remove(activeItem.id);
+}
 </script>
 
 <Card>
 	<Table items={data?.items ?? []}>
 		{#snippet row(item)}
 			{#each columns as column}
-				<TableColumn name={column.name}>
+				<TableColumn name={column.label}>
 					{#if column.type === 'text'}
-						{item[column.field]}
+						{item[column.name]}
 					{:else if column.type === 'badge'}
 						<span class="py-0.5 px-2 rounded bg-gray-300 dark:bg-gray-700">
-							{item[column.field]}
+							{item[column.name]}
 						</span>
 					{/if}
 				</TableColumn>

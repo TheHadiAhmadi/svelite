@@ -1,24 +1,37 @@
-<script>
-	import { setContext } from 'svelte';
-	let { items = [], row, ...rest } = $props();
-	let columns = $state([]);
-	let loading = $state(true);
-	function register(name) {
-		console.log('register', name);
-		if (loading) loading = false;
-		if (columns.indexOf(name) == -1) columns = [...columns, name];
-	}
-	function unregister(name) {}
-	setContext('TABLE', { register, unregister });
+<script>import { onMount, setContext } from "svelte";
+let { items = [], row, ...rest } = $props();
+let columns = $state([]);
+let loading = $state(true);
+let empty = $state(false);
+function register(name) {
+  console.log("register", name);
+  if (loading)
+    loading = false;
+  if (columns.indexOf(name) == -1)
+    columns = [...columns, name];
+}
+function unregister(name) {
+}
+onMount(() => {
+  console.log("mount", columns, loading);
+  if (columns.length == 0) {
+    empty = true;
+  }
+});
+setContext("TABLE", { register, unregister });
 </script>
 
-<div class="relative overflow-x-auto" {...rest}>
+<div class="relative overflow-x-auto" class:min-h-80={loading} {...rest}>
 	<div
 		class="w-full h-full absolute flex items-center justify-center opacity-0 transition duration-400 bg-white dark:bg-gray-800"
 		class:opacity-100={loading}
 		class:pointer-events-none={!loading}
 	>
-		Loading...
+		{#if empty}
+			Empty
+		{:else}
+			Loading...
+		{/if}
 	</div>
 
 	<table

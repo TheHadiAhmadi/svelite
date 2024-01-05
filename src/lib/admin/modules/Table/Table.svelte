@@ -33,12 +33,12 @@
 	<Table items={data?.items ?? []}>
 		{#snippet row(item)}
 			{#each columns as column}
-				<TableColumn name={column.name}>
+				<TableColumn name={column.label}>
 					{#if column.type === 'text'}
-						{item[column.field]}
+						{item[column.name]}
 					{:else if column.type === 'badge'}
 						<span class="py-0.5 px-2 rounded bg-gray-300 dark:bg-gray-700">
-							{item[column.field]}
+							{item[column.name]}
 						</span>
 					{/if}
 				</TableColumn>

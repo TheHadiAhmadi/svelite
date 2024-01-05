@@ -15,7 +15,7 @@ export default (config: any) => {
         const collectionFormFields = collection.fields.map((x) => ({ label: x.name, ...x }));
 
         const collectionTableFields = collection.fields.map((x) => {
-            x.field ??= x.name;
+            x.label ??= x.name;
 
             if (x.type === 'plain_text') {
                 x.type = 'text';

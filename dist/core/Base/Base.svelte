@@ -1,5 +1,4 @@
-<script>
-	let { tag = 'div', children, class: klass = '', classes, ...restProps } = $props();
+<script>let { tag = "div", children, class: klass = "", classes, ...restProps } = $props();
 </script>
 
 {#if children}

@@ -7,8 +7,8 @@ export default {
 	props: {},
 	load(props, api) {
 		return {
-			login(username, password) {
-				return api.login({ username, password });
+			login(body) {
+				return api.auth.login(body);
 			}
 		};
 	}

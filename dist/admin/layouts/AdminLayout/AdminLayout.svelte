@@ -26,6 +26,7 @@
 
 		<div class="hidden md:flex">
 			Something here {hasSidebar}
+			<button onclick={() => data.logout()}>Logout</button>
 		</div>
 	{/snippet}
 

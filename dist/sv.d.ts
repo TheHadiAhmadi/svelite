@@ -1,5 +1,9 @@
 declare const _default: {
     api: {
+        file: {
+            upload: any;
+            url: (id: string) => any;
+        };
         auth: {
             login: any;
             register: any;

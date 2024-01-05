@@ -1,10 +1,17 @@
 export function customApi(methods) {
+    methods.file ??= {}
+    methods.auth ??= {}
+    methods.db ??= {}
 	return {
+        file: {
+            upload: methods.file.upload,
+            url: (id: string) => methods.file.url(id)
+        },
 		auth: {
-			login: methods.login,
-			register: methods.register,
-			logout: methods.logout,
-			getUser: methods.getUser
+			login: methods.auth.login,
+			register: methods.auth.register,
+			logout: methods.auth.logout,
+			getUser: methods.auth.getUser
 		},
 		db: (collection) => {
 			let filters: any[] = [];
@@ -12,15 +19,15 @@ export function customApi(methods) {
 			return {
 				find() {
 					function all() {
-						return methods.find({ collection, filters });
+						return methods.db.find({ collection, filters });
 					}
 
 					function paginate(page, perPage) {
-						return methods.find({ collection, filters, page, perPage });
+						return methods.db.find({ collection, filters, page, perPage });
 					}
 
 					function first() {
-						return methods
+						return methods.db
 							.find({ collection, filters })
 							.then((res) => ({ ...res, data: res.data[0] }));
 					}
@@ -42,13 +49,13 @@ export function customApi(methods) {
 					};
 				},
 				insert(data) {
-					return methods.insert({ data, collection });
+					return methods.db.insert({ data, collection });
 				},
 				update(data) {
-					return methods.update({ data, collection });
+					return methods.db.update({ data, collection });
 				},
 				remove(id) {
-					return methods.remove({ id, collection });
+					return methods.db.remove({ id, collection });
 				}
 			};
 		}

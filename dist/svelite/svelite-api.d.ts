@@ -1,4 +1,8 @@
 export declare function customApi(methods: any): {
+    file: {
+        upload: any;
+        url: (id: string) => any;
+    };
     auth: {
         login: any;
         register: any;
@@ -22,6 +26,10 @@ export declare function customApi(methods: any): {
     };
 };
 export declare function createSveliteApi(url: string): {
+    file: {
+        upload: any;
+        url: (id: string) => any;
+    };
     auth: {
         login: any;
         register: any;

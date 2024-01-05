@@ -35,6 +35,10 @@ export type SveliteConfig = {
 };
 export default function createSvelite(config: SveliteConfig): {
     api: {
+        file: {
+            upload: any;
+            url: (id: string) => any;
+        };
         auth: {
             login: any;
             register: any;

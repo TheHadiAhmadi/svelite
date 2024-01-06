@@ -17,13 +17,14 @@
 			goto('.');
 		}
 	}
+
 </script>
 
 <form onsubmit={onSubmit}>
 	<Card>
 		<CardBody>
 			{#each fields ?? [] as field}
-				<AppFormField {field} bind:value={value[field.name]} />
+                <AppFormField upload={data.upload} file={data.file} {field} bind:value={value[field.name]} />
 			{/each}
 
 			<div class="flex justify-end gap-2 ms-auto">

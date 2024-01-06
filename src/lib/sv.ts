@@ -15,7 +15,9 @@ export default createSvelite({
 					fields: [
 						{ name: 'Name', type: 'plain_text' },
 						{ name: 'Username', type: 'plain_text' },
-						{ name: 'Status', type: 'select', items: ['active', 'disabled'] }
+						{ name: 'Status', type: 'select', items: ['active', 'disabled'] },
+						{ name: 'Profile', type: 'image'},
+
 					]
 				},
 				{
@@ -23,6 +25,7 @@ export default createSvelite({
 					slug: 'blogs',
 					fields: [
 						{ name: 'Title', type: 'plain_text' },
+						{ name: 'Gallery', type: 'image', multiple: true },
 						{ name: 'Content', type: 'plain_text' },
 						{ name: 'Status', type: 'select', items: ['draft', 'published'] }
 					]
@@ -31,6 +34,7 @@ export default createSvelite({
 			]
 		})
 	],
-    api: 'https://svelite-api.hadiahmadi.dev/api'
-	//api: 'http://localhost:5173/api'
+    // api: 'https://svelite-api.hadiahmadi.dev/api'
+	// api: 'http://localhost:5173/api'
+    api: 'http://localhost:3010/api'
 });

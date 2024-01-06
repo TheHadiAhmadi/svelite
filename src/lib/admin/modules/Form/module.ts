@@ -34,6 +34,9 @@ export default {
 			};
 		}
 
+        result.upload = api.upload
+        result.file = api.file
+
 		return result;
 	}
 };

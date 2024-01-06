@@ -2,6 +2,7 @@ export function customApi(methods) {
     methods.file ??= {}
     methods.auth ??= {}
     methods.db ??= {}
+
 	return {
         upload: methods.upload,
         file: (id: string) => methods.file(id),
@@ -101,59 +102,21 @@ export function createSveliteApi(url: string) {
 		},
 		async getUser() {
 			return { name: 'DEMO', username: 'demo1', email: 'demo@gmail.com', id: 'id_123123131' };
-		}
+		},
+        file: (id: string) => url + '/files/' + id,
+        async upload(file) {
+            const formData = new FormData()
+            formData.append('file', file)
+            
+            const id = await fetch(url + '/files', {
+                method: 'POST',
+                headers: {
+                    Authorization: 'bearer ' + '123',
+                },
+                body: formData
+            }).then(res => res.json()).then(res => res.data.id)
+
+            return id
+        }
 	});
 }
-/*	
-
-	return {
-		auth: {
-			login({ username, password }) {},
-			register({ username, password, name, email }) {}
-		},
-		db: (collection: string) => ({
-			insert: (data: any) => run('insert', { collection, data }),
-			update: (data: any) => run('update', { collection, data }),
-			remove: (id: string) => run('remove', { collection, data: id }),
-			find: () => {
-				let filters: any[] = [];
-				let page = 0;
-				let perPage = 0;
-
-				function filter(field: string, operator: string, value: any) {
-					filters.push({ field, operator, value });
-					return {
-						filter,
-						paginate,
-						all,
-						first
-					};
-				}
-
-				function paginate(_page: number, _perPage: number) {
-					page = _page;
-					perPage = _perPage;
-
-					return run('find', { collection, filters, page, perPage });
-				}
-
-				function all() {
-					return run('find', { collection, filters });
-				}
-
-				function first() {
-					return run('find', { collection, filters }).then((res) => ({
-						...res,
-						data: res.data[0]
-					}));
-				}
-
-				return {
-					all,
-					paginate,
-					filter,
-					first
-				};
-			}
-		})
-	};*/

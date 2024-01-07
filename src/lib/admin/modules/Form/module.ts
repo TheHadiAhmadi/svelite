@@ -10,7 +10,7 @@ export default {
 	},
 	async load(props, api, params) {
 		let result: any = {};
-		console.log(params);
+		console.log(props, params);
 
 		if (props.load) {
 			const [collection, field, op, val] = props.load.split(':');

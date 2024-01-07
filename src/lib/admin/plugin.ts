@@ -21,6 +21,8 @@ export function getAdminLayout(config: any) {
 export function AdminPanelPlugin(config: any) {
     let plugins = []
 
+    let collections = config.collections ?? []
+
     let layout = getAdminLayout(config)
     let adminPrefix = config.adminPrefix ?? 'admin'
 
@@ -68,6 +70,9 @@ export function AdminPanelPlugin(config: any) {
         const authenticationConfig = {
             layout,
             adminPrefix,
+            authPrefix: config.authPrefix,
+            collections: config.collections
+
         }
 
         plugins.push(AuthenticationPlugin(authenticationConfig))

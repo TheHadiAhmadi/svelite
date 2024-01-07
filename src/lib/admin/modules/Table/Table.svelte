@@ -1,4 +1,5 @@
 <script lang="ts">
+	import {invalidateAll} from '$app/navigation';
 	import { Modal } from '$lib/core';
 	import Button from '$lib/core/Button/Button.svelte';
 	import ButtonGroup from '$lib/core/Button/ButtonGroup.svelte';
@@ -25,7 +26,9 @@
 	}
 
 	async function onRemove() {
-		data.remove(activeItem.id);
+		await data.remove(activeItem.id);
+        invalidateAll()
+        removeConfirmOpen = false;
 	}
 </script>
 

@@ -1,22 +1,24 @@
-export function form(fields: any[], actions: any[] = [], submit: any, load = '') {
+export function form(fields: any[], actions: any[] = [], submit: any, load = '', goBack = false) {
 	return {
 		name: 'Form',
 		props: {
 			fields,
 			actions,
 			submit,
-			load
+			load,
+            goBack
 		}
 	};
 }
 
-export function page(title = 'page', actions: any[] = [], content: any[] = []) {
+export function page({title, actions, content, hasBack} = {}) {
 	return {
 		name: 'Page',
 		props: {
-			title,
-			actions,
-			content
+			title: title ?? 'Page',
+			actions: actions ?? [],
+			content: content ?? [],
+            hasBack: hasBack ?? false
 		}
 	};
 }

@@ -1,8 +1,10 @@
 <script lang="ts">
     import '$lib/styles.css'
-import FormField from "$lib/core/FormField/FormField.svelte";
+    import FormField from "$lib/core/FormField/FormField.svelte";
 	import ImagePicker from "$lib/core/ImagePicker/ImagePicker.svelte";
 	import Input from '$lib/core/Input/Input.svelte';
+    import TabPanel from '$lib/core/Tabs/TabPanel.svelte';
+    import Tabs from '$lib/core/Tabs/Tabs.svelte';
     let value: string;
     let values: string[] = [];
 
@@ -20,6 +22,17 @@ import FormField from "$lib/core/FormField/FormField.svelte";
         return res.data.id
     }
 </script>
+
+TABS:
+<div>
+    <Tabs>
+        <TabPanel name="Panel1">Panel1</TabPanel>
+        <TabPanel name="Panel2">Panel2</TabPanel>
+        <TabPanel name="Panel3">Panel3</TabPanel>
+
+    </Tabs>
+
+</div>
 
 <div class="container mx-auto">
     <FormField label="File Picker">

@@ -1,4 +1,6 @@
 <script>
+    import {page} from '$app/stores'
+
 	import Layout from '$lib/core/Layout/Layout.svelte';
 
 	import SidebarItem from '$lib/core/Sidebar/SidebarItem.svelte';
@@ -32,7 +34,16 @@
 
 	{#snippet sidebar()}
 		{#each sidebarItems as item}
-			<SidebarItem href={item.href} title={item.title} icon={item.icon} />
+            {#if item.submenu}
+                {@const active = item.submenu.some(x => x.href === $page.url.pathname)}
+                <SidebarItem href={item.href} {active} title={item.title} icon={item.icon}>
+                    {#each item.submenu as menu}
+                        <SidebarItem level={2} href={menu.href} active={menu.href === $page.url.pathname} title={menu.title} />
+                    {/each}
+                </SidebarItem>
+            {:else}
+                <SidebarItem active={$page.url.pathname === item.href} href={item.href} title={item.title} icon={item.icon} />
+            {/if}
 		{/each}
 	{/snippet}
 

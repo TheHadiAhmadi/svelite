@@ -6,6 +6,10 @@ export default (config: any) => {
 
     for (let collection of collections) {
 
+        if(collection.slug.startsWith('_')) {
+            continue;
+        }
+
         config.layout.props.sidebar.push({
             icon: 'database',
             href: '/admin/content/' + collection.slug,
@@ -33,9 +37,10 @@ export default (config: any) => {
             title: collection.name,
             layout: config.layout,
             modules: [
-                page(
-                    collection.name,
-                    [
+                page({
+                    title: collection.name,
+                    hasBack: false,
+                    actions: [
                         {
                             text: 'Add New Item',
                             color: 'primary',
@@ -43,7 +48,7 @@ export default (config: any) => {
                             href: '/admin/content/' + collection.slug + '/create'
                         }
                     ],
-                    [
+                    content: [
                         table(collection.slug, collectionTableFields, [
                             'remove',
                             {
@@ -53,7 +58,7 @@ export default (config: any) => {
                             }
                         ])
                     ]
-                )
+                })
             ]
         };
 
@@ -62,17 +67,18 @@ export default (config: any) => {
             title: 'Add ' + collection.name,
             layout: config.layout,
             modules: [
-                page(
-                    'Add ' + collection.name,
-                    ['back'],
-                    [
+                page({
+                    title: 'Add ' + collection.name,
+                    hasBack: true,
+                    actions: [],
+                    content: [
                         form(collectionFormFields, ['cancel'], {
                             color: 'primray',
                             action: collection.slug + ':insert',
-                            text: 'Create'
-                        })
-                    ]
-                )
+                            text: 'Create',
+                        }, '', true)
+                    ],
+                })
             ]
         };
         const contentUpdatePage = {
@@ -80,10 +86,11 @@ export default (config: any) => {
             title: 'Update ' + collection.name,
             layout: config.layout,
             modules: [
-                page(
-                    'Update ' + collection.name,
-                    ['back'],
-                    [
+                page({
+                    title: 'Update ' + collection.name,
+                    actions: [],
+                    hasBack: true,
+                    content: [
                         form(
                             collectionFormFields,
                             ['cancel'],
@@ -92,10 +99,11 @@ export default (config: any) => {
                                 action: collection.slug + ':update',
                                 text: 'Update'
                             },
-                            collection.slug + ':id:=:id'
+                            collection.slug + ':id:=:id',
+                            true
                         )
-                    ]
-                )
+                    ],
+                })
             ]
         };
         pages.push(contentListPage);

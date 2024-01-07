@@ -3,18 +3,24 @@
 	import Button from '$lib/core/Button/Button.svelte';
 	import Card from '$lib/core/Card/Card.svelte';
 	import CardBody from '$lib/core/Card/CardBody.svelte';
+	import {getContext} from 'svelte';
 	import AppFormField from '../../components/AppFormField.svelte';
 
-	let { data, load, fields, submit, actions, params, ...rest } = $props();
+	let { data, load, goBack = false, submit, fields, actions, params, ...rest } = $props();
 
 	let value: any = $state(data.value ?? {});
+
+    const {back} = getContext('PAGE')
 
 	async function onSubmit(e) {
 		e.preventDefault();
 
 		if (data.submit) {
 			data.submit(value);
-			goto('.');
+
+            if(goBack) {
+                back()
+            }
 		}
 	}
 

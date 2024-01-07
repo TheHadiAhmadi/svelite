@@ -16,9 +16,10 @@ export default (config: any) => {
         slug: adminPrefix + '/pages',
         layout,
         modules: [
-            page(
-                'Page List',
-                [
+            page({
+                title: 'Page List',
+                hasBack: false,
+                actions: [
                     {
                         text: 'Create Page',
                         color: 'primary',
@@ -26,12 +27,12 @@ export default (config: any) => {
                         href: '/' + adminPrefix + '/pages/create'
                     }
                 ],
-                [
+                content: [
                     table(
                         'pages',
                         [
-                            { type: 'text', name: 'Title', field: 'title' },
-                            { type: 'text', name: 'Slug', field: 'slug' }
+                            { type: 'text', label: 'Title', name: 'title' },
+                            { type: 'text', label: 'Slug', name: 'slug' }
                         ],
                         [
                             'remove',
@@ -40,7 +41,7 @@ export default (config: any) => {
                         ]
                     )
                 ]
-            )
+            })
         ]
     };
 
@@ -70,17 +71,18 @@ export default (config: any) => {
         slug: adminPrefix + '/pages/create',
         layout,
         modules: [
-            page(
-                'Create Page',
-                ['back'],
-                [
+            page({
+                title: 'Create Page',
+                actions: [],
+                hasBack: true,
+                content: [
                     form(pageFormFields, ['cancel'], {
                         color: 'primray',
                         action: 'pages:insert',
                         text: 'Create'
-                    })
+                    }, '', true)
                 ]
-            )
+            })
         ]
     };
 
@@ -89,10 +91,11 @@ export default (config: any) => {
         slug: 'admin/pages/{id}',
         layout,
         modules: [
-            page(
-                'Edit Page',
-                ['back'],
-                [
+            page({
+                title: 'Edit Page',
+                hasBack: true,
+                actions: [],
+                content: [
                     form(
                         pageFormFields,
                         ['cancel'],
@@ -101,10 +104,11 @@ export default (config: any) => {
                             action: 'pages:update',
                             text: 'Update'
                         },
-                        'pages:id:=:id'
+                        'pages:id:=:id',
+                        true
                     )
                 ]
-            )
+            })
         ]
     };
 

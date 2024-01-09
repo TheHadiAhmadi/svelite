@@ -12,7 +12,7 @@ export default (userConfig = {}) => {
             },
             alias: {
                 ...userConfig.kit?.alias,
-                '$svelite': path.resolve('./svelte.config')
+                '$svelite': path.resolve('./svelite.config')
             }
         }
     }

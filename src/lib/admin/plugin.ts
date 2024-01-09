@@ -1,11 +1,11 @@
-import modules from './modules';
-import layouts from './layouts';
+import modules from './modules.js';
+import layouts from './layouts.js';
 
-//import AuthenticationPlugin from './plugins/Authentication/plugin'
-//import AdminDashboardPlugin from './plugins/AdminDashboard/plugin'
-//import PageManagementPlugin from './plugins/PageManagement/plugin'
-import ContentManagementPlugin from './plugins/ContentManagement/plugin'
-//import ContentTypeBuilderPlugin from './plugins/ContentTypeBuilder/plugin'
+import AuthenticationPlugin from './plugins/Authentication/plugin.js'
+import AdminDashboardPlugin from './plugins/AdminDashboard/plugin.js'
+import PageManagementPlugin from './plugins/PageManagement/plugin.js'
+import ContentManagementPlugin from './plugins/ContentManagement/plugin.js'
+import ContentTypeBuilderPlugin from './plugins/ContentTypeBuilder/plugin.js'
 
 export function getAdminLayout(config: any) {
     return {
@@ -34,7 +34,7 @@ export function AdminPanelPlugin(config: any) {
             adminPrefix,
         }
 
-    //    plugins.push(ContentTypeBuilderPlugin(contentTypeBuilderConfig))
+        plugins.push(ContentTypeBuilderPlugin(contentTypeBuilderConfig))
 	}
 
 
@@ -44,7 +44,7 @@ export function AdminPanelPlugin(config: any) {
             adminPrefix,
         }
 
-   //     plugins.push(AdminDashboardPlugin(adminDashboardConfig))
+        plugins.push(AdminDashboardPlugin(adminDashboardConfig))
 	}
 
 	if (config.auth !== false) {
@@ -64,7 +64,7 @@ export function AdminPanelPlugin(config: any) {
             uiModules: config.modules ?? {}
         }
 
-  //      plugins.push(PageManagementPlugin(pageManagementConfig))
+        plugins.push(PageManagementPlugin(pageManagementConfig))
 	}
 
 	if (config.auth !== false) {
@@ -75,7 +75,7 @@ export function AdminPanelPlugin(config: any) {
             collections: config.collections
         }
 
- //       plugins.push(AuthenticationPlugin(authenticationConfig))
+        plugins.push(AuthenticationPlugin(authenticationConfig))
 	}
 
 	return {

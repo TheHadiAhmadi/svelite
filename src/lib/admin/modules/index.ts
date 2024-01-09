@@ -1,6 +1,6 @@
-import Form from './Form/module';
-import Page from './Page/module';
-import Table from './Table/module';
+import Form from './Form/module.js';
+import Page from './Page/module.js';
+import Table from './Table/module.js';
 
 export default {
 	Form,

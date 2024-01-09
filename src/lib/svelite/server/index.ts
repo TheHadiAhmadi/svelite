@@ -1,4 +1,4 @@
-import createSveliteDb, { createMemoryAdapter } from './sveliteDb';
+import createSveliteDb, { createMemoryAdapter } from './sveliteDb.js';
 
 function respond(code = 200, data: any = null, message = 'Success', field = null) {
 	const response: any = {};

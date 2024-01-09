@@ -1,4 +1,4 @@
-import type { PageModule } from '.';
+import type { PageModule } from './index.js';
 
 function matchRoute(url, pages) {
     console.log(url, pages.map(x => ([x.slug, x.modules[0]?.name])))

@@ -1,4 +1,4 @@
-import ViewPage from './ViewPage/module'
+import ViewPage from './ViewPage/module.js'
 
 export default {
     ViewPage

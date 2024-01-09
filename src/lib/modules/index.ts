@@ -1,4 +1,4 @@
-import Header from './Header/module'
+import Header from './Header/module.js'
 
 export default {
     Header

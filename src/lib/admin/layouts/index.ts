@@ -1,4 +1,4 @@
-import AdminLayout from './AdminLayout/layout';
+import AdminLayout from './AdminLayout/layout.js';
 
 export default {
 	AdminLayout,

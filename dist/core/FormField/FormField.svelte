@@ -2,12 +2,13 @@
 	// @ts-nocheck
 	import Base from '../Base/Base.svelte';
 
-	let { children, label, ...restProps } = $props();
+	let { children, label, id, ...restProps } = $props();
+
 </script>
 
-<Base classes="mb-6 flex flex-col gap-2" {...restProps}>
+<Base classes="mb-6 flex flex-col gap-1" {...restProps}>
 	{#if label}
-		<label for="">
+        <label class="text-sm font-medium text-gray-800 dark:text-gray-200" for="{id}">
 			{#if typeof label === 'string'}
 				{label}
 			{:else}

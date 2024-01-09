@@ -1,35 +1,64 @@
 import type { PageModule } from '.';
 
 function matchRoute(url, pages) {
-    pages = pages.sort((a, b) => {
+    console.log(url, pages.map(x => ([x.slug, x.modules[0]?.name])))
 
-        if(a.slug.includes('{...') && !b.slug.includes('{...')) {
-            return 1
-        }
+    const staticPages = pages.filter(x => !x.slug.includes('{'))
+    const dynamicPages = pages.filter(x => x.slug.includes('{') && !x.slug.includes('{...'))
+    const restPages = pages.filter(x => x.slug.includes('{...'))
 
-        if(a.slug.includes('{') && !b.slug.includes('{')) {
-            return 1
-        }
-
-        return -1
-    })
+    console.log(url, pages.map(x => ([x.slug, x.modules[0]?.name])))
 	let result: any = {};
-	for (let page of pages) {
 
+    for(let page of staticPages) {
 		if (url === page.slug)
-			return {
+			result = {
 				page,
 				params: {}
 			};
+    }
+    if(result.page) return result;
+
+	for (let page of dynamicPages) {
+        console.log('match dynamic' , page)
 
 		const urlSplitted = url.split('/');
 		const slugSplitted = page.slug?.split('/');
 		// match dynamic..
 		//
-		if (!urlSplitted.length === slugSplitted) return {};
+		if (!urlSplitted.length === slugSplitted) result = {};
 
 		let params: any = {};
 		for (let index in slugSplitted) {
+            console.log('check slug part: ', urlSplitted[index], slugSplitted[index])
+            if(urlSplitted[index] === slugSplitted[index])
+                continue;
+
+            // check if slugSplitted is dynamic
+            if (slugSplitted[index].startsWith('{')) {
+                console.log('has dynamic')
+                result.page = page;
+                params[slugSplitted[index].slice(1, slugSplitted[index].length - 1)] = urlSplitted[index];
+                result.params = params;
+                break;
+            } else {
+                break;
+            }
+		}
+    }
+    if(result.page) return result;
+
+	for (let page of restPages) {
+
+		const urlSplitted = url.split('/');
+		const slugSplitted = page.slug?.split('/');
+		// match dynamic..
+		//
+		if (!urlSplitted.length === slugSplitted) result = {};
+
+		let params: any = {};
+		for (let index in slugSplitted) {
+            
 			if (urlSplitted[index] !== slugSplitted[index]) {
 				// check if slugSplitted is dynamic
 				if (slugSplitted[index]?.startsWith('{...')) {
@@ -42,22 +71,15 @@ function matchRoute(url, pages) {
 
 					break;
 				}
-				if (slugSplitted[index]?.startsWith('{')) {
-					result.page = page;
-					params[slugSplitted[index].slice(1, slugSplitted[index].length - 1)] = urlSplitted[index];
-					result.params = params;
-					break;
-				} else {
-					delete result['page'];
-					break;
-				}
 			} else {
 				continue;
 			}
 		}
 
-		if (result.page) return result;
+		// if (result.page) return result;
 	}
+    console.log(result)
+
 	return result;
 }
 

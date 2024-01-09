@@ -1,16 +1,31 @@
 <script>
 	import PageHeader from './PageHeader.svelte';
 	import Base from '../Base/Base.svelte';
+	import {afterNavigate, goto} from '$app/navigation';
+
+    let backUrl = $state('')
 
 	let {
 		title = '',
 		actions,
+        hasBack = false,
 		children,
 		container = true,
 		theme = 'light',
 		dir = 'ltr',
 		...restProps
 	} = $props();
+
+    afterNavigate(({from, to}) => {
+        
+        if(from?.url.href !== to.url.href)
+        backUrl = from.url.href
+    })
+
+    export function back() {
+        goto(backUrl)
+    }
+
 </script>
 
 <Base
@@ -24,13 +39,13 @@
 	{#if container}
 		<div class="mx-auto container">
 			{#if title || actions}
-				<PageHeader children={actions} {title} />
+                <PageHeader children={actions} {title} {hasBack} {backUrl}/>
 			{/if}
 			{@render children()}
 		</div>
 	{:else}
 		{#if title || actions}
-			<PageHeader children={actions} {title} />
+            <PageHeader children={actions} {title} {hasBack} {backUrl}/>
 		{/if}
 		{@render children()}
 	{/if}

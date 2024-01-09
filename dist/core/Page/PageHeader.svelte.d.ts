@@ -4,6 +4,8 @@
 export default class PageHeader extends SvelteComponentTyped<{
     [x: string]: unknown;
     title?: string | undefined;
+    hasBack: unknown;
+    backUrl?: string | undefined;
     children: unknown;
 }, {
     [evt: string]: CustomEvent<any>;
@@ -17,6 +19,8 @@ declare const __propDef: {
     props: {
         [x: string]: unknown;
         title?: string | undefined;
+        hasBack: unknown;
+        backUrl?: string | undefined;
         children: unknown;
     };
     events: {

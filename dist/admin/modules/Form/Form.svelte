@@ -2,14 +2,18 @@
 import Button from "../../../core/Button/Button.svelte";
 import Card from "../../../core/Card/Card.svelte";
 import CardBody from "../../../core/Card/CardBody.svelte";
+import { getContext } from "svelte";
 import AppFormField from "../../components/AppFormField.svelte";
-let { data, load, fields, submit, actions, params, ...rest } = $props();
+let { data, load, goBack = false, submit, fields, actions, params, ...rest } = $props();
 let value = $state(data.value ?? {});
+const { back } = getContext("PAGE");
 async function onSubmit(e) {
   e.preventDefault();
   if (data.submit) {
     data.submit(value);
-    goto(".");
+    if (goBack) {
+      back();
+    }
   }
 }
 </script>
@@ -18,7 +22,7 @@ async function onSubmit(e) {
 	<Card>
 		<CardBody>
 			{#each fields ?? [] as field}
-				<AppFormField {field} bind:value={value[field.name]} />
+                <AppFormField upload={data.upload} file={data.file} {field} bind:value={value[field.name]} />
 			{/each}
 
 			<div class="flex justify-end gap-2 ms-auto">

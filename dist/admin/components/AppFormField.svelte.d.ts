@@ -5,6 +5,8 @@ export default class AppFormField extends SvelteComponentTyped<{
     [x: string]: unknown;
     field: unknown;
     value: unknown;
+    upload: unknown;
+    file: unknown;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {}> {
@@ -18,6 +20,8 @@ declare const __propDef: {
         [x: string]: unknown;
         field: unknown;
         value: unknown;
+        upload: unknown;
+        file: unknown;
     };
     events: {
         [evt: string]: CustomEvent<any>;

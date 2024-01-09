@@ -1,16 +1,24 @@
 declare const _default: {
     api: {
-        file: {
-            upload: any;
-            url: (id: string) => any;
-        };
+        upload: any;
+        file: (id: string) => any;
         auth: {
-            login: any;
-            register: any;
+            login: ({ username, password }: {
+                username: any;
+                password: any;
+            }) => Promise<any>;
+            register: ({ username, name, email, password }: {
+                username: any;
+                name: any;
+                email: any;
+                password: any;
+            }) => Promise<any>;
             logout: any;
-            getUser: any;
+            getUser: () => Promise<{
+                token: string | null;
+            } | null>;
         };
-        db: (collection: any) => {
+        db: (collection: string) => {
             find(): {
                 filter: (field: any, operator: any, value: any) => {
                     all: () => any;

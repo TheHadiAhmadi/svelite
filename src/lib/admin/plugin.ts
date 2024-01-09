@@ -63,6 +63,7 @@ export function AdminPanelPlugin(config: any) {
             adminPrefix,
             uiModules: config.modules ?? {}
         }
+
         plugins.push(PageManagementPlugin(pageManagementConfig))
 	}
 
@@ -72,11 +73,11 @@ export function AdminPanelPlugin(config: any) {
             adminPrefix,
             authPrefix: config.authPrefix,
             collections: config.collections
-
         }
 
         plugins.push(AuthenticationPlugin(authenticationConfig))
 	}
+
 	return {
         plugins,
 		modules,

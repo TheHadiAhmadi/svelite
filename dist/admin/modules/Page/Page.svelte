@@ -1,28 +1,33 @@
 <script>
+	import {afterNavigate, goto} from '$app/navigation';
 	import { Button, Icon, Page } from '../../../core';
+	import ButtonGroup from '../../../core/Button/ButtonGroup.svelte';
+	import PageHeader from '../../../core/Page/PageHeader.svelte';
 	import SvSlot from '../../../svelite/SvSlot.svelte';
+	import {setContext} from 'svelte';
 
-	let { title = '', content = [], ...data } = $props();
+	let { title = '', hasBack = false, content = [], ...data } = $props();
+
+    let pageEl = $state();
+
+    function back() {
+        pageEl.back()
+    }
+
+    setContext('PAGE', {back})
 </script>
 
-<Page {title}>
-	{#snippet actions()}
+<Page bind:this={pageEl} {hasBack} {title}>
+    {#snippet actions()}
 		{#each data.actions ?? [] as action}
-			{#if action === 'back'}
-				<Button onclick={() => history.back()}>
-					<Icon name="chevron-left" />
-					Back
-				</Button>
-			{:else}
-				<Button color={action.color} href={action.href}>
-					{#if action.icon}
-						<Icon name={action.icon} />
-					{/if}
-					{action.text}
-				</Button>
-			{/if}
+            <Button color={action.color} href={action.href}>
+                {#if action.icon}
+                    <Icon name={action.icon} />
+                {/if}
+                {action.text}
+            </Button>
 		{/each}
-	{/snippet}
+        {/snippet}
 
 	{#snippet children()}
 		<SvSlot slot={content} />

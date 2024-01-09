@@ -10,7 +10,7 @@ declare const _default: {
         };
     };
     load(props: any, api: any): Promise<{
-        remove(id: any): boolean;
+        remove(id: any): Promise<boolean>;
         items: any;
         reload(): void;
     }>;

@@ -4,6 +4,7 @@
 export default class Page extends SvelteComponentTyped<{
     [x: string]: unknown;
     title?: string | undefined;
+    hasBack?: boolean | undefined;
     content?: unknown;
 }, {
     [evt: string]: CustomEvent<any>;
@@ -17,6 +18,7 @@ declare const __propDef: {
     props: {
         [x: string]: unknown;
         title?: string | undefined;
+        hasBack?: boolean | undefined;
         content?: unknown;
     };
     events: {

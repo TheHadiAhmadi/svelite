@@ -3,8 +3,9 @@ declare const __propDef: {
     props: {
         data: unknown;
         load: unknown;
-        fields: unknown;
+        goBack?: boolean | undefined;
         submit: unknown;
+        fields: unknown;
         actions: unknown;
         params: unknown;
     } & Record<string, unknown>;

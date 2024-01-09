@@ -12,8 +12,8 @@ export default {
         let items = response.data;
         console.log("load table", { response, items });
         return {
-            remove(id) {
-                api.db(props.collection).remove(id);
+            async remove(id) {
+                await api.db(props.collection).remove(id);
                 return true;
             },
             items,

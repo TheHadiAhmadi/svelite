@@ -1,4 +1,5 @@
-<script>import { Modal } from "../../../core";
+<script>import { invalidateAll } from "$app/navigation";
+import { Modal } from "../../../core";
 import Button from "../../../core/Button/Button.svelte";
 import ButtonGroup from "../../../core/Button/ButtonGroup.svelte";
 import Card from "../../../core/Card/Card.svelte";
@@ -18,7 +19,9 @@ function closeRemoveConfirm() {
   removeConfirmOpen = false;
 }
 async function onRemove() {
-  data.remove(activeItem.id);
+  await data.remove(activeItem.id);
+  invalidateAll();
+  removeConfirmOpen = false;
 }
 </script>
 

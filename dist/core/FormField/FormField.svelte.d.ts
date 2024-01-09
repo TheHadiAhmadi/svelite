@@ -5,6 +5,7 @@ export default class FormField extends SvelteComponentTyped<{
     [x: string]: unknown;
     children: unknown;
     label: unknown;
+    id: unknown;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {}> {
@@ -18,6 +19,7 @@ declare const __propDef: {
         [x: string]: unknown;
         children: unknown;
         label: unknown;
+        id: unknown;
     };
     events: {
         [evt: string]: CustomEvent<any>;

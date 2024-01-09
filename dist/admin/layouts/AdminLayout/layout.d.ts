@@ -15,9 +15,10 @@ declare const _default: {
             items: string[];
         };
     };
-    load(props: any, api: any): {
+    load(props: any, api: any): Promise<{
+        user: any;
         logout(): any;
-    };
+    }>;
     component: typeof AdminLayout;
 };
 export default _default;

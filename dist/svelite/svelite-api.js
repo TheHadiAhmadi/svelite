@@ -3,28 +3,50 @@ export function customApi(methods) {
     methods.auth ??= {};
     methods.db ??= {};
     return {
-        file: {
-            upload: methods.file.upload,
-            url: (id) => methods.file.url(id)
-        },
+        upload: methods.upload,
+        file: (id) => methods.file(id),
         auth: {
-            login: methods.auth.login,
-            register: methods.auth.register,
-            logout: methods.auth.logout,
-            getUser: methods.auth.getUser
+            login: async ({ username, password }) => {
+                if (methods.login) {
+                    const res = await methods.login({ username, password });
+                    return res;
+                }
+            },
+            register: async ({ username, name, email, password }) => {
+                if (methods.login && methods.register) {
+                    await methods.register({ username, name, email, password });
+                    const res = await methods.login({ username, password });
+                    const token = res.data.token;
+                    localStorage.setItem("TOKEN", token);
+                    return res;
+                }
+            },
+            logout: methods.logout,
+            getUser: async () => {
+                if (typeof window !== 'undefined') {
+                    const token = localStorage.getItem("TOKEN");
+                    return {
+                        token
+                    };
+                    // return methods.getUser(token)
+                }
+                else {
+                    return null;
+                }
+            }
         },
         db: (collection) => {
             let filters = [];
             return {
                 find() {
                     function all() {
-                        return methods.db.find({ collection, filters });
+                        return methods.find({ collection, filters });
                     }
                     function paginate(page, perPage) {
-                        return methods.db.find({ collection, filters, page, perPage });
+                        return methods.find({ collection, filters, page, perPage });
                     }
                     function first() {
-                        return methods.db
+                        return methods
                             .find({ collection, filters })
                             .then((res) => ({ ...res, data: res.data[0] }));
                     }
@@ -44,13 +66,13 @@ export function customApi(methods) {
                     };
                 },
                 insert(data) {
-                    return methods.db.insert({ data, collection });
+                    return methods.insert({ data, collection });
                 },
                 update(data) {
-                    return methods.db.update({ data, collection });
+                    return methods.update({ data, collection });
                 },
                 remove(id) {
-                    return methods.db.remove({ id, collection });
+                    return methods.remove({ id, collection });
                 }
             };
         }
@@ -65,6 +87,10 @@ export function createSveliteApi(url) {
             },
             body: JSON.stringify({ ...body, action })
         };
+        if (typeof window !== 'undefined') {
+            const token = localStorage.getItem('TOKEN');
+            opts.headers['Authorization'] = 'bearer ' + token;
+        }
         const result = await fetch(url, opts).then((res) => res.json());
         return result;
     }
@@ -82,69 +108,30 @@ export function createSveliteApi(url) {
             return run('remove', { collection, data: id });
         },
         async login({ password, username }) {
-            return console.log('todo login');
+            return run('login', { password, username });
         },
         async register({ password, username, name, email }) {
-            return console.log('todo register');
+            return run('register', { password, name, email, username });
         },
         async logout() {
             return console.log('logout');
         },
-        async getUser() {
-            return { name: 'DEMO', username: 'demo1', email: 'demo@gmail.com', id: 'id_123123131' };
+        async getUser(token) {
+            return run('get_user', {});
+            // return { name: 'DEMO', username: 'demo1', email: 'demo@gmail.com', id: 'id_123123131' };
+        },
+        file: (id) => url + '/files/' + id,
+        async upload(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+            const id = await fetch(url + '/files', {
+                method: 'POST',
+                headers: {
+                    Authorization: 'bearer ' + '123',
+                },
+                body: formData
+            }).then(res => res.json()).then(res => res.data.id);
+            return id;
         }
     });
 }
-/*
-
-    return {
-        auth: {
-            login({ username, password }) {},
-            register({ username, password, name, email }) {}
-        },
-        db: (collection: string) => ({
-            insert: (data: any) => run('insert', { collection, data }),
-            update: (data: any) => run('update', { collection, data }),
-            remove: (id: string) => run('remove', { collection, data: id }),
-            find: () => {
-                let filters: any[] = [];
-                let page = 0;
-                let perPage = 0;
-
-                function filter(field: string, operator: string, value: any) {
-                    filters.push({ field, operator, value });
-                    return {
-                        filter,
-                        paginate,
-                        all,
-                        first
-                    };
-                }
-
-                function paginate(_page: number, _perPage: number) {
-                    page = _page;
-                    perPage = _perPage;
-
-                    return run('find', { collection, filters, page, perPage });
-                }
-
-                function all() {
-                    return run('find', { collection, filters });
-                }
-
-                function first() {
-                    return run('find', { collection, filters }).then((res) => ({
-                        ...res,
-                        data: res.data[0]
-                    }));
-                }
-
-                return {
-                    all,
-                    paginate,
-                    filter,
-                    first
-                };
-            }
-        })
-    };*/

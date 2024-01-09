@@ -3,15 +3,11 @@
 /** @typedef {typeof __propDef.slots}  PageSlots */
 export default class Page extends SvelteComponentTyped<{
     [x: string]: unknown;
-    title?: string | undefined;
-    actions: unknown;
-    children: unknown;
-    container?: boolean | undefined;
-    theme?: string | undefined;
-    dir?: string | undefined;
+    back?: unknown;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {}> {
+    get back(): {};
 }
 export type PageProps = typeof __propDef.props;
 export type PageEvents = typeof __propDef.events;
@@ -20,12 +16,7 @@ import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
         [x: string]: unknown;
-        title?: string | undefined;
-        actions: unknown;
-        children: unknown;
-        container?: boolean | undefined;
-        theme?: string | undefined;
-        dir?: string | undefined;
+        back?: unknown;
     };
     events: {
         [evt: string]: CustomEvent<any>;

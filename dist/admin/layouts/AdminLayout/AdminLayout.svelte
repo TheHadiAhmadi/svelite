@@ -1,4 +1,6 @@
 <script>
+    import {page} from '$app/stores'
+
 	import Layout from '../../../core/Layout/Layout.svelte';
 
 	import SidebarItem from '../../../core/Sidebar/SidebarItem.svelte';
@@ -12,6 +14,7 @@
 		showSidebar = !showSidebar;
 	}
 </script>
+
 
 <Layout bind:showSidebar {dir} {theme} {...restProps}>
 	{#snippet header({ hasSidebar })}
@@ -32,7 +35,22 @@
 
 	{#snippet sidebar()}
 		{#each sidebarItems as item}
-			<SidebarItem href={item.href} title={item.title} icon={item.icon} />
+            {@const visible = item.visible ? item.visible({user: data.user}) : true}
+            {#if visible} 
+                {#if item.submenu}
+                    {@const active = item.submenu.some(x => x.href === $page.url.pathname)}
+                    <SidebarItem href={item.href} {active} title={item.title} icon={item.icon}>
+                        {#each item.submenu as menu}
+                            {@const visible2 = menu.visible ? menu.visible({user: data.user}) : true}
+                            {#if visible2}
+                                <SidebarItem level={2} href={menu.href} active={menu.href === $page.url.pathname} title={menu.title} />
+                            {/if}
+                        {/each}
+                    </SidebarItem>
+                {:else}
+                    <SidebarItem active={$page.url.pathname === item.href} href={item.href} title={item.title} icon={item.icon} />
+                {/if}
+            {/if}
 		{/each}
 	{/snippet}
 

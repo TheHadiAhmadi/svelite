@@ -9,9 +9,10 @@ export default {
         dir: { type: 'select', items: ['rtl', 'ltr'] },
         theme: { type: 'select', items: ['dark', 'light'] }
     },
-    load(props, api) {
+    async load(props, api) {
         console.log('load', api);
         return {
+            user: await api.auth.getUser(),
             logout() {
                 console.log(api);
                 return api.auth.logout();

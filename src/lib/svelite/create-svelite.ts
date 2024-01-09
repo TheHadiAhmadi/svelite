@@ -83,8 +83,6 @@ export default function createSvelite(config: SveliteConfig) {
 
 	const load = createSveliteLoad(api, pages, modules, layouts);
 
-
-    console.log(modules, layouts, pages)
 	return {
 		api,
 		load

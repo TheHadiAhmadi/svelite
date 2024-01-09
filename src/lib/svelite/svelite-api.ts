@@ -7,12 +7,39 @@ export function customApi(methods) {
         upload: methods.upload,
         file: (id: string) => methods.file(id),
 		auth: {
-			login: methods.login,
-			register: methods.register,
+			login: async ({username, password}) => {
+                if(methods.login) {
+                    const res = await methods.login({username, password})
+                    return res
+                }
+            },
+			register: async ({username, name, email, password}) => {
+                if(methods.login && methods.register) {
+                    await methods.register({username, name, email, password})
+
+                    const res = await methods.login({username, password})
+
+                    const token = res.data.token
+                    localStorage.setItem("TOKEN", token)
+                    return res;
+                }
+            },
 			logout: methods.logout,
-			getUser: methods.getUser
+			getUser: async () => {
+                if(typeof window !== 'undefined') {
+                    const token = localStorage.getItem("TOKEN")
+                    return {
+                        token
+                    }
+
+                    // return methods.getUser(token)
+                } else {
+                    return null
+                }
+
+            }
 		},
-		db: (collection) => {
+		db: (collection: string) => {
 			let filters: any[] = [];
 
 			return {
@@ -63,13 +90,18 @@ export function customApi(methods) {
 
 export function createSveliteApi(url: string) {
 	async function run(action: string, body: any) {
-		const opts = {
+		const opts: any = {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({ ...body, action })
 		};
+
+        if(typeof window !== 'undefined') {
+            const token = localStorage.getItem('TOKEN')
+            opts.headers['Authorization'] = 'bearer ' + token
+        }
 
 		const result = await fetch(url, opts).then((res) => res.json());
 
@@ -92,16 +124,17 @@ export function createSveliteApi(url: string) {
 			return run('remove', { collection, data: id });
 		},
 		async login({ password, username }) {
-			return console.log('todo login');
+            return run('login', {password, username})
 		},
 		async register({ password, username, name, email }) {
-			return console.log('todo register');
+            return run('register', {password, name, email, username})
 		},
 		async logout() {
 			return console.log('logout');
 		},
-		async getUser() {
-			return { name: 'DEMO', username: 'demo1', email: 'demo@gmail.com', id: 'id_123123131' };
+		async getUser(token: string) {
+            return run('get_user', {})
+			// return { name: 'DEMO', username: 'demo1', email: 'demo@gmail.com', id: 'id_123123131' };
 		},
         file: (id: string) => url + '/files/' + id,
         async upload(file) {

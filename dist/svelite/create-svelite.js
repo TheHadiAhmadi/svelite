@@ -36,7 +36,6 @@ export default function createSvelite(config) {
     layouts = { ...layouts, ...(config.layouts ?? {}) };
     pages = [...pages, ...(config.pages ?? [])];
     const load = createSveliteLoad(api, pages, modules, layouts);
-    console.log(modules, layouts, pages);
     return {
         api,
         load

@@ -18,6 +18,6 @@ export default defineConfig({
 		// Whether to polyfill `node:` protocol imports.
 		//	protocolImports: true
 		//}),
-		sveltekit()
+		sveltekit(),
 	]
 });

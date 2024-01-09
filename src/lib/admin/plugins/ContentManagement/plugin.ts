@@ -13,7 +13,8 @@ export default (config: any) => {
         config.layout.props.sidebar.push({
             icon: 'database',
             href: '/admin/content/' + collection.slug,
-            title: collection.name
+            title: collection.name,
+            visible: collection.sidebar
         });
 
         const collectionFormFields = collection.fields.map((x) => ({ label: x.name, ...x }));
@@ -93,7 +94,7 @@ export default (config: any) => {
                     content: [
                         form(
                             collectionFormFields,
-                            ['cancel'],
+                            [],
                             {
                                 color: 'primray',
                                 action: collection.slug + ':update',

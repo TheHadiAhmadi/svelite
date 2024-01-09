@@ -62,7 +62,7 @@ export declare function AdminPanelPlugin(config: any): {
                 };
             };
             load(props: any, api: any): Promise<{
-                remove(id: any): boolean;
+                remove(id: any): Promise<boolean>;
                 items: any;
                 reload(): void;
             }>;
@@ -82,9 +82,10 @@ export declare function AdminPanelPlugin(config: any): {
                     items: string[];
                 };
             };
-            load(props: any, api: any): {
+            load(props: any, api: any): Promise<{
+                user: any;
                 logout(): any;
-            };
+            }>;
             component: typeof import("./layouts/AdminLayout/AdminLayout.svelte").default;
         };
     };

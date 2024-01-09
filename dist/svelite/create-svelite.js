@@ -1,7 +1,7 @@
 // place files you want to import through the `$lib` alias in this folder.
 //
-import { createSveliteLoad } from './create-svelite-load';
-import { customApi, createSveliteApi } from './svelite-api';
+import { createSveliteLoad } from './create-svelite-load.js';
+import { customApi, createSveliteApi } from './svelite-api.js';
 export default function createSvelite(config) {
     let api;
     if (config.api) {

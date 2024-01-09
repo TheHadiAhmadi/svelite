@@ -1,10 +1,10 @@
-import modules from './modules';
-import layouts from './layouts';
-import AuthenticationPlugin from './plugins/Authentication/plugin';
-import AdminDashboardPlugin from './plugins/AdminDashboard/plugin';
-import PageManagementPlugin from './plugins/PageManagement/plugin';
-import ContentManagementPlugin from './plugins/ContentManagement/plugin';
-import ContentTypeBuilderPlugin from './plugins/ContentTypeBuilder/plugin';
+import modules from './modules/index.js';
+import layouts from './layouts/index.js';
+import AuthenticationPlugin from './plugins/Authentication/plugin.js';
+import AdminDashboardPlugin from './plugins/AdminDashboard/plugin.js';
+import PageManagementPlugin from './plugins/PageManagement/plugin.js';
+import ContentManagementPlugin from './plugins/ContentManagement/plugin.js';
+import ContentTypeBuilderPlugin from './plugins/ContentTypeBuilder/plugin.js';
 export function getAdminLayout(config) {
     return {
         name: 'AdminLayout',

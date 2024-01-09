@@ -19,7 +19,7 @@ export declare function AdminPanelPlugin(config: any): {
         Form: {
             name: string;
             description: string;
-            component: typeof import("./modules/Form/Form.svelte").default;
+            component: typeof import("./modules/Form/Form.svelte.js").default;
             props: {
                 collection: {
                     type: string;
@@ -35,7 +35,7 @@ export declare function AdminPanelPlugin(config: any): {
         Page: {
             name: string;
             description: string;
-            component: typeof import("./modules/Page/Page.svelte").default;
+            component: typeof import("./modules/Page/Page.svelte.js").default;
             props: {
                 actions: {
                     type: string;
@@ -54,7 +54,7 @@ export declare function AdminPanelPlugin(config: any): {
         Table: {
             name: string;
             description: string;
-            component: typeof import("./modules/Table/Table.svelte").default;
+            component: typeof import("./modules/Table/Table.svelte.js").default;
             props: {
                 collection: {
                     type: string;
@@ -86,7 +86,7 @@ export declare function AdminPanelPlugin(config: any): {
                 user: any;
                 logout(): any;
             }>;
-            component: typeof import("./layouts/AdminLayout/AdminLayout.svelte").default;
+            component: typeof import("./layouts/AdminLayout/AdminLayout.svelte.js").default;
         };
     };
 };

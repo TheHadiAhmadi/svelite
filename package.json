@@ -29,6 +29,9 @@
 		"./postcss.config.js": {
 			"import": "./dist/postcss.config.js"
 		},
+		"./vite": {
+			"import": "./dist/vite.config.js"
+		},
 		"./admin": {
 			"import": "./dist/admin/plugin.js"
 		},

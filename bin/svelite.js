@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import path from 'path'
 import {dirname} from 'path';
 import {fileURLToPath} from 'url'
 import { createServer } from "vite";

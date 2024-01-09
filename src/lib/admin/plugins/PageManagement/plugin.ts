@@ -1,7 +1,7 @@
 import modules from './modules'
 
 import PageModules from './components/PageModules.svelte';
-import {form, page, table} from "$lib/admin/helpers";
+import {form, page, table} from "../..//helpers";
 
 export default (config: any) => {
 

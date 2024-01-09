@@ -1,4 +1,4 @@
-import sv from '$lib/sv';
+import sv from '$lib/svelite/sv';
 import type { PageLoadEvent } from './$types';
 
 export async function load({ params }: PageLoadEvent) {

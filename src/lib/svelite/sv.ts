@@ -1,4 +1,4 @@
-import {createSvelite} from './svelite'
+import {createSvelite} from '.'
 import config from '$svelite'
 
 

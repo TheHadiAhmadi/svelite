@@ -3,12 +3,11 @@
 import path from 'path'
 import {dirname} from 'path';
 import {fileURLToPath} from 'url'
+import { sveltekit } from '@sveltejs/kit/vite';
 import { createServer } from "vite";
 
-const file = fileURLToPath(import.meta.url)
-const folder = dirname(file)
-
 const server = await createServer({
+    plugins: [sveltekit()],
     css: {
         postcss: path.resolve('node_modules/svelitecms/dist/postcss.config.js')
     },

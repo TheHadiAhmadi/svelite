@@ -1,6 +1,6 @@
 {
 	"name": "svelitecms",
-	"version": "0.0.2-next.13",
+	"version": "0.0.2-next.14",
 	"bin": {
 		"svelite": "./bin/svelite.js"
 	},
@@ -23,9 +23,9 @@
 			"types": "./dist/core/index.d.ts",
 			"svelte": "./dist/core/index.js"
 		},
-        "./config": {
-            "import": "./dist/config.js"
-        },
+		"./config": {
+			"import": "./dist/config.js"
+		},
 		".": {
 			"types": "./dist/index.d.ts",
 			"svelte": "./dist/index.js"

@@ -13,7 +13,7 @@ const config = {
 			checkOrigin: false
 		},
         alias: {
-            "$svelite": path.resolve("./svelite.config")
+//            "$svelite": path.resolve("./svelite.config")
 
         },
 		// adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.

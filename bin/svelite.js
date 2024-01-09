@@ -7,6 +7,7 @@ import { build, createServer } from "vite";
 if(process.argv.includes('build')) {
     const server = await build({
         plugins: [sveltekit()],
+        server: {fs: {strict: false}},
         css: {
             postcss: path.resolve('node_modules/svelitecms/dist/postcss.config.js')
         },
@@ -16,6 +17,7 @@ if(process.argv.includes('build')) {
 } else {
     const server = await createServer({
         plugins: [sveltekit()],
+        server: {fs: {strict: false}},
         css: {
             postcss: path.resolve('node_modules/svelitecms/dist/postcss.config.js')
         },

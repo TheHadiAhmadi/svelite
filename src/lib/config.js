@@ -11,7 +11,7 @@ export default (userConfig) => {
             },
             alias: {
                 ...userConfig.kit.alias,
-                '$svelite': path.resolve('svelite.config.js')
+                '$svelite': path.resolve('./svelite.config.js')
             }
         }
     }

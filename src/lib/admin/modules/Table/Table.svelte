@@ -1,6 +1,6 @@
 <script lang="ts">
 	import {invalidateAll} from '$app/navigation';
-	import { Modal } from '$lib/core';
+	import { Modal } from '$lib/core/index.js';
 	import Button from '$lib/core/Button/Button.svelte';
 	import ButtonGroup from '$lib/core/Button/ButtonGroup.svelte';
 

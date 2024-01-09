@@ -1,6 +1,6 @@
 <script>
 	import {afterNavigate, goto} from '$app/navigation';
-	import { Button, Icon, Page } from '$lib/core';
+	import { Button, Icon, Page } from '$lib/core/index.js';
 	import ButtonGroup from '$lib/core/Button/ButtonGroup.svelte';
 	import PageHeader from '$lib/core/Page/PageHeader.svelte';
 	import SvSlot from '$lib/svelite/SvSlot.svelte';

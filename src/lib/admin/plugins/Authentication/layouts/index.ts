@@ -1,4 +1,4 @@
-import AuthLayout from './AuthLayout/layout'
+import AuthLayout from './AuthLayout/layout.js'
 
 export default {
     AuthLayout

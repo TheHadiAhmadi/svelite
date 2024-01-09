@@ -1,5 +1,5 @@
 <script>
-	import { Input } from '$lib/core';
+	import { Input } from '$lib/core/index.js';
 	import Button from '$lib/core/Button/Button.svelte';
 	import ButtonGroup from '$lib/core/Button/ButtonGroup.svelte';
 	import Card from '$lib/core/Card/Card.svelte';

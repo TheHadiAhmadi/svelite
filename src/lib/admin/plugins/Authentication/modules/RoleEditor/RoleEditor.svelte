@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Form from "$lib/admin/components/Form.svelte";
 	import FormTab from "$lib/admin/components/FormTab.svelte";
-	import {Input} from "$lib/core";
+	import {Input} from "$lib/core/index.js";
 	import Button from "$lib/core/Button/Button.svelte";
 	import ButtonGroup from "$lib/core/Button/ButtonGroup.svelte";
 	import FormField from "$lib/core/FormField/FormField.svelte";

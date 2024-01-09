@@ -1,5 +1,5 @@
 <script>import { invalidateAll } from "$app/navigation";
-import { Modal } from "../../../core";
+import { Modal } from "../../../core/index.js";
 import Button from "../../../core/Button/Button.svelte";
 import ButtonGroup from "../../../core/Button/ButtonGroup.svelte";
 import Card from "../../../core/Card/Card.svelte";

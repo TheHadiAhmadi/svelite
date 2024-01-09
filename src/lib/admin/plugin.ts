@@ -1,5 +1,5 @@
-import modules from './modules.js';
-import layouts from './layouts.js';
+import modules from './modules/index.js';
+import layouts from './layouts/index.js';
 
 import AuthenticationPlugin from './plugins/Authentication/plugin.js'
 import AdminDashboardPlugin from './plugins/AdminDashboard/plugin.js'

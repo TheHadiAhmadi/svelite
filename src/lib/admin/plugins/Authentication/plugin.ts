@@ -1,6 +1,6 @@
-import modules from "./modules.js";
-import layouts from "./layouts.js";
-import {page, table} from "../../helpers.js";
+import modules from "./modules/index.js";
+import layouts from "./layouts/index.js";
+import {page, table} from "../../helpers/index.js";
 
 export default (config) => {
     const authPrefix = config.authPrefix ?? 'auth'

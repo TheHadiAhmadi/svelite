@@ -1,4 +1,4 @@
-import {table, form, page} from "../../helpers.js";
+import {table, form, page} from "../../helpers/index.js";
 
 export default (config: any) => {
     const collections = config.collections ?? []

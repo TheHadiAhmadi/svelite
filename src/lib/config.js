@@ -7,11 +7,12 @@ export default (userConfig = {}) => {
             ...userConfig.kit ?? {},
             files: {
                 ...userConfig.kit?.files ?? {},
-                routes: path.resolve('node_modules/svelitecms/dist/routes')
+                routes: path.resolve('node_modules/svelitecms/dist/routes'),
+                appTemplate: path.resolve('node_modules/svelitecms/dist/app.html')
             },
             alias: {
                 ...userConfig.kit?.alias,
-                '$svelite': path.resolve('./src/lib/sv.js')
+                '$svelite': path.resolve('./svelte.config')
             }
         }
     }

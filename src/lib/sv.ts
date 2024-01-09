@@ -1,4 +1,17 @@
-import { createSvelite } from './svelite';
+import {createSvelite} from './svelite'
+import config from '$svelite'
+
+
+export default createSvelite({
+    plugins: config.plugins,
+    modules: config.modules,
+    pages: config.pages,
+    layouts: config.layouts,
+    api: config.api
+})
+
+
+/* import { createSvelite } from './svelite';
 import { AdminPanelPlugin } from './admin/plugin';
 import modules from './modules'
 import customPlugin from './custom/plugin'
@@ -41,3 +54,4 @@ export default createSvelite({
 	// api: 'http://localhost:5173/api'
     api: 'http://localhost:3010/api'
 });
+*/

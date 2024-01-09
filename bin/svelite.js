@@ -9,7 +9,7 @@ const folder = dirname(file)
 
 const server = await createServer({
     css: {
-        postcss: folder
+        postcss: path.resolve('node_modules/svelitecms/dist/postcss.config.js')
     },
 })
 

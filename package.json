@@ -23,6 +23,12 @@
 			"types": "./dist/core/index.d.ts",
 			"svelte": "./dist/core/index.js"
 		},
+		"./tailwind.config.js": {
+			"import": "./dist/tailwind.config.js"
+		},
+		"./postcss.config.js": {
+			"import": "./dist/postcss.config.js"
+		},
 		"./config": {
 			"import": "./dist/config.js"
 		},

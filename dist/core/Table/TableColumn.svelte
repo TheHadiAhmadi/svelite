@@ -2,7 +2,6 @@
 let { name, width = "auto", children, ...rest } = $props();
 const { register, unregister } = getContext("TABLE");
 onMount(() => {
-  console.log("Run effect");
   register(name);
   return () => unregister(name);
 });

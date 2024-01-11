@@ -1,9 +1,7 @@
 function matchRoute(url, pages) {
-    console.log(url, pages.map(x => ([x.slug, x.modules[0]?.name])));
     const staticPages = pages.filter(x => !x.slug.includes('{'));
     const dynamicPages = pages.filter(x => x.slug.includes('{') && !x.slug.includes('{...'));
     const restPages = pages.filter(x => x.slug.includes('{...'));
-    console.log(url, pages.map(x => ([x.slug, x.modules[0]?.name])));
     let result = {};
     for (let page of staticPages) {
         if (url === page.slug)
@@ -15,7 +13,6 @@ function matchRoute(url, pages) {
     if (result.page)
         return result;
     for (let page of dynamicPages) {
-        console.log('match dynamic', page);
         const urlSplitted = url.split('/');
         const slugSplitted = page.slug?.split('/');
         // match dynamic..
@@ -24,12 +21,10 @@ function matchRoute(url, pages) {
             result = {};
         let params = {};
         for (let index in slugSplitted) {
-            console.log('check slug part: ', urlSplitted[index], slugSplitted[index]);
             if (urlSplitted[index] === slugSplitted[index])
                 continue;
             // check if slugSplitted is dynamic
             if (slugSplitted[index].startsWith('{')) {
-                console.log('has dynamic');
                 result.page = page;
                 params[slugSplitted[index].slice(1, slugSplitted[index].length - 1)] = urlSplitted[index];
                 result.params = params;
@@ -68,7 +63,6 @@ function matchRoute(url, pages) {
         }
         // if (result.page) return result;
     }
-    console.log(result);
     return result;
 }
 export function createSveliteLoad(api, pages, modules, layouts) {

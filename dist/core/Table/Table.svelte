@@ -4,7 +4,6 @@ let columns = $state([]);
 let loading = $state(true);
 let empty = $state(false);
 function register(name) {
-  console.log("register", name);
   if (loading)
     loading = false;
   if (columns.indexOf(name) == -1)
@@ -13,7 +12,6 @@ function register(name) {
 function unregister(name) {
 }
 onMount(() => {
-  console.log("mount", columns, loading);
   if (columns.length == 0) {
     empty = true;
   }

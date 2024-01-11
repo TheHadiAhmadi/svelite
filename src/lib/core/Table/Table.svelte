@@ -9,7 +9,6 @@
 	let empty = $state(false);
 
 	function register(name: string) {
-		console.log('register', name);
 		if (loading) loading = false;
 
 		if (columns.indexOf(name) == -1) columns = [...columns, name];
@@ -20,7 +19,6 @@
 	}
 
 	onMount(() => {
-		console.log('mount', columns, loading);
 		if (columns.length == 0) {
 			empty = true;
 		}

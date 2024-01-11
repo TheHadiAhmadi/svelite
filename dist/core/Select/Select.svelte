@@ -14,7 +14,6 @@ function getText(item) {
   return typeof item === "object" ? item[text] : item;
 }
 function select(item) {
-  console.log("select");
   if (multiple) {
     if (!value)
       value = [];

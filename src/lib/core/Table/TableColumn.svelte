@@ -6,7 +6,6 @@
 	const { register, unregister } = getContext<any>('TABLE');
 
 	onMount(() => {
-		console.log('Run effect');
 		register(name);
 		return () => unregister(name);
 	});

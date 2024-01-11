@@ -12,7 +12,6 @@ if(process.argv.includes('build')) {
             postcss: path.resolve('node_modules/svelitecms/dist/postcss.config.js')
         },
     })
-    console.log('HELLO')
 
 } else {
     const server = await createServer({

@@ -18,7 +18,6 @@
 	}
 
 	function select(item) {
-		console.log('select');
 		if (multiple) {
 			if (!value) value = [];
 			if (value.includes(getKey(item))) {

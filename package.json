@@ -29,14 +29,14 @@
 		"./postcss.config.js": {
 			"import": "./dist/postcss.config.js"
 		},
-		"./vite": {
-			"import": "./dist/vite.config.js"
-		},
 		"./admin": {
 			"import": "./dist/admin/plugin.js"
 		},
-		"./config": {
-			"import": "./dist/config.js"
+		"./config/svelte": {
+			"import": "./dist/config/svelte.config.js"
+		},
+		"./config/vite": {
+			"import": "./dist/config/vite.config.js"
 		},
 		".": {
 			"types": "./dist/index.d.ts",
@@ -67,7 +67,7 @@
 	"type": "module",
 	"dependencies": {
 		"@sveltejs/adapter-node": "^2.0.2",
-		"@sveltejs/kit": "^2.0.6",
+		"@sveltejs/kit": "^2.3.0",
 		"@sveltejs/package": "^2.2.5",
 		"@sveltejs/vite-plugin-svelte": "^3.0.1",
 		"execa": "^8.0.1",

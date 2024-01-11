@@ -1,5 +1,5 @@
 import {createSvelite} from './index.js'
-import config from '$svelite'
+import config from '$config'
 
 
 export default createSvelite({

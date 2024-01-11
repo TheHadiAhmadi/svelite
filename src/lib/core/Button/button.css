@@ -1,5 +1,5 @@
 .button {
-	@apply transition items-center justify-center inline-flex gap-2 delay-0 shadow-sm rounded;
+	@apply transition items-center justify-center inline-flex gap-2 delay-0 shadow-sm rounded outline-none;
 }
 
 .button-color-default.button-ghost {

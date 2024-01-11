@@ -1,8 +1,10 @@
+import {vitePreprocess} from '@sveltejs/vite-plugin-svelte'
 import path from 'path'
 
 export default (userConfig = {}) => {
     return {
         ...userConfig,
+        preprocess: vitePreprocess(),
         kit: {
             ...userConfig.kit ?? {},
             files: {

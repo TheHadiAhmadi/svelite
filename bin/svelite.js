@@ -8,19 +8,20 @@ const pack = JSON.parse(readFileSync('./package.json', 'utf-8') ?? "{}")
 const config = pack.svelite
 
 async function generateConfig({adapter}) {
+    const message = "// This file is auto generated do not edit.\n"
 
-    writeFileSync('postcss.config.js', `
+    writeFileSync('postcss.config.js', message + `
 export default {
     plugins: {
         tailwindcss: true
     }
 }
 `)
-    writeFileSync('svelte.config.js', `
+    writeFileSync('svelte.config.js', message + `
 import svelte from 'svelitecms/config/svelte'
 export default svelte({adapter: '${adapter}'})
 `)
-    writeFileSync('vite.config.js', `
+    writeFileSync('vite.config.js', message + `
 import vite from 'svelitecms/config/vite'
 export default vite()
 `)
@@ -31,7 +32,7 @@ export default vite()
 
     console.log('deps', deps)
 
-    writeFileSync('tailwind.config.js', `
+    writeFileSync('tailwind.config.js', message + `
 export default {
     content: [
         "./modules/**/*.svelte", 

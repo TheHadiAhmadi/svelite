@@ -15,4 +15,8 @@ export default (config) => ({
             ...(config?.css ?? {}),
             postcss: path.resolve('node_modules/svelitecms/dist/config/postcss.config.js')
         },
+    optimizeDeps: {
+        ...(config?.optimizeDeps ?? {}),
+        exclude: [...(config?.optimizeDeps?.exclude ?? []), 'svelitecms']
+    }
 })

@@ -1,7 +1,7 @@
 // place files you want to import through the `$lib` alias in this folder.
 //
 
-import { createSveliteLoad } from './create-svelite-load.js';
+import { createSveliteLoad } from './svelite-load.js';
 import { customApi, createSveliteApi } from './svelite-api.js';
 
 export type FileManagementConfig = {};
@@ -59,11 +59,11 @@ export default function createSvelite(config: SveliteConfig) {
 		api = createSveliteApi('/api');
 	}
 
-	let modules = {};
-	let layouts = {};
+	let modules: any = {};
+	let layouts: any = {};
 	let pages: SvelitePage[] = [];
 
-    function loadPlugin(plugin) {
+    function loadPlugin(plugin: any) {
         if(plugin.plugins) {
             plugin.plugins.map(x => loadPlugin(x))
         }

@@ -7,9 +7,8 @@ const config = {
 	preprocess: vitePreprocess(),
 	kit: {
         files: {
-//             routes: path.resolve('./src/lib/routes'),
-            lib: path.resolve('./src/lib/'),
-            appTemplate: path.resolve('./src/lib/app.html')
+            lib: path.resolve('./src'),
+            routes: path.resolve('./src/lib')
         },
 		csrf: {
 			checkOrigin: false

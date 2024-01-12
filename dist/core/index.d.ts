@@ -27,3 +27,4 @@ export { default as TableColumn } from "./Table/TableColumn.svelte";
 export { default as Table } from "./Table/Table.svelte";
 export { default as Tabs } from "./Tabs/Tabs.svelte";
 export { default as TabPanel } from "./Tabs/TabPanel.svelte";
+export { default as Textarea } from "./Textarea/Textarea.svelte";

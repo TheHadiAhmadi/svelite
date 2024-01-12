@@ -24,9 +24,22 @@ export default svelte({adapter: '${adapter}'})
 import vite from 'svelitecms/config/vite'
 export default vite()
 `)
+
+    let deps = Object.keys({...(pack?.dependencies ?? {}), ...(pack?.devDependencies ?? {})})
+
+    deps = deps.filter(x => x.startsWith('svelite'))
+
+    console.log('deps', deps)
+
     writeFileSync('tailwind.config.js', `
 export default {
-    content: ["./modules/**/*.svelte", "./plugins/**/*.svelte"],
+    content: [
+        "./modules/**/*.svelte", 
+        "./plugins/**/*.svelte",
+        "node_modules/svelitecms/dist/core/**/*.{svelte,css}",
+        "node_modules/svelitecms/dist/svelite/**/*.svelte",
+        ${deps.map(x => `"node_modules/${x}/dist/**/*.svelte"`).join(',\n')}
+    ],
     darkMode: "class",
 }
 `)

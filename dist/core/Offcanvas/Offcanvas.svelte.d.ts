@@ -1,7 +1,7 @@
 /** @typedef {typeof __propDef.props}  OffcanvasProps */
 /** @typedef {typeof __propDef.events}  OffcanvasEvents */
 /** @typedef {typeof __propDef.slots}  OffcanvasSlots */
-export default class Offcanvas extends SvelteComponentTyped<{
+export default class Offcanvas extends SvelteComponent<{
     [x: string]: unknown;
     open: unknown;
     children: unknown;
@@ -12,7 +12,7 @@ export default class Offcanvas extends SvelteComponentTyped<{
 export type OffcanvasProps = typeof __propDef.props;
 export type OffcanvasEvents = typeof __propDef.events;
 export type OffcanvasSlots = typeof __propDef.slots;
-import { SvelteComponentTyped } from "svelte";
+import { SvelteComponent } from "svelte";
 declare const __propDef: {
     props: {
         [x: string]: unknown;

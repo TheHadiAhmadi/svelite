@@ -1,7 +1,7 @@
 /** @typedef {typeof __propDef.props}  InputProps */
 /** @typedef {typeof __propDef.events}  InputEvents */
 /** @typedef {typeof __propDef.slots}  InputSlots */
-export default class Input extends SvelteComponentTyped<{
+export default class Input extends SvelteComponent<{
     [x: string]: unknown;
     value: unknown;
     type?: string | undefined;
@@ -13,7 +13,7 @@ export default class Input extends SvelteComponentTyped<{
 export type InputProps = typeof __propDef.props;
 export type InputEvents = typeof __propDef.events;
 export type InputSlots = typeof __propDef.slots;
-import { SvelteComponentTyped } from "svelte";
+import { SvelteComponent } from "svelte";
 declare const __propDef: {
     props: {
         [x: string]: unknown;

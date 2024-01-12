@@ -1,7 +1,7 @@
 /** @typedef {typeof __propDef.props}  PageProps */
 /** @typedef {typeof __propDef.events}  PageEvents */
 /** @typedef {typeof __propDef.slots}  PageSlots */
-export default class Page extends SvelteComponentTyped<{
+export default class Page extends SvelteComponent<{
     [x: string]: unknown;
     back?: unknown;
 }, {
@@ -12,7 +12,7 @@ export default class Page extends SvelteComponentTyped<{
 export type PageProps = typeof __propDef.props;
 export type PageEvents = typeof __propDef.events;
 export type PageSlots = typeof __propDef.slots;
-import { SvelteComponentTyped } from "svelte";
+import { SvelteComponent } from "svelte";
 declare const __propDef: {
     props: {
         [x: string]: unknown;

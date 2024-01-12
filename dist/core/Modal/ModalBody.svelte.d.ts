@@ -1,7 +1,7 @@
 /** @typedef {typeof __propDef.props}  ModalBodyProps */
 /** @typedef {typeof __propDef.events}  ModalBodyEvents */
 /** @typedef {typeof __propDef.slots}  ModalBodySlots */
-export default class ModalBody extends SvelteComponentTyped<{
+export default class ModalBody extends SvelteComponent<{
     [x: string]: unknown;
     children: unknown;
 }, {
@@ -11,7 +11,7 @@ export default class ModalBody extends SvelteComponentTyped<{
 export type ModalBodyProps = typeof __propDef.props;
 export type ModalBodyEvents = typeof __propDef.events;
 export type ModalBodySlots = typeof __propDef.slots;
-import { SvelteComponentTyped } from "svelte";
+import { SvelteComponent } from "svelte";
 declare const __propDef: {
     props: {
         [x: string]: unknown;

@@ -1,4 +1,4 @@
-import { SvelteComponentTyped } from "svelte";
+import { SvelteComponent } from "svelte";
 declare const __propDef: {
     props: {
         children: unknown;
@@ -11,6 +11,6 @@ declare const __propDef: {
 export type ButtonGroupProps = typeof __propDef.props;
 export type ButtonGroupEvents = typeof __propDef.events;
 export type ButtonGroupSlots = typeof __propDef.slots;
-export default class ButtonGroup extends SvelteComponentTyped<ButtonGroupProps, ButtonGroupEvents, ButtonGroupSlots> {
+export default class ButtonGroup extends SvelteComponent<ButtonGroupProps, ButtonGroupEvents, ButtonGroupSlots> {
 }
 export {};

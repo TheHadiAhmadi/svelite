@@ -1,4 +1,4 @@
-import { SvelteComponentTyped } from "svelte";
+import { SvelteComponent } from "svelte";
 declare const __propDef: {
     props: {
         tag?: string | undefined;
@@ -14,6 +14,6 @@ declare const __propDef: {
 export type BaseProps = typeof __propDef.props;
 export type BaseEvents = typeof __propDef.events;
 export type BaseSlots = typeof __propDef.slots;
-export default class Base extends SvelteComponentTyped<BaseProps, BaseEvents, BaseSlots> {
+export default class Base extends SvelteComponent<BaseProps, BaseEvents, BaseSlots> {
 }
 export {};

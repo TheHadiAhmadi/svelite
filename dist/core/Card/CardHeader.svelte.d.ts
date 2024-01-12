@@ -1,7 +1,7 @@
 /** @typedef {typeof __propDef.props}  CardHeaderProps */
 /** @typedef {typeof __propDef.events}  CardHeaderEvents */
 /** @typedef {typeof __propDef.slots}  CardHeaderSlots */
-export default class CardHeader extends SvelteComponentTyped<{
+export default class CardHeader extends SvelteComponent<{
     [x: string]: unknown;
     children: unknown;
     title: unknown;
@@ -12,7 +12,7 @@ export default class CardHeader extends SvelteComponentTyped<{
 export type CardHeaderProps = typeof __propDef.props;
 export type CardHeaderEvents = typeof __propDef.events;
 export type CardHeaderSlots = typeof __propDef.slots;
-import { SvelteComponentTyped } from "svelte";
+import { SvelteComponent } from "svelte";
 declare const __propDef: {
     props: {
         [x: string]: unknown;

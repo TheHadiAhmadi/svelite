@@ -1,7 +1,7 @@
 /** @typedef {typeof __propDef.props}  SidebarProps */
 /** @typedef {typeof __propDef.events}  SidebarEvents */
 /** @typedef {typeof __propDef.slots}  SidebarSlots */
-export default class Sidebar extends SvelteComponentTyped<{
+export default class Sidebar extends SvelteComponent<{
     [x: string]: unknown;
     children: unknown;
     hasHeader: unknown;
@@ -12,7 +12,7 @@ export default class Sidebar extends SvelteComponentTyped<{
 export type SidebarProps = typeof __propDef.props;
 export type SidebarEvents = typeof __propDef.events;
 export type SidebarSlots = typeof __propDef.slots;
-import { SvelteComponentTyped } from "svelte";
+import { SvelteComponent } from "svelte";
 declare const __propDef: {
     props: {
         [x: string]: unknown;

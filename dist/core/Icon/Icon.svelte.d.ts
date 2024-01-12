@@ -1,7 +1,7 @@
 /** @typedef {typeof __propDef.props}  IconProps */
 /** @typedef {typeof __propDef.events}  IconEvents */
 /** @typedef {typeof __propDef.slots}  IconSlots */
-export default class Icon extends SvelteComponentTyped<{
+export default class Icon extends SvelteComponent<{
     [x: string]: unknown;
     name: unknown;
 }, {
@@ -11,7 +11,7 @@ export default class Icon extends SvelteComponentTyped<{
 export type IconProps = typeof __propDef.props;
 export type IconEvents = typeof __propDef.events;
 export type IconSlots = typeof __propDef.slots;
-import { SvelteComponentTyped } from "svelte";
+import { SvelteComponent } from "svelte";
 declare const __propDef: {
     props: {
         [x: string]: unknown;

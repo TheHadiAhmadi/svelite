@@ -1,4 +1,4 @@
-import { SvelteComponentTyped } from "svelte";
+import { SvelteComponent } from "svelte";
 import './button.css';
 declare const __propDef: {
     props: {
@@ -18,6 +18,6 @@ declare const __propDef: {
 export type ButtonProps = typeof __propDef.props;
 export type ButtonEvents = typeof __propDef.events;
 export type ButtonSlots = typeof __propDef.slots;
-export default class Button extends SvelteComponentTyped<ButtonProps, ButtonEvents, ButtonSlots> {
+export default class Button extends SvelteComponent<ButtonProps, ButtonEvents, ButtonSlots> {
 }
 export {};

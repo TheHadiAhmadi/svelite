@@ -1,7 +1,7 @@
 /** @typedef {typeof __propDef.props}  PageHeaderProps */
 /** @typedef {typeof __propDef.events}  PageHeaderEvents */
 /** @typedef {typeof __propDef.slots}  PageHeaderSlots */
-export default class PageHeader extends SvelteComponentTyped<{
+export default class PageHeader extends SvelteComponent<{
     [x: string]: unknown;
     title?: string | undefined;
     hasBack: unknown;
@@ -14,7 +14,7 @@ export default class PageHeader extends SvelteComponentTyped<{
 export type PageHeaderProps = typeof __propDef.props;
 export type PageHeaderEvents = typeof __propDef.events;
 export type PageHeaderSlots = typeof __propDef.slots;
-import { SvelteComponentTyped } from "svelte";
+import { SvelteComponent } from "svelte";
 declare const __propDef: {
     props: {
         [x: string]: unknown;

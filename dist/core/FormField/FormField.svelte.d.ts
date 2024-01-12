@@ -1,7 +1,7 @@
 /** @typedef {typeof __propDef.props}  FormFieldProps */
 /** @typedef {typeof __propDef.events}  FormFieldEvents */
 /** @typedef {typeof __propDef.slots}  FormFieldSlots */
-export default class FormField extends SvelteComponentTyped<{
+export default class FormField extends SvelteComponent<{
     [x: string]: unknown;
     children: unknown;
     label: unknown;
@@ -13,7 +13,7 @@ export default class FormField extends SvelteComponentTyped<{
 export type FormFieldProps = typeof __propDef.props;
 export type FormFieldEvents = typeof __propDef.events;
 export type FormFieldSlots = typeof __propDef.slots;
-import { SvelteComponentTyped } from "svelte";
+import { SvelteComponent } from "svelte";
 declare const __propDef: {
     props: {
         [x: string]: unknown;

@@ -2,3 +2,4 @@ legacy
 .svelite
 node_modules
 dist
+build

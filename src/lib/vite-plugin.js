@@ -8,15 +8,13 @@ export function svelite(config = {}) {
 
     let sveliteConfig;
 
-    console.log('svelite', path.resolve('./src/lib/'))
     const plugin = {
         name: 'svelite',
         config() {
             return {
                 resolve: {
                     alias: {
-                        '$lib': path.resolve('./src/lib'),
-                        '$svelite': path.resolve('./src/lib/svelite'),
+
                     }
                 },
                 build: {

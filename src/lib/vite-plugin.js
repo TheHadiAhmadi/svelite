@@ -25,12 +25,16 @@ export function svelite(config = {}) {
             }
         },
         async configureServer(vite) {
-            const configModule = await vite.ssrLoadModule(configFile)
-            sveliteConfig = normalizeConfig(configModule.default)
-            console.log('config: ', sveliteConfig)
             const template = readFileSync('./.svelite/index.html', 'utf-8')
-            
+
             vite.middlewares.use('/', async (req, res, next) => {
+
+                if(!sveliteConfig) {
+                    const configModule = await vite.ssrLoadModule(configFile)
+                    sveliteConfig = normalizeConfig(configModule.default)
+                    console.log('load config: ', sveliteConfig)
+                }
+
                 const {render} = await vite.ssrLoadModule(path.resolve('.svelite/server.js'))
 
                 const result = await render({url: req.url, template, config: sveliteConfig})

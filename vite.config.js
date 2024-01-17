@@ -1,14 +1,19 @@
-import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
+import {svelte, vitePreprocess} from '@sveltejs/vite-plugin-svelte'
 import path from 'path'
 
-export default defineConfig({
-    build: {
-        rollupOptions: {
-            external: ['$config']
+export default {
+    resolve: {
+        alias: {
+            'svelitecms': path.resolve('./dist/svelite'),
+            'svelitecms/vite': path.resolve('./dist/vite')
         }
     },
-	plugins: [
-		sveltekit(),
-	]
-});
+    plugins: [
+        svelte({
+            preprocess: vitePreprocess()
+        })
+//         svelite({
+  //       })
+    ], 
+}
+

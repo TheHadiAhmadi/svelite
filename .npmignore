@@ -1,0 +1,9 @@
+node_modules
+.svelite
+legacy
+src/
+index.html
+index.js
+vite.config.js
+vite.build.config.js
+svelite.config.js

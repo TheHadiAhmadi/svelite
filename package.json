@@ -23,6 +23,12 @@
         },
         "./vite": {
             "import": "./dist/vite.js"
-        }
-    }
+        },
+		"./styles.css": {
+			"import": "./dist/styles.css"
+		}
+    },
+	"bin": {
+		"svelite": "./bin/svelite.js"
+	}
 }

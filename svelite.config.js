@@ -1,4 +1,3 @@
-//import Test from './Test.svelte'
 
 export default {
     pages: [
@@ -7,8 +6,7 @@ export default {
     modules: {
         Test: {
             name: 'Test',
- //           description: 'This is test module',
-  //          component: Test,
+            component: console.log,
             async load(props) {
                 console.log('load inside test module', props)
 

@@ -1,6 +1,6 @@
 {
     "name": "svelitecms",
-    "version": "0.0.5",
+    "version": "0.0.6-next.0",
     "type": "module",
     "scripts": {
         "dev": "vite",
@@ -24,11 +24,11 @@
         "./vite": {
             "import": "./dist/vite.js"
         },
-		"./styles.css": {
-			"import": "./dist/styles.css"
-		}
+        "./styles.css": {
+            "import": "./dist/styles.css"
+        }
     },
-	"bin": {
-		"svelite": "./bin/svelite.js"
-	}
+    "bin": {
+        "svelite": "./bin/svelite.js"
+    }
 }

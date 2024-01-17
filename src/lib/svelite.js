@@ -62,6 +62,7 @@ export async function loadPageData(slug, config) {
 }
 
 export function normalizeConfig(config) {
+    console.log('normalize config')
     
 	let api = {};
 	if (config.api) {

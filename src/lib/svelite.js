@@ -1,3 +1,6 @@
+export {default as SvPage} from './components/SvPage.svelte'
+export {default as SvSlot} from './components/SvSlot.svelte'
+export {default as SvModule} from './components/SvModule.svelte'
 
 export function matchRoute(slug, pages) {
     for(let page of pages ?? []) {
@@ -18,7 +21,7 @@ export async function loadPageData(slug, config) {
         page.layout.component = config.layouts[page.layout.name].component;
 
         // layout load
-        if (layouts[page.layout.name].load) {
+        if (config.layouts[page.layout.name].load) {
             page.layout.props ??= {};
             page.layout.props.data = await config.layouts[page.layout.name].load(
                 page.layout.props,
@@ -31,7 +34,7 @@ export async function loadPageData(slug, config) {
     // Page (recursive)
     async function initializeModule(module) {
         // page component
-        module.component = config.modules[module.name].component;
+        module.component = config.modules[module.name].component ?? config.modules[module.name];
         // page load
         if (config.modules[module.name].load) {
             module.props.data = await config.modules[module.name].load(module.props, config.api, params);
@@ -77,6 +80,11 @@ export function normalizeConfig(config) {
 	// 	api = createSveliteApi('/api');
 	}
 
+    api = {
+        auth: {login: console.log, register: console.log, logout: console.log, getUser: console.log},
+        db: (collection) => ({find: () => ({find: console.log, first: console.log, filter: console.log}), insert: console.log, update: console.log, remove: console.log})
+    }
+
     // enable modules Single component mode (no name, description, load...)
 	let modules = {};
 	let layouts = {};
@@ -102,7 +110,9 @@ export function normalizeConfig(config) {
 
     return {
         api,
-        pages,
+        pages: pages.map(x => ({
+            ...x, 
+            slug: x.slug.startsWith('/') ? x.slug : '/' + x.slug})),
         modules,
         layouts
     }

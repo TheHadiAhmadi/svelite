@@ -2,6 +2,7 @@ import {svelte, vitePreprocess} from '@sveltejs/vite-plugin-svelte'
 import path from 'path'
 import {readFileSync} from 'fs'
 import { normalizeConfig } from './svelite';
+import { respond } from './server';
 
 export function svelite(config = {}) {
     const configFile = config.configFile ?? './svelite.config.js'
@@ -29,6 +30,17 @@ export function svelite(config = {}) {
 
             vite.middlewares.use('/', async (req, res, next) => {
 
+                // TODO: find better ways
+                if(req.url.startsWith(configFile.slice(1))) return next()
+                if(req.url.startsWith('/@fs')) return next()
+                if(req.url.startsWith('/@vite')) return next()
+                if(req.url.startsWith('/.svelite')) return next()
+                if(req.url.includes('.js')) return next()
+                if(req.url.includes('.mjs')) return next()
+                if(req.url.includes('.css')) return next()
+                if(req.url.includes('.svelte')) return next()
+                if(req.url.includes('.ts')) return next()
+
                 if(!sveliteConfig) {
                     const configModule = await vite.ssrLoadModule(configFile)
                     sveliteConfig = normalizeConfig(configModule.default)
@@ -37,13 +49,16 @@ export function svelite(config = {}) {
 
                 const {render} = await vite.ssrLoadModule(path.resolve('.svelite/server.js'))
 
-                const result = await render({url: req.url, template, config: sveliteConfig})
+                const result = await render({url: req.url, template})
 
-                if(!result) {
+                if(!result.body) {
                     return next()
                 }
 
-                return res.end(result)
+                console.log('Headers: ', result.headers)
+                console.log('Status: ', result.status)
+
+                return res.end(result.body)
             })
             // find current page
             // render page component

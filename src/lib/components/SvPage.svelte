@@ -2,6 +2,8 @@
 	import SvModule from './SvModule.svelte';
 
 	let { page } = $props();
+
+    console.log("page", page)
 </script>
 
 <svelte:head>
@@ -11,10 +13,9 @@
 	{/if}
 </svelte:head>
 
-{JSON.stringify(page)}
-PAGE: 
 {#if page}
 	{#each page.modules ?? [] as module}
+        {JSON.stringify(module)}
 		<SvModule component={module.component} properties={module.props} />
 	{/each}
 {:else}

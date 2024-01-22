@@ -24,8 +24,11 @@
         "./vite": {
             "import": "./dist/vite.js"
         },
-        "./styles.css": {
-            "import": "./dist/styles.css"
+        "./client": {
+            "import": "./dist/client.js"
+        },
+        "./server": {
+            "import": "./dist/server.js"
         }
     },
     "bin": {

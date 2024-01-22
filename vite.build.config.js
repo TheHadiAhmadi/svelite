@@ -7,8 +7,10 @@ export default {
         ssr: true,
         rollupOptions: {
          input: {
-                svelite: path.resolve('./src/lib'),
-                vite: path.resolve('./src/lib/vite-plugin'),
+                svelite: path.resolve('./src/lib/svelite'),
+                client: path.resolve('./src/lib/client'),
+                server: path.resolve('./src/lib/server'),
+                vite: path.resolve('./src/lib/vite'),
           },
         }
     }

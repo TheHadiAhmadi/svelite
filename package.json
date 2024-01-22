@@ -19,16 +19,25 @@
     },
     "exports": {
         ".": {
-            "import": "./dist/svelite.js"
+            "import": "./dist/svelite.js",
+            "svelte": "./dist/svelite.js"
         },
         "./vite": {
-            "import": "./dist/vite.js"
+            "import": "./dist/vite.js",
+            "svelte": "./dist/vite.js"
+
         },
         "./client": {
-            "import": "./dist/client.js"
+            "import": "./dist/client.js",
+            "svelte": "./dist/client.js"
         },
         "./server": {
-            "import": "./dist/server.js"
+            "import": "./dist/server.js",
+            "svelte": "./dist/server.js"
+        },
+        "./components": {
+            "import": "./dist/components.js",
+            "svelte": "./dist/components.js"
         }
     },
     "bin": {

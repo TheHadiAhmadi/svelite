@@ -37,6 +37,7 @@ export function svelite(config = {}) {
         console.log("passed one");
         // TODO: find better ways
         if (req.url.startsWith("/@fs")) return next();
+        if (req.url.startsWith("/favicon.ico")) return next();
         console.log("passed two");
         if (req.url.startsWith("/@vite")) return next();
         console.log("passed three");

@@ -7,6 +7,7 @@ export default {
             'svelitecms/vite': path.resolve('./dist/vite'),
             'svelitecms/client': path.resolve('./dist/client'),
             'svelitecms/server': path.resolve('./dist/server'),
+            'svelitecms/components': path.resolve('./dist/components/index'),
             'svelitecms': path.resolve('./dist/svelite'),
         }
     },

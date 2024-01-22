@@ -11,8 +11,7 @@ export async function respond(configObject, ctx) {
 
     console.log({page})
     if(!page) return null;
-    return import ('./components/SvPage.svelte').then(module => {
-        const {html, head} = render(module.default, {
+        const {html, head} = render(ctx.SvPage, {
             props: {
                 page
             }
@@ -27,6 +26,5 @@ export async function respond(configObject, ctx) {
                 'Content-Type': 'text/html'
             }
         }
-    })
 
 }

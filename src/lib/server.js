@@ -7,7 +7,7 @@ export async function respond(configObject, ctx) {
     const template = ctx.template
 
     const config = normalizeConfig(configObject)
-    const page = await loadPageData(url, config)
+    const {page} = await loadPageData(url, config)
 
     console.log({page})
     if(!page) return null;

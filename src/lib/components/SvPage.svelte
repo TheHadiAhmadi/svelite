@@ -12,7 +12,7 @@
 		<!-- Description.... -->
 	{/if}
 </svelte:head>
-
+<div class="svelite-page">
 {#if page}
 	{#each page.modules ?? [] as module}
         {JSON.stringify(module)}
@@ -21,3 +21,4 @@
 {:else}
 	Svelite Page Not found!
 {/if}
+</div>

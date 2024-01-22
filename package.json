@@ -34,10 +34,6 @@
         "./server": {
             "import": "./dist/server.js",
             "svelte": "./dist/server.js"
-        },
-        "./components": {
-            "import": "./dist/components.js",
-            "svelte": "./dist/components.js"
         }
     },
     "bin": {

@@ -10,6 +10,7 @@ app.use(sirv('./client'))
 app.use('/', async (req, res) => {
     const template = await readFileSync('./client/.svelite/index.html', 'utf-8')
     const result = await render({url: req.url, template})
+    
     res.end(result)
 })
 

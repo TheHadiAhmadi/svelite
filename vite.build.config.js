@@ -1,5 +1,6 @@
-import path from "path";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
+import path from "path";
+// import { svelite } from "src";
 
 export default {
   plugins: [svelte()],

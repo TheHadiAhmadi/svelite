@@ -1,7 +1,7 @@
 import { svelte, vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 import path from "path";
 import { readFileSync, existsSync } from "fs";
-import { normalizeConfig } from "./svelite";
+import { normalizeConfig } from "./svelite.js";
 
 export function svelite(config = {}) {
   const configFile = config.configFile ?? "./svelite.config.js";
@@ -19,11 +19,11 @@ export function svelite(config = {}) {
         ssr: {
           noExternal: ['svelitecms']
         },
-        build: {
-          rollupOptions: {
-            input: ".svelite/index.html",
-          },
-        },
+        // build: {
+        //   rollupOptions: {
+        //     input: ".svelite/index.html",
+        //   },
+        // },
       };
     },
     async configureServer(vite) {
@@ -56,7 +56,7 @@ export function svelite(config = {}) {
 
         const result = await render({ url: req.url, template });
 
-        if (!result.body) {
+        if (!result?.body) {
           return next();
         }
 

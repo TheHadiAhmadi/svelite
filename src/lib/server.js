@@ -1,30 +1,29 @@
-import {render} from 'svelte/server'
-import {loadPageData, normalizeConfig} from './svelite'
+import { render } from "svelte/server";
+import { loadPageData, normalizeConfig } from "./svelite";
 
-// TODO: Handle api requests 
+// TODO: Handle api requests
 export async function respond(configObject, ctx) {
-    const url = ctx.url
-    const template = ctx.template
+  const url = ctx.url;
+  const template = ctx.template;
 
-    const config = normalizeConfig(configObject)
-    const {page} = await loadPageData(url, config)
+  const config = normalizeConfig(configObject);
+  const { page } = await loadPageData(url, config);
 
-    console.log({page})
-    if(!page) return null;
-        const {html, head} = render(ctx.SvPage, {
-            props: {
-                page
-            }
-        })
+  if (!page) return null;
+  
+  const { html, head } = render(ctx.SvPage, {
+    props: {
+      page,
+    },
+  });
 
-        console.log({html, head})
+  console.log({html, head, page})
 
-        return {
-            status: 200,
-            body: template.replace('<!--head-->', head).replace('<!--body-->', html),
-            headers: {
-                'Content-Type': 'text/html'
-            }
-        }
-
+  return {
+    status: 200,
+    body: template.replace("<!--head-->", head).replace("<!--body-->", html),
+    headers: {
+      "Content-Type": "text/html",
+    },
+  };
 }

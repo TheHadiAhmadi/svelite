@@ -1,5 +1,8 @@
 <script>
-    
     let {a} = $props()
+
+    let count = $state(0)
 </script>
-<h1>Test {a}</h1>
+
+<button onclick={() => count++}>Increment {count}</button>
+<h1>Test {@html a}</h1>

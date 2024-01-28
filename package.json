@@ -5,10 +5,11 @@
     "scripts": {
         "dev": "vite",
         "build": "npm run build:server && npm run build:client && npm run build:index",
-        "build:package": "vite build --config vite.build.config.js",
+        "build:package": "vite build --config vite.build.config.js && npm run build:components",
         "build:client": "vite build --outDir build/client",
         "build:server": "vite build --ssr .svelite/server.js --outDir build/server",
-        "build:index": "cp index.js dist"
+        "build:index": "cp index.js dist",
+        "build:components": "cp src/lib/components dist -r"
     },
     "dependencies": {
         "@sveltejs/vite-plugin-svelte": "^3.0.1",
@@ -21,6 +22,10 @@
         ".": {
             "import": "./dist/svelite.js",
             "svelte": "./dist/svelite.js"
+        },
+        "./components": {
+            "import": "./dist/components/index.js",
+            "svelte": "./dist/components/index.js"
         },
         "./vite": {
             "import": "./dist/vite.js",

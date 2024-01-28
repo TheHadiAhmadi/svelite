@@ -1,5 +1,5 @@
 import path from 'path'
-import { svelite } from './dist/vite'
+// import { svelite } from './dist/vite'
 
 export default {
     resolve: {
@@ -11,8 +11,8 @@ export default {
             'svelitecms': path.resolve('./dist/svelite'),
         }
     },
-    plugins: [
-        svelite()
-    ], 
+//     plugins: [
+//         // svelite()
+//     ], 
 }
 

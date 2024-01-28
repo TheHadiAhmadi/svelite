@@ -1,4 +1,5 @@
 import Test from './modules/Test.svelte'
+
 export default {
     pages: [
         {slug: '/test', modules: [{name: 'Test', props: {a: 123}}]}
@@ -13,5 +14,4 @@ export default {
             }
         }
     }
-
 }

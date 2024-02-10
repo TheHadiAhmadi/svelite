@@ -1,5 +1,6 @@
 {
   "name": "playground",
+  "type": "module",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "iconify-icon": "^2.0.0",
     "svelitecms": "file:.."
   }
 }

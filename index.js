@@ -8,8 +8,8 @@ const app = express()
 app.use(sirv('./client'))
 
 app.use('/', async (req, res) => {
-    const template = await readFileSync('./client/.svelite/index.html', 'utf-8')
-    const result = await render({url: req.url, template})
+    const template = readFileSync('./client/.svelite/index.html', 'utf-8')
+    const result = await render({url: req.url, template, method: req.method})
     
     res.end(result)
 })

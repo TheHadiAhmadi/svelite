@@ -4,8 +4,10 @@ import SvPage from './components/SvPage.svelte'
 
 export default async function (configObject) {
     const config = normalizeConfig(configObject)
+
     // TODO: if not window 
     const path = window.location.pathname
+
     const {page} = await loadPageData(path, config)
 
     const target = document.getElementById("app")
@@ -17,5 +19,5 @@ export default async function (configObject) {
         }
     }
 
-    const res = createRoot(SvPage, options)
+    createRoot(SvPage, options)
 }

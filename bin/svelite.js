@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-import { svelte } from '@sveltejs/vite-plugin-svelte'
+import {svelte} from '@sveltejs/vite-plugin-svelte'
 import {svelite} from '../src/lib/vite.js'
 
-import {cpSync, existsSync, mkdirSync, writeFileSync, writeSync} from 'fs'
+import { existsSync, mkdirSync, writeFileSync} from 'fs'
+import {readdir} from 'fs/promises'
 import path from 'path'
 import { createServer, build } from 'vite'
 let mode = 'dev'
@@ -60,10 +61,11 @@ import sirv from 'sirv'
 const app = express()
 
 app.use(sirv('./client'))
+app.use(express.json())
 
 app.use('/', async (req, res) => {
     const template = await readFileSync('./client/.svelite/index.html', 'utf-8')
-    const result = await render({url: req.url, template})
+    const result = await render({url: req.url, method: req.method, body: req.body, template})
     
     res.end(result?.body ?? '')
 })
@@ -80,6 +82,30 @@ app.listen(3000, () => console.log('server started at localhost:' + 3000))`
     // create file and folder
 } else {
     // pack
+    const plugins = await readdir('./plugins')
+
+    for(let plugin of plugins) {
+        const hasServer = existsSync('./plugins/' + plugin + '/server.js') || existsSync('./plugins/' + plugin + '/server.ts')
+
+        build({
+            plugins: [svelte()],
+            build: {
+                rollupOptions: {
+                    output: {
+                        manualChunks: {}
+                      },
+
+                    external: ['svelte']
+                },
+                outDir: './dist/' + plugin,
+                emptyOutDir: false,
+                lib: {
+                    entry: hasServer ? ['./plugins/' + plugin, './plugins/' + plugin + '/server'] : ['./plugins/' + plugin], 
+                    formats: ['es']
+                }
+            }
+        })
+    } 
 }
 
 async function init() {
@@ -113,25 +139,24 @@ async function init() {
 </html>`
 
     const clientJS = `import config from '../svelite.config.js'
-import {createRoot} from 'svelte'
-import {SvPage} from 'svelitecms/components'
-import {normalizeConfig, loadPageData} from 'svelitecms'
+import init from 'svelitecms/client'
 
-const path = window.location.pathname
-loadPageData(path, normalizeConfig(config)).then(x => {
-    createRoot(SvPage, {
-        target: document.getElementById('app'),
-        props: x 
-    })
-})
+init(config)
 `
 
     const serverJS = `import config from '../svelite.config.js'
 import { respond } from 'svelitecms/server'
-import {SvPage} from 'svelitecms/components'
 
 export async function render(ctx) {
-    ctx.SvPage = SvPage
+    try {
+        const module = await import('../svelite.server.js')
+        if(module.default) {
+            ctx.server = module.default
+        }
+    } catch(err) {
+        //
+    }
+
     return respond(config, ctx)
 }`
 

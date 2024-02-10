@@ -54,7 +54,7 @@ export function svelite(config = {}) {
 
         console.log("render page");
 
-        const result = await render({ url: req.url, template });
+        const result = await render({ url: req.url, method: req.method, template });
 
         if (!result?.body) {
           return next();

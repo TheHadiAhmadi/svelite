@@ -1,10 +1,14 @@
-import Home from './Home.svelte'
-import Footer from './Footer.svelte'
-import Test from './Test.svelte'
-import Header from './Header.svelte'
+import Home from './modules/Home.svelte'
+import Footer from './modules/Footer.svelte'
+import Test from './modules/Test.svelte'
+import Header from './modules/Header.svelte'
+
+import AdminPlugin from './plugins/admin/index'
+import TestPlugin from './plugins/test-plugin/index.js'
 
 export default {
-    plugins: [/* List of plugins */],
+    plugins: [TestPlugin(), AdminPlugin({
+    })],
     pages: [
         {
             slug: '/',

@@ -2,10 +2,13 @@
     "name": "svelitecms",
     "version": "0.0.6-next.11",
     "type": "module",
+    "bin": {
+        "svelite": "bin/svelite.js"
+    },
     "scripts": {
         "dev": "vite",
         "build": "npm run build:server && npm run build:client && npm run build:index",
-        "build:package": "vite build --config vite.build.config.js && npm run build:components",
+        "build:package": "node build.js",
         "build:client": "vite build --outDir build/client",
         "build:server": "vite build --ssr .svelite/server.js --outDir build/server",
         "build:index": "cp index.js dist",
@@ -39,8 +42,5 @@
             "import": "./dist/server.js",
             "svelte": "./dist/server.js"
         }
-    },
-    "bin": {
-        "svelite": "./bin/svelite.js"
     }
 }

@@ -33,7 +33,7 @@ export function svelite(config = {}) {
       vite.middlewares.use("/", async (req, res, next) => {
         console.log("request: ", req.url, existsSync("." + req.url));
 
-        if (existsSync("." + req.url.split("?")[0])) return next();
+        if (existsSync("." + req.url.split("?")[0]) && !req.url === '/') return next();
         console.log("passed one");
         // TODO: find better ways
         if (req.url.startsWith("/@fs")) return next();

@@ -80,27 +80,6 @@ app.listen(3000, () => console.log('server started at localhost:' + 3000))`
     // create file and folder
 } else {
     // pack
-    const result = await build({
-        build: {
-            ssr: true,
-            outDir: 'dist',
-            rollupOptions: {
-                input: {
-                    svelite: path.resolve("./src/lib/svelite"),
-                    client: path.resolve("./src/lib/client"),
-                    server: path.resolve("./src/lib/server"),
-                    vite: path.resolve("./src/lib/vite"),
-                },
-            }
-        },
-        plugins: [svelte()]
-    }).then(res => {
-    })
-
-    cpSync('./src/lib/components', './dist/components', {
-        recursive: true
-    })
-
 }
 
 async function init() {
@@ -134,10 +113,17 @@ async function init() {
 </html>`
 
     const clientJS = `import config from '../svelite.config.js'
-import init from 'svelitecms/client'
+import {createRoot} from 'svelte'
 import {SvPage} from 'svelitecms/components'
+import {normalizeConfig, loadPageData} from 'svelitecms'
 
-init(config, SvPage)
+const path = window.location.pathname
+loadPageData(path, normalizeConfig(config)).then(x => {
+    createRoot(SvPage, {
+        target: document.getElementById('app'),
+        props: x 
+    })
+})
 `
 
     const serverJS = `import config from '../svelite.config.js'

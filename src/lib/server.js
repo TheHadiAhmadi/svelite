@@ -1,5 +1,6 @@
 import { render } from "svelte/server";
 import { loadPageData, normalizeConfig } from "./svelite";
+import SvPage from './components/SvPage.svelte'
 
 // TODO: Handle api requests
 export async function respond(configObject, ctx) {
@@ -11,7 +12,7 @@ export async function respond(configObject, ctx) {
 
   if (!page) return null;
   
-  const { html, head } = render(ctx.SvPage, {
+  const { html, head } = render(SvPage, {
     props: {
       page,
     },

@@ -1,0 +1,388 @@
+.github/workflows/publish.yml                      |    1 +
+ .gitignore                                         |   13 +-
+ .npmignore                                         |   10 +
+ .npmrc                                             |    1 -
+ .prettierignore                                    |   13 -
+ .prettierrc                                        |    8 -
+ README.md                                          |   38 -
+ TODO.md                                            |   12 +
+ bin/svelite.js                                     |  171 +
+ build.js                                           |   44 +
+ dist/core/Accordion/Accordion.svelte               |   55 -
+ dist/core/Accordion/Accordion.svelte.d.ts          |   18 -
+ dist/core/Base/Base.svelte                         |   10 -
+ dist/core/Base/Base.svelte.d.ts                    |   19 -
+ dist/core/Button/Button.svelte                     |   25 -
+ dist/core/Button/Button.svelte.d.ts                |   23 -
+ dist/core/Button/ButtonGroup.svelte                |    6 -
+ dist/core/Button/ButtonGroup.svelte.d.ts           |   16 -
+ dist/core/Card/Card.svelte                         |   21 -
+ dist/core/Card/Card.svelte.d.ts                    |   19 -
+ dist/core/Card/CardBody.svelte.d.ts                |   25 -
+ dist/core/Card/CardHeader.svelte.d.ts              |   27 -
+ dist/core/Card/CardTitle.svelte.d.ts               |   25 -
+ dist/core/FormField/FormField.svelte.d.ts          |   29 -
+ dist/core/Header/Header.svelte.d.ts                |   25 -
+ dist/core/Icon/Icon.svelte.d.ts                    |   25 -
+ dist/core/Input/Input.svelte.d.ts                  |   29 -
+ dist/core/Layout/Layout.svelte.d.ts                |   35 -
+ dist/core/Layout/LayoutBody.svelte.d.ts            |   29 -
+ dist/core/Modal/Modal.svelte.d.ts                  |   29 -
+ dist/core/Modal/ModalBody.svelte.d.ts              |   25 -
+ dist/core/Modal/ModalFooter.svelte.d.ts            |   25 -
+ dist/core/Modal/ModalHeader.svelte.d.ts            |   25 -
+ dist/core/Offcanvas/Offcanvas.svelte.d.ts          |   27 -
+ dist/core/Page/Page.svelte                         |   66 -
+ dist/core/Page/Page.svelte.d.ts                    |   26 -
+ dist/core/Page/PageHeader.svelte.d.ts              |   31 -
+ dist/core/Select/Select.svelte                     |   49 -
+ dist/core/Select/Select.svelte.d.ts                |   21 -
+ dist/core/Sidebar/Sidebar.svelte.d.ts              |   27 -
+ dist/core/Sidebar/SidebarItem.svelte.d.ts          |   35 -
+ dist/core/Switch/Switch.svelte.d.ts                |   27 -
+ dist/core/Table/Table.svelte                       |   54 -
+ dist/core/Table/Table.svelte.d.ts                  |   17 -
+ dist/core/Table/TableColumn.svelte                 |   12 -
+ dist/core/Table/TableColumn.svelte.d.ts            |   18 -
+ dist/core/index.d.ts                               |   30 -
+ dist/index.d.ts                                    |    1 -
+ dist/index.js                                      |    1 -
+ dist/styles.css                                    |   31 -
+ dist/svelite/create-svelite.d.ts                   |   79 -
+ dist/svelite/create-svelite.js                     |   43 -
+ dist/svelite/index.d.ts                            |    7 -
+ dist/svelite/index.js                              |    7 -
+ dist/svelite/svelite-api.d.ts                      |   70 -
+ dist/svelite/svelite-api.js                        |  137 -
+ index.html                                         |   12 +
+ index.js                                           |   18 +
+ modules/Test.svelte                                |    8 +
+ package-lock.json                                  | 4309 ++++++++------------
+ package.json                                       |  106 +-
+ playground/modules/Footer.svelte                   |    1 +
+ playground/modules/Header.svelte                   |    1 +
+ playground/modules/Home.svelte                     |    1 +
+ playground/modules/Test.svelte                     |    1 +
+ playground/package-lock.json                       |   51 +
+ playground/package.json                            |   17 +
+ .../plugins/admin/components/AppFormField.svelte   |   27 +
+ playground/plugins/admin/components/Form.svelte    |   21 +
+ playground/plugins/admin/components/FormTab.svelte |    8 +
+ .../components}/core/Accordion/Accordion.svelte    |    0
+ .../admin/components}/core/Base/Base.svelte        |    0
+ .../admin/components}/core/Button/Button.svelte    |    0
+ .../components}/core/Button/ButtonGroup.svelte     |    0
+ .../admin/components}/core/Button/button.css       |    0
+ .../admin/components}/core/Card/Card.svelte        |    0
+ .../admin/components}/core/Card/CardBody.svelte    |    0
+ .../admin/components}/core/Card/CardHeader.svelte  |    0
+ .../admin/components}/core/Card/CardTitle.svelte   |    0
+ .../components}/core/FormField/FormField.svelte    |    0
+ .../admin/components}/core/Header/Header.svelte    |    0
+ .../admin/components}/core/Icon/Icon.svelte        |    0
+ .../core/ImagePicker/ImagePicker.svelte            |    0
+ .../admin/components}/core/Input/Input.svelte      |    0
+ .../admin/components}/core/Layout/Layout.svelte    |    0
+ .../components}/core/Layout/LayoutBody.svelte      |    0
+ .../admin/components}/core/Modal/Modal.svelte      |    0
+ .../admin/components}/core/Modal/ModalBody.svelte  |    0
+ .../components}/core/Modal/ModalFooter.svelte      |    0
+ .../components}/core/Modal/ModalHeader.svelte      |    0
+ .../components}/core/Offcanvas/Offcanvas.svelte    |    0
+ .../admin/components}/core/Page/Page.svelte        |    9 +-
+ .../admin/components}/core/Page/PageHeader.svelte  |    0
+ .../admin/components}/core/Select/Select.svelte    |    0
+ .../admin/components}/core/Sidebar/Sidebar.svelte  |    0
+ .../components}/core/Sidebar/SidebarItem.svelte    |    0
+ .../admin/components}/core/Switch/Switch.svelte    |    0
+ .../admin/components}/core/Switch/switch.css       |    0
+ .../admin/components}/core/Table/Table.svelte      |    0
+ .../components}/core/Table/TableColumn.svelte      |    0
+ .../admin/components}/core/Tabs/TabPanel.svelte    |    0
+ .../admin/components}/core/Tabs/Tabs.svelte        |    0
+ .../components}/core/Textarea/Textarea.svelte      |    0
+ .../plugins/admin/components}/core/index.js        |    0
+ playground/plugins/admin/components/index.ts       |    4 +
+ playground/plugins/admin/helpers/index.ts          |   38 +
+ playground/plugins/admin/index.ts                  |   87 +
+ .../admin/layouts/AdminLayout/AdminLayout.svelte   |   66 +
+ .../plugins/admin/layouts/AdminLayout/layout.ts    |   25 +
+ playground/plugins/admin/layouts/index.ts          |    5 +
+ playground/plugins/admin/modules/Form/Form.svelte  |   70 +
+ playground/plugins/admin/modules/Form/module.ts    |   43 +
+ playground/plugins/admin/modules/Page/Page.svelte  |   34 +
+ playground/plugins/admin/modules/Page/module.ts    |   12 +
+ .../plugins/admin/modules/Table/Table.svelte       |   78 +
+ playground/plugins/admin/modules/Table/module.ts   |   27 +
+ playground/plugins/admin/modules/index.ts          |    9 +
+ .../plugins/admin/plugins/AdminDashboard/plugin.ts |   14 +
+ .../layouts/AuthLayout/AuthLayout.svelte           |    9 +
+ .../Authentication/layouts/AuthLayout/layout.ts    |    7 +
+ .../admin/plugins/Authentication/layouts/index.ts  |    5 +
+ .../Authentication/modules/Login/Login.svelte      |   24 +
+ .../plugins/Authentication/modules/Login/module.ts |   15 +
+ .../modules/Register/Register.svelte               |   30 +
+ .../Authentication/modules/Register/module.ts      |   16 +
+ .../admin/plugins/Authentication/modules/index.ts  |    8 +
+ .../plugins/admin/plugins/Authentication/plugin.ts |  192 +
+ .../admin/plugins/ContentManagement/plugin.ts      |  135 +
+ .../admin/plugins/ContentTypeBuilder/plugin.ts     |    8 +
+ .../PageManagement/components/PageModules.svelte   |   48 +
+ .../modules/ViewPage/ViewPage.svelte               |   20 +
+ .../PageManagement/modules/ViewPage/module.ts      |   31 +
+ .../admin/plugins/PageManagement/modules/index.ts  |    5 +
+ .../plugins/admin/plugins/PageManagement/plugin.ts |  140 +
+ playground/plugins/test-plugin/index.js            |   18 +
+ playground/plugins/test-plugin/test.svelte         |    1 +
+ playground/plugins/test2-plugin/index.js           |   18 +
+ playground/plugins/test2-plugin/server.ts          |   18 +
+ playground/plugins/test2-plugin/test.svelte        |    1 +
+ playground/svelite.config.js                       |   40 +
+ playground/svelite.server.js                       |   19 +
+ playground/vite.config.js                          |   16 +
+ postcss.config.js                                  |    5 -
+ src/app.d.ts                                       |   12 -
+ src/app.html                                       |   12 -
+ src/config/postcss.config.js                       |    9 -
+ src/config/svelte.config.js                        |   34 -
+ src/config/tailwind.config.js                      |   10 -
+ src/config/vite.config.js                          |   22 -
+ src/core/Button/button.css                         |   46 -
+ src/core/Card/CardBody.svelte                      |   11 -
+ src/core/Card/CardHeader.svelte                    |   17 -
+ src/core/Card/CardTitle.svelte                     |    9 -
+ src/core/FormField/FormField.svelte                |   22 -
+ src/core/Header/Header.svelte                      |   12 -
+ src/core/Icon/Icon.svelte                          |   16 -
+ src/core/Input/Input.svelte                        |    9 -
+ src/core/Layout/Layout.svelte                      |   58 -
+ src/core/Layout/LayoutBody.svelte                  |   14 -
+ src/core/Modal/Modal.svelte                        |   22 -
+ src/core/Modal/ModalBody.svelte                    |    7 -
+ src/core/Modal/ModalFooter.svelte                  |   10 -
+ src/core/Modal/ModalHeader.svelte                  |   37 -
+ src/core/Offcanvas/Offcanvas.svelte                |   41 -
+ src/core/Page/PageHeader.svelte                    |   19 -
+ src/core/Sidebar/Sidebar.svelte                    |   16 -
+ src/core/Sidebar/SidebarItem.svelte                |   39 -
+ src/core/Switch/Switch.svelte                      |   14 -
+ src/core/Switch/switch.css                         |    2 -
+ src/core/index.js                                  |   30 -
+ src/index.ts                                       |    1 -
+ src/lib/client.js                                  |   23 +
+ src/{svelite => lib}/components/SvLayout.svelte    |    0
+ src/{svelite => lib}/components/SvModule.svelte    |    0
+ src/lib/components/SvPage.svelte                   |   21 +
+ src/{svelite => lib}/components/SvSlot.svelte      |    0
+ src/lib/components/index.js                        |    3 +
+ src/lib/server.js                                  |   59 +
+ src/lib/svelite.js                                 |  114 +
+ src/lib/vite.js                                    |   79 +
+ src/routes/[...slug]/+layout.svelte                |   10 -
+ src/routes/[...slug]/+layout.ts                    |    6 -
+ src/routes/[...slug]/+page.svelte                  |    9 -
+ src/styles.css                                     |   31 -
+ src/svelite/components/SvPage.svelte               |   20 -
+ src/svelite/create-svelite.ts                      |   90 -
+ src/svelite/index.ts                               |    8 -
+ src/svelite/sv.ts                                  |   10 -
+ src/svelite/svelite-api.ts                         |  155 -
+ src/svelite/svelite-load.ts                        |  140 -
+ svelite.config.js                                  |   19 +
+ svelte.config.js                                   |   23 -
+ tailwind.config.js                                 |    9 -
+ tsconfig.json                                      |   18 -
+ vite.build.config.js                               |   18 +
+ vite.config.js                                     |   24 +-
+ 196 files changed, 3836 insertions(+), 5227 deletions(-)
+ create mode 100644 .npmignore
+ delete mode 100644 .npmrc
+ delete mode 100644 .prettierignore
+ delete mode 100644 .prettierrc
+ delete mode 100644 README.md
+ create mode 100644 TODO.md
+ create mode 100755 bin/svelite.js
+ create mode 100644 build.js
+ delete mode 100644 dist/core/Accordion/Accordion.svelte
+ delete mode 100644 dist/core/Accordion/Accordion.svelte.d.ts
+ delete mode 100644 dist/core/Base/Base.svelte
+ delete mode 100644 dist/core/Base/Base.svelte.d.ts
+ delete mode 100644 dist/core/Button/Button.svelte
+ delete mode 100644 dist/core/Button/Button.svelte.d.ts
+ delete mode 100644 dist/core/Button/ButtonGroup.svelte
+ delete mode 100644 dist/core/Button/ButtonGroup.svelte.d.ts
+ delete mode 100644 dist/core/Card/Card.svelte
+ delete mode 100644 dist/core/Card/Card.svelte.d.ts
+ delete mode 100644 dist/core/Card/CardBody.svelte.d.ts
+ delete mode 100644 dist/core/Card/CardHeader.svelte.d.ts
+ delete mode 100644 dist/core/Card/CardTitle.svelte.d.ts
+ delete mode 100644 dist/core/FormField/FormField.svelte.d.ts
+ delete mode 100644 dist/core/Header/Header.svelte.d.ts
+ delete mode 100644 dist/core/Icon/Icon.svelte.d.ts
+ delete mode 100644 dist/core/Input/Input.svelte.d.ts
+ delete mode 100644 dist/core/Layout/Layout.svelte.d.ts
+ delete mode 100644 dist/core/Layout/LayoutBody.svelte.d.ts
+ delete mode 100644 dist/core/Modal/Modal.svelte.d.ts
+ delete mode 100644 dist/core/Modal/ModalBody.svelte.d.ts
+ delete mode 100644 dist/core/Modal/ModalFooter.svelte.d.ts
+ delete mode 100644 dist/core/Modal/ModalHeader.svelte.d.ts
+ delete mode 100644 dist/core/Offcanvas/Offcanvas.svelte.d.ts
+ delete mode 100644 dist/core/Page/Page.svelte
+ delete mode 100644 dist/core/Page/Page.svelte.d.ts
+ delete mode 100644 dist/core/Page/PageHeader.svelte.d.ts
+ delete mode 100644 dist/core/Select/Select.svelte
+ delete mode 100644 dist/core/Select/Select.svelte.d.ts
+ delete mode 100644 dist/core/Sidebar/Sidebar.svelte.d.ts
+ delete mode 100644 dist/core/Sidebar/SidebarItem.svelte.d.ts
+ delete mode 100644 dist/core/Switch/Switch.svelte.d.ts
+ delete mode 100644 dist/core/Table/Table.svelte
+ delete mode 100644 dist/core/Table/Table.svelte.d.ts
+ delete mode 100644 dist/core/Table/TableColumn.svelte
+ delete mode 100644 dist/core/Table/TableColumn.svelte.d.ts
+ delete mode 100644 dist/core/index.d.ts
+ delete mode 100644 dist/index.d.ts
+ delete mode 100644 dist/index.js
+ delete mode 100644 dist/styles.css
+ delete mode 100644 dist/svelite/create-svelite.d.ts
+ delete mode 100644 dist/svelite/create-svelite.js
+ delete mode 100644 dist/svelite/index.d.ts
+ delete mode 100644 dist/svelite/index.js
+ delete mode 100644 dist/svelite/svelite-api.d.ts
+ delete mode 100644 dist/svelite/svelite-api.js
+ create mode 100644 index.html
+ create mode 100644 index.js
+ create mode 100644 modules/Test.svelte
+ create mode 100644 playground/modules/Footer.svelte
+ create mode 100644 playground/modules/Header.svelte
+ create mode 100644 playground/modules/Home.svelte
+ create mode 100644 playground/modules/Test.svelte
+ create mode 100644 playground/package-lock.json
+ create mode 100644 playground/package.json
+ create mode 100644 playground/plugins/admin/components/AppFormField.svelte
+ create mode 100644 playground/plugins/admin/components/Form.svelte
+ create mode 100644 playground/plugins/admin/components/FormTab.svelte
+ rename {src => playground/plugins/admin/components}/core/Accordion/Accordion.svelte (100%)
+ rename {src => playground/plugins/admin/components}/core/Base/Base.svelte (100%)
+ rename {src => playground/plugins/admin/components}/core/Button/Button.svelte (100%)
+ rename {src => playground/plugins/admin/components}/core/Button/ButtonGroup.svelte (100%)
+ rename {dist => playground/plugins/admin/components}/core/Button/button.css (100%)
+ rename {src => playground/plugins/admin/components}/core/Card/Card.svelte (100%)
+ rename {dist => playground/plugins/admin/components}/core/Card/CardBody.svelte (100%)
+ rename {dist => playground/plugins/admin/components}/core/Card/CardHeader.svelte (100%)
+ rename {dist => playground/plugins/admin/components}/core/Card/CardTitle.svelte (100%)
+ rename {dist => playground/plugins/admin/components}/core/FormField/FormField.svelte (100%)
+ rename {dist => playground/plugins/admin/components}/core/Header/Header.svelte (100%)
+ rename {dist => playground/plugins/admin/components}/core/Icon/Icon.svelte (100%)
+ rename {src => playground/plugins/admin/components}/core/ImagePicker/ImagePicker.svelte (100%)
+ rename {dist => playground/plugins/admin/components}/core/Input/Input.svelte (100%)
+ rename {dist => playground/plugins/admin/components}/core/Layout/Layout.svelte (100%)
+ rename {dist => playground/plugins/admin/components}/core/Layout/LayoutBody.svelte (100%)
+ rename {dist => playground/plugins/admin/components}/core/Modal/Modal.svelte (100%)
+ rename {dist => playground/plugins/admin/components}/core/Modal/ModalBody.svelte (100%)
+ rename {dist => playground/plugins/admin/components}/core/Modal/ModalFooter.svelte (100%)
+ rename {dist => playground/plugins/admin/components}/core/Modal/ModalHeader.svelte (100%)
+ rename {dist => playground/plugins/admin/components}/core/Offcanvas/Offcanvas.svelte (100%)
+ rename {src => playground/plugins/admin/components}/core/Page/Page.svelte (89%)
+ rename {dist => playground/plugins/admin/components}/core/Page/PageHeader.svelte (100%)
+ rename {src => playground/plugins/admin/components}/core/Select/Select.svelte (100%)
+ rename {dist => playground/plugins/admin/components}/core/Sidebar/Sidebar.svelte (100%)
+ rename {dist => playground/plugins/admin/components}/core/Sidebar/SidebarItem.svelte (100%)
+ rename {dist => playground/plugins/admin/components}/core/Switch/Switch.svelte (100%)
+ rename {dist => playground/plugins/admin/components}/core/Switch/switch.css (100%)
+ rename {src => playground/plugins/admin/components}/core/Table/Table.svelte (100%)
+ rename {src => playground/plugins/admin/components}/core/Table/TableColumn.svelte (100%)
+ rename {src => playground/plugins/admin/components}/core/Tabs/TabPanel.svelte (100%)
+ rename {src => playground/plugins/admin/components}/core/Tabs/Tabs.svelte (100%)
+ rename {src => playground/plugins/admin/components}/core/Textarea/Textarea.svelte (100%)
+ rename {dist => playground/plugins/admin/components}/core/index.js (100%)
+ create mode 100644 playground/plugins/admin/components/index.ts
+ create mode 100644 playground/plugins/admin/helpers/index.ts
+ create mode 100644 playground/plugins/admin/index.ts
+ create mode 100644 playground/plugins/admin/layouts/AdminLayout/AdminLayout.svelte
+ create mode 100644 playground/plugins/admin/layouts/AdminLayout/layout.ts
+ create mode 100644 playground/plugins/admin/layouts/index.ts
+ create mode 100644 playground/plugins/admin/modules/Form/Form.svelte
+ create mode 100644 playground/plugins/admin/modules/Form/module.ts
+ create mode 100644 playground/plugins/admin/modules/Page/Page.svelte
+ create mode 100644 playground/plugins/admin/modules/Page/module.ts
+ create mode 100644 playground/plugins/admin/modules/Table/Table.svelte
+ create mode 100644 playground/plugins/admin/modules/Table/module.ts
+ create mode 100644 playground/plugins/admin/modules/index.ts
+ create mode 100644 playground/plugins/admin/plugins/AdminDashboard/plugin.ts
+ create mode 100644 playground/plugins/admin/plugins/Authentication/layouts/AuthLayout/AuthLayout.svelte
+ create mode 100644 playground/plugins/admin/plugins/Authentication/layouts/AuthLayout/layout.ts
+ create mode 100644 playground/plugins/admin/plugins/Authentication/layouts/index.ts
+ create mode 100644 playground/plugins/admin/plugins/Authentication/modules/Login/Login.svelte
+ create mode 100644 playground/plugins/admin/plugins/Authentication/modules/Login/module.ts
+ create mode 100644 playground/plugins/admin/plugins/Authentication/modules/Register/Register.svelte
+ create mode 100644 playground/plugins/admin/plugins/Authentication/modules/Register/module.ts
+ create mode 100644 playground/plugins/admin/plugins/Authentication/modules/index.ts
+ create mode 100644 playground/plugins/admin/plugins/Authentication/plugin.ts
+ create mode 100644 playground/plugins/admin/plugins/ContentManagement/plugin.ts
+ create mode 100644 playground/plugins/admin/plugins/ContentTypeBuilder/plugin.ts
+ create mode 100644 playground/plugins/admin/plugins/PageManagement/components/PageModules.svelte
+ create mode 100644 playground/plugins/admin/plugins/PageManagement/modules/ViewPage/ViewPage.svelte
+ create mode 100644 playground/plugins/admin/plugins/PageManagement/modules/ViewPage/module.ts
+ create mode 100644 playground/plugins/admin/plugins/PageManagement/modules/index.ts
+ create mode 100644 playground/plugins/admin/plugins/PageManagement/plugin.ts
+ create mode 100644 playground/plugins/test-plugin/index.js
+ create mode 100644 playground/plugins/test-plugin/test.svelte
+ create mode 100644 playground/plugins/test2-plugin/index.js
+ create mode 100644 playground/plugins/test2-plugin/server.ts
+ create mode 100644 playground/plugins/test2-plugin/test.svelte
+ create mode 100644 playground/svelite.config.js
+ create mode 100644 playground/svelite.server.js
+ create mode 100644 playground/vite.config.js
+ delete mode 100644 postcss.config.js
+ delete mode 100644 src/app.d.ts
+ delete mode 100644 src/app.html
+ delete mode 100644 src/config/postcss.config.js
+ delete mode 100644 src/config/svelte.config.js
+ delete mode 100644 src/config/tailwind.config.js
+ delete mode 100644 src/config/vite.config.js
+ delete mode 100644 src/core/Button/button.css
+ delete mode 100644 src/core/Card/CardBody.svelte
+ delete mode 100644 src/core/Card/CardHeader.svelte
+ delete mode 100644 src/core/Card/CardTitle.svelte
+ delete mode 100644 src/core/FormField/FormField.svelte
+ delete mode 100644 src/core/Header/Header.svelte
+ delete mode 100644 src/core/Icon/Icon.svelte
+ delete mode 100644 src/core/Input/Input.svelte
+ delete mode 100644 src/core/Layout/Layout.svelte
+ delete mode 100644 src/core/Layout/LayoutBody.svelte
+ delete mode 100644 src/core/Modal/Modal.svelte
+ delete mode 100644 src/core/Modal/ModalBody.svelte
+ delete mode 100644 src/core/Modal/ModalFooter.svelte
+ delete mode 100644 src/core/Modal/ModalHeader.svelte
+ delete mode 100644 src/core/Offcanvas/Offcanvas.svelte
+ delete mode 100644 src/core/Page/PageHeader.svelte
+ delete mode 100644 src/core/Sidebar/Sidebar.svelte
+ delete mode 100644 src/core/Sidebar/SidebarItem.svelte
+ delete mode 100644 src/core/Switch/Switch.svelte
+ delete mode 100644 src/core/Switch/switch.css
+ delete mode 100644 src/core/index.js
+ delete mode 100644 src/index.ts
+ create mode 100644 src/lib/client.js
+ rename src/{svelite => lib}/components/SvLayout.svelte (100%)
+ rename src/{svelite => lib}/components/SvModule.svelte (100%)
+ create mode 100644 src/lib/components/SvPage.svelte
+ rename src/{svelite => lib}/components/SvSlot.svelte (100%)
+ create mode 100644 src/lib/components/index.js
+ create mode 100644 src/lib/server.js
+ create mode 100644 src/lib/svelite.js
+ create mode 100644 src/lib/vite.js
+ delete mode 100644 src/routes/[...slug]/+layout.svelte
+ delete mode 100644 src/routes/[...slug]/+layout.ts
+ delete mode 100644 src/routes/[...slug]/+page.svelte
+ delete mode 100644 src/styles.css
+ delete mode 100644 src/svelite/components/SvPage.svelte
+ delete mode 100644 src/svelite/create-svelite.ts
+ delete mode 100644 src/svelite/index.ts
+ delete mode 100644 src/svelite/sv.ts
+ delete mode 100644 src/svelite/svelite-api.ts
+ delete mode 100644 src/svelite/svelite-load.ts
+ create mode 100644 svelite.config.js
+ delete mode 100644 svelte.config.js
+ delete mode 100644 tailwind.config.js
+ delete mode 100644 tsconfig.json
+ create mode 100644 vite.build.config.js

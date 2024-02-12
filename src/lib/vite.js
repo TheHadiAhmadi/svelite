@@ -1,4 +1,5 @@
 import { svelte, vitePreprocess } from "@sveltejs/vite-plugin-svelte";
+import express from 'express'
 import path from "path";
 import { readFileSync, existsSync } from "fs";
 import { normalizeConfig } from "./svelite.js";
@@ -30,6 +31,7 @@ export function svelite(config = {}) {
       const template = readFileSync("./.svelite/index.html", "utf-8");
       console.log("configure middleware");
 
+        vite.middlewares.use(express.json())
       vite.middlewares.use("/", async (req, res, next) => {
         console.log("request: ", req.url, existsSync("." + req.url));
 
@@ -52,18 +54,18 @@ export function svelite(config = {}) {
           path.resolve(".svelite/server.js")
         );
 
-        console.log("render page");
-
-        const result = await render({ url: req.url, method: req.method, template });
+        const protocol = req.connection.encrypted ? 'https' : 'http'
+        const url = new URL(protocol + '://' + req.headers.host + req.url)
+        const result = await render({ request: req, url, method: req.method, template });
 
         if (!result?.body) {
-          return next();
+              return next();
         }
 
         console.log("Headers: ", result.headers);
         console.log("Status: ", result.status);
 
-        return res.end(result.body);
+        return res.end(typeof result.body === 'object' ? JSON.stringify(result.body) : result.body);
       });
       // find current page
       // render page component

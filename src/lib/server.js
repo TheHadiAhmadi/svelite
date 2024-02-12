@@ -1,14 +1,14 @@
 import { render } from "svelte/server";
 import { loadPageData, normalizeConfig } from "./svelite";
-import SvPage from './components/SvPage.svelte'
+import SvLayout from './components/SvLayout.svelte'
 
-async function handleServer(url, method, serverConfig) {
+async function handleServer(serverConfig, request) {
     if(serverConfig?.routes) {
         // find matching server route
         //
         // static 
         for(let route in serverConfig.routes) {
-            if(route === url) {
+            if(route === request.url) {
                 const mapping = {
                     'post': 'POST',
                     'POST': 'POST',
@@ -17,15 +17,7 @@ async function handleServer(url, method, serverConfig) {
                     'GET': 'GET',
                 }
 
-                const request = {
-                    url,
-                    method,
-                    params: {},  // TODO
-                    body: {a: 1} // TODO
-
-                }
-
-                const response = await serverConfig.routes[route][mapping[method ?? 'GET']](request)
+                const response = await serverConfig.routes[route][mapping[request.method ?? 'GET']](request)
                 return response
             }
         }
@@ -34,16 +26,18 @@ async function handleServer(url, method, serverConfig) {
 }
 // TODO: Handle api requests
 export async function respond(configObject, ctx) {
-  const url = ctx.url;
-  const template = ctx.template;
+    const url = ctx.url
+    const template = ctx.template;
     const method = ctx.method
 
   const config = normalizeConfig(configObject);
   const { page } = await loadPageData(url, config);
 
-  if (!page || (method !== 'GET')) return handleServer(url, ctx.method, ctx.server);
+  if (!page || (method !== 'GET')) return handleServer(ctx.server, ctx.request);
   
-  const { html, head } = render(SvPage, {
+
+    console.log(page)
+  const { html, head } = render(SvLayout, {
     props: {
       page,
     },

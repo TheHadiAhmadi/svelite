@@ -5,35 +5,63 @@ export function matchRoute(slug, pages) {
     return {} 
 }
 
-export async function loadPageData(slug, config) {
+export async function loadPageData(url, config) {
+    console.log('loadPageData', url)
+    const slug = url.pathname
     const {page, params} = matchRoute(slug, config.pages)
 
-    if(!page) return {}
-
-    // layout
-    if (page.layout) {
-        // layout component
-        page.layout.component = config.layouts[page.layout.name].component;
-
-        // layout load
-        if (config.layouts[page.layout.name].load) {
-            page.layout.props ??= {};
-            page.layout.props.data = await config.layouts[page.layout.name].load(
-                page.layout.props,
-                config.api,
-                params
-            );
+    function api(path) {
+        return {
+            async get(params) {
+                return fetch(url.origin + path).then(res => res.json())
+            },
+            async post(body) {
+                return fetch(url.origin + path, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                }).then(res => res.json())
+            }
         }
     }
 
+    if(!page) return {}
+
+    const resolvedLayouts = {}
+    // layout
+    if (page.layout) {
+        // layout component
+        if(!resolvedLayouts[page.layout.name])
+            resolvedLayouts[page.layout.name] = await config.layouts[page.layout.name]
+        page.layout.component = resolvedLayouts[page.layout.name].default
+
+        // layout load
+        if (resolvedLayouts[page.layout.name].load) {
+            page.layout.props ??= {};
+            page.layout.props.data = await resolvedLayouts[page.layout.name].load({
+                props: page.layout.props,
+                api,
+                params
+            });
+        }
+    }
+
+    const resolvedModules = {}
     // Page (recursive)
     async function initializeModule(module) {
+        if(!resolvedModules[module.name])
+            resolvedModules[module.name] = await config.modules[module.name]
+
         // page component
-        module.component = config.modules[module.name].component ?? config.modules[module.name];
+        module.component = resolvedModules[module.name].default
         // page load
-        if (config.modules[module.name].load) {
+        if (resolvedModules[module.name].load) {
+
+            console.log('load: ', resolvedModules)
             module.props ??= {}
-            module.props.data = await config.modules[module.name].load(module.props, config.api, params);
+            module.props.data = await resolvedModules[module.name].load({props: module.props, api, params});
         }
 
         // initialize all modules of page recursively
@@ -43,7 +71,7 @@ export async function loadPageData(slug, config) {
                 Array.isArray(prop) &&
                 prop.length > 0 &&
                 typeof prop[0].props === 'object' &&
-                config.modules[prop[0].name]
+                resolvedModules[prop[0].name]
             ) {
                 for (let slot of prop) {
                     await initializeModule(slot);

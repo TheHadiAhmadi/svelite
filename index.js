@@ -9,9 +9,12 @@ app.use(sirv('./client'))
 
 app.use('/', async (req, res) => {
     const template = readFileSync('./client/.svelite/index.html', 'utf-8')
-    const result = await render({url: req.url, template, method: req.method})
+    const url = new URL(req.protocol + "://" + req.headers.host + req.url)
+    const result = await render({request: req, url, method: req.method, template})
     
-    res.end(result)
+    let response = typeof result === 'object' ? JSON.stringify(result) : result
+
+    res.end(response)
 })
 
 app.listen(3000)

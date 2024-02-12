@@ -1,11 +1,12 @@
 <script>
-	let { children, data, ...rest } = $props();
+    import SvPage from './SvPage.svelte'
+	let { page } = $props();
 </script>
 
-{#if data.page?.layout}
-	<svelte:component this={data.page.layout.component} {...data.page.layout.props}>
-		{@render children()}
+{#if page.layout}
+	<svelte:component this={page.layout.component} {...page.layout.props}>
+        <SvPage {page}/>
 	</svelte:component>
 {:else}
-	{@render children()}
+    <SvPage {page}/>
 {/if}

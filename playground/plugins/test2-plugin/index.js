@@ -1,7 +1,6 @@
 import Test from './test.svelte'
 
 export default () => {
-
     return {
         modules: {
             Test,

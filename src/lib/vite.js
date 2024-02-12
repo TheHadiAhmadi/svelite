@@ -15,16 +15,14 @@ export function svelite(config = {}) {
     config() {
       return {
         resolve: {
-          alias: {},
+          alias: {
+              '$modules': path.resolve('./modules'),
+              '$plugins': path.resolve('./plugins'),
+          },
         },
         ssr: {
           noExternal: ['svelitecms']
         },
-        // build: {
-        //   rollupOptions: {
-        //     input: ".svelite/index.html",
-        //   },
-        // },
       };
     },
     async configureServer(vite) {
@@ -43,6 +41,10 @@ export function svelite(config = {}) {
         console.log("passed two");
         if (req.url.startsWith("/@vite")) return next();
         console.log("passed three");
+
+        if(req.url.includes('svelite.server') && req.method === 'GET') {
+            return res.end('export default {routes: {}}');
+        }
 
         if (!sveliteConfig) {
           const configModule = await vite.ssrLoadModule(configFile);
@@ -69,7 +71,7 @@ export function svelite(config = {}) {
       });
       // find current page
       // render page component
-    },
+      }
   };
 
   return [

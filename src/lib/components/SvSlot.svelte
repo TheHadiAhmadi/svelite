@@ -1,9 +1,9 @@
 <script>
 	import SvModule from './SvModule.svelte';
 
-	let { slot = [] } = $props();
+	let { modules = [] } = $props();
 </script>
 
-{#each slot as item}
+{#each modules as item}
 	<SvModule component={item.component} properties={item.props} />
 {/each}

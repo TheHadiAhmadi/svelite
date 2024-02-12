@@ -1,5 +1,11 @@
 export default {
     routes: {
+        "/rrrrrr": {
+
+            POST() {
+                return {body: "rrrrrrrrrr"}
+            }
+        },
         '/api/test': {
 
             GET() {

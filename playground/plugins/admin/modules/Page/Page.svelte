@@ -29,6 +29,6 @@
         {/snippet}
 
 	{#snippet children()}
-		<SvSlot slot={content} />
+		<SvSlot modules={content} />
 	{/snippet}
 </Page>

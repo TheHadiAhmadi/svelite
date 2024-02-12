@@ -1,8 +1,7 @@
-import Test2Plugin from './plugins/test2-plugin/server'
-
+import test2Plugin from './plugins/test2-plugin/server'
 export default {
-    plugins: [Test2Plugin],
     routes: {
+        ...test2Plugin.routes,
         '/': {
             POST(request) {
                 return {

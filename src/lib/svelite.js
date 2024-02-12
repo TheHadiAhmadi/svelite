@@ -6,7 +6,6 @@ export function matchRoute(slug, pages) {
 }
 
 export async function loadPageData(url, config) {
-    console.log('loadPageData', url)
     const slug = url.pathname
     const {page, params} = matchRoute(slug, config.pages)
 
@@ -90,24 +89,6 @@ export async function loadPageData(url, config) {
 
 export function normalizeConfig(config) {
     
-	let api = {};
-	if (config.api) {
-		if (typeof config.api === 'object') {
-	// 		api = customApi(config.api);
-		} else if (typeof config.api === 'string') {
-			// api = createSveliteApi(config.api);
-		} else {
-			// api = createSveliteApi('/api');
-		}
-	} else {
-	// 	api = createSveliteApi('/api');
-	}
-
-    api = {
-        auth: {login: console.log, register: console.log, logout: console.log, getUser: console.log},
-        db: (collection) => ({find: () => ({find: console.log, first: console.log, filter: console.log}), insert: console.log, update: console.log, remove: console.log})
-    }
-
     // enable modules Single component mode (no name, description, load...)
 	let modules = {};
 	let layouts = {};
@@ -132,12 +113,11 @@ export function normalizeConfig(config) {
 	pages = [...pages, ...(config.pages ?? [])];
 
     return {
-        api,
         pages: pages.map(x => ({
             ...x, 
             slug: x.slug.startsWith('/') ? x.slug : '/' + x.slug})),
         modules,
-        layouts
+        layouts,
     }
 }
 

@@ -32,6 +32,7 @@ export async function loadPageData(slug, config) {
         module.component = config.modules[module.name].component ?? config.modules[module.name];
         // page load
         if (config.modules[module.name].load) {
+            module.props ??= {}
             module.props.data = await config.modules[module.name].load(module.props, config.api, params);
         }
 

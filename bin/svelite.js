@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import {svelte} from '@sveltejs/vite-plugin-svelte'
-import {svelite} from '../src/lib/vite.js'
+import {svelite} from 'svelitecms/vite'
 
 import { existsSync, mkdirSync, writeFileSync} from 'fs'
 import {readdir} from 'fs/promises'
@@ -112,7 +112,7 @@ async function init() {
     if(existsSync('.svelite/client.js')) return;
 
     if(!existsSync('svelite.config.js')) {
-        writeFileSync('svelite.config.js', `export defualt {
+        writeFileSync('svelite.config.js', `export default {
     plugins: [/* List of plugins */],
     pages: [/* List of pages */],
     modules: {

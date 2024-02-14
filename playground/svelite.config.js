@@ -5,7 +5,7 @@ import * as Header from './modules/Header.svelte'
 
 import AdminPlugin from './plugins/admin/index'
 import TestPlugin from './plugins/test2-plugin/index.js'
-
+ 
 export default {
     plugins: [
         TestPlugin(), 

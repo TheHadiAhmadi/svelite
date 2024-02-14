@@ -2,16 +2,19 @@
 import {svelte} from '@sveltejs/vite-plugin-svelte'
 import {svelite} from 'svelitecms/vite'
 
-import { existsSync, mkdirSync, writeFileSync} from 'fs'
+import { existsSync, mkdirSync, writeFileSync, renameSync} from 'fs'
 import {readdir} from 'fs/promises'
 import path from 'path'
 import { createServer, build } from 'vite'
+import { ChildProcess, spawn } from 'child_process'
 let mode = 'dev'
 
 if(process.argv.includes('build')) {
     mode = 'build'
 } else if(process.argv.includes('pack')) {
     mode = 'pack'
+} else if(process.argv.includes('deploy')) {
+    mode = 'deploy'
 } else if(process.argv.includes('preview')) {
     mode = 'preview'
 } else if(process.argv.includes('init')) {
@@ -28,22 +31,66 @@ if(mode === 'dev') {
     vite.printUrls()
 
 } else if(mode === 'build') {
+    const isVercel = process.argv.includes('vercel')
+    if(isVercel) {
+        mkdirSync('./build/.vercel/output/functions/fn.func', {recursive: true})
+        writeFileSync('./build/.vercel/output/functions/fn.func/package.json', JSON.stringify({
+            type: "module",
+        }))
+
+        writeFileSync('./build/.vercel/output/config.json', JSON.stringify({
+            version: 3,
+            routes: [
+                {
+                    handle: "filesystem"
+                },
+                {
+                    "src": "/.*",
+                    "dest": "/fn"
+                }
+            ]
+        }))
+
+        writeFileSync('./build/.vercel/output/functions/fn.func/.vc-config.json', JSON.stringify({
+            runtime: "nodejs20.x",
+            handler: "index.js",
+            launcherType: "Nodejs"
+        }))
+
+        writeFileSync('./build/.vercel/output/functions/fn.func/index.js', `
+import {render} from './server/server.js'
+import {readFileSync} from 'fs'
+
+export default async (req, res) => {
+    const template = readFileSync('./index.html', 'utf-8')
+    const url = new URL(req.protocol + "://" + req.headers.host + req.url)
+    const result = await render({request: req, url, method: req.method, template})
+    
+    let response = typeof result?.body === 'object' ? JSON.stringify(result.body) : result.body
+
+    res.end(response)
+}
+        `)
+    }
     const result = await build({
         plugins: [svelite()],
         build: {
             ssr: true,
-            outDir: 'build/server',
+            outDir: isVercel ? 'build/.vercel/output/functions/fn.func/server' : 'build/server',
             rollupOptions: {
-                input: path.resolve('.svelite/server.js')
+                input: path.resolve('.svelite/server.js'),
             }
         },
+        ssr: {
+            noExternal: ['esm-env']
+        }
     }).then(res => {
         // res.write()
     })
     console.log('here: ')
     const result2 = await build({
         build: {
-            outDir: 'build/client',
+            outDir: isVercel ? 'build/.vercel/output/static' : 'build/client',
             rollupOptions: {
                 input: '.svelite/index.html'
             }
@@ -52,6 +99,10 @@ if(mode === 'dev') {
     }).then(res => {
     })
     
+    if(isVercel)
+    {
+        renameSync('./build/.vercel/output/static/.svelite/index.html', './build/.vercel/output/functions/fn.func/index.html');
+    }
 
     const indexJS = `import {render} from './server/server.js'
 import {readFileSync} from 'fs'
@@ -76,7 +127,12 @@ app.use('/', async (req, res) => {
 app.listen(3000, () => console.log('server started at localhost:' + 3000))`
 
     writeFileSync('build/index.js', indexJS)
-    // 
+    
+} else if(mode === 'deploy') {
+    if(process.argv.includes('vercel')) {
+        spawn('vercel', ['deploy', '--prebuilt', '--prod', 'build'])
+    }
+
 } else if(mode === 'preview') {
     preview()
     // cd dist && node index.js
@@ -96,8 +152,7 @@ app.listen(3000, () => console.log('server started at localhost:' + 3000))`
                 rollupOptions: {
                     output: {
                         manualChunks: {}
-                      },
-
+                    },
                     external: ['svelte']
                 },
                 outDir: './dist/' + plugin,

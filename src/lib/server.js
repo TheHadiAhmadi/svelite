@@ -14,12 +14,21 @@ async function handleServer(routes, request) {
                 'GET': 'GET',
             }
 
-            try {
-            const response = await routes[route][mapping[request.method ?? 'GET']](request)
-            return response
-            } catch(err) {
+            const method = routes[route][mapping[request.method ?? 'GET']]
 
-                return {status: 405, body: 'Method or route not found'}
+            if(!method) {
+                return {
+                    status: 405, 
+                    body: 'Method or route not found'
+                }
+            }
+
+            try {
+                const response = await method(request)
+                return response
+            } catch(err) {
+                console.log(err)
+                return {}
             }
         }
     }
@@ -39,6 +48,8 @@ export async function respond(configObject, ctx) {
           return handleServer(ctx.server.routes, ctx.request);
       }
   }
+
+    if(!page) return {body: '404'}
   
   const { html, head } = render(SvLayout, {
     props: {

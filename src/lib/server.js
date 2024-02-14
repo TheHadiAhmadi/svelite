@@ -41,6 +41,7 @@ export async function respond(configObject, ctx) {
     const method = ctx.method
 
   const config = normalizeConfig(configObject);
+  console.log({url})
   const { page } = await loadPageData(url, config);
 
   if (!page || (method !== 'GET')) {

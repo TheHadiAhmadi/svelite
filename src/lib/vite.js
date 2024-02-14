@@ -31,18 +31,20 @@ export function svelite(config = {}) {
 
         vite.middlewares.use(express.json())
       vite.middlewares.use("/", async (req, res, next) => {
-        console.log("request: ", req.url, existsSync("." + req.url));
+        const urlpath = req.url.split("?")[0]
+        console.log("request: ", req.url, existsSync("." + urlpath));
+        
 
-        if (existsSync("." + req.url.split("?")[0]) && !req.url === '/') return next();
+        if (existsSync("." + urlpath) && req.url !== '/') return next();
         console.log("passed one");
         // TODO: find better ways
-        if (req.url.startsWith("/@fs")) return next();
-        if (req.url.startsWith("/favicon.ico")) return next();
+        if (urlpath.startsWith("/@fs")) return next();
+        if (urlpath.startsWith("/favicon.ico")) return next();
         console.log("passed two");
-        if (req.url.startsWith("/@vite")) return next();
+        if (urlpath.startsWith("/@vite")) return next();
         console.log("passed three");
 
-        if(req.url.includes('svelite.server') && req.method === 'GET') {
+        if(urlpath.includes('svelite.server') && req.method === 'GET') {
             return res.end('export default {routes: {}}');
         }
 

@@ -1,6 +1,6 @@
 {
     "name": "svelitecms",
-    "version": "0.0.6-next.20",
+    "version": "0.0.6-next.21",
     "type": "module",
     "bin": {
         "svelite": "bin/svelite.js"
@@ -18,7 +18,9 @@
         "vercel": "^33.5.1",
         "vite": "^5.1.0-beta.0"
     },
-    "files": ["files/*"],
+    "files": [
+        "files/*"
+    ],
     "exports": {
         ".": {
             "import": "./dist/svelite.js",

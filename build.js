@@ -45,5 +45,6 @@ await build({
 cpSync('./src/lib/components', './dist/components', {
     recursive: true
 })
+cpSync('./src/lib/components/index.js', './dist/components/index.js')
 
 

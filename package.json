@@ -7,12 +7,7 @@
     },
     "scripts": {
         "dev": "vite",
-        "build": "npm run build:server && npm run build:client && npm run build:index",
-        "build:package": "node build.js",
-        "build:client": "vite build --outDir build/client",
-        "build:server": "vite build --ssr .svelite/server.js --outDir build/server",
-        "build:index": "cp index.js dist",
-        "build:components": "cp src/lib/components dist -r"
+        "build": "node scripts/build.js"
     },
     "dependencies": {
         "@sveltejs/vite-plugin-svelte": "^3.0.1",
@@ -23,6 +18,7 @@
         "vercel": "^33.5.1",
         "vite": "^5.1.0-beta.0"
     },
+    "files": ["files/*"],
     "exports": {
         ".": {
             "import": "./dist/svelite.js",

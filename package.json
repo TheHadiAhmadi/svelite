@@ -1,6 +1,6 @@
 {
     "name": "svelitecms",
-    "version": "0.0.6-next.19",
+    "version": "0.0.6-next.20",
     "type": "module",
     "bin": {
         "svelite": "bin/svelite.js"

@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 import {svelte} from '@sveltejs/vite-plugin-svelte'
 import {svelite} from 'svelitecms/vite'
+import 'dotenv/config'
 
 import { existsSync, mkdirSync, writeFileSync, renameSync} from 'fs'
 import {readdir} from 'fs/promises'
 import path from 'path'
 import { createServer, build } from 'vite'
-import { ChildProcess, spawn } from 'child_process'
+import { spawn } from 'child_process'
 let mode = 'dev'
 
 if(process.argv.includes('build')) {
@@ -17,10 +18,17 @@ if(process.argv.includes('build')) {
     mode = 'deploy'
 } else if(process.argv.includes('preview')) {
     mode = 'preview'
-} else if(process.argv.includes('init')) {
-    mode = 'init'
+}
+
+function checkInit() {
+    if(existsSync('./.svelite')) {
+        return;
+    } else {
+        init()
+    }
 }
  
+checkInit();
 
 if(mode === 'dev') {
     const vite = await createServer({
@@ -96,7 +104,6 @@ export default async (req, res) => {
     }).then(res => {
         // res.write()
     })
-    console.log('here: ')
     const result2 = await build({
         build: {
             outDir: isVercel ? 'build/.vercel/output/static' : 'build/client',
@@ -145,9 +152,6 @@ app.listen(3000, () => console.log('server started at localhost:' + 3000))`
 } else if(mode === 'preview') {
     preview()
     // cd dist && node index.js
-} else if(mode === 'init') {
-    init()
-    // create file and folder
 } else {
     // pack
     const plugins = await readdir('./plugins')
@@ -207,8 +211,9 @@ async function init() {
 
     const clientJS = `import config from '../svelite.config.js'
 import init from 'svelitecms/client'
+import {SvLayout} from 'svelitecms/components'
 
-init(config)
+init(config, SvLayout)
 `
 
     const serverJS = `import config from '../svelite.config.js'

@@ -1,8 +1,7 @@
 import { normalizeConfig, loadPageData} from "./svelite"
-import {createRoot} from 'svelte'
-import SvLayout from './components/SvLayout.svelte'
+import { createRoot } from "svelte"
 
-export default async function (configObject) {
+export default async function (configObject, SvLayout) {
     const config = normalizeConfig(configObject)
 
     const {page} = await loadPageData(window.location, config)

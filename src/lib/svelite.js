@@ -1,14 +1,20 @@
-export function matchRoute(slug, pages) {
+export function matchRoute(slug, pages, routes = []) {
+    console.log('matchRoute', {slug, pages, routes})
     for(let page of pages ?? []) {
         if(page.slug == slug) return {page};
+    }
+    for(let route in routes ?? {}) {
+        console.log({route, slug: slug.slice(1)})
+        if(route === slug.slice(1)) return {route: routes[route]};
     }
     return {} 
 }
 
 export async function loadPageData(url, config) {
     const slug = url.pathname
-    const {page, params} = matchRoute(slug, config.pages)
+    const {page, route, params} = matchRoute(slug, config.pages, config.routes)
 
+    console.log({page, route})
     function api(path) {
         return {
             async get(params) {
@@ -26,7 +32,9 @@ export async function loadPageData(url, config) {
         }
     }
 
-    if(!page) return {}
+    if(!page) {
+        return { route }
+    }
 
     const resolvedLayouts = {}
     // layout
@@ -83,7 +91,7 @@ export async function loadPageData(url, config) {
         await initializeModule(module);
     }
     return {
-        page
+        page,
     };
 }
 

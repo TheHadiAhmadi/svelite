@@ -11,11 +11,14 @@ await build({
         rollupOptions: {
             input: {
                 svelite: path.resolve("./src/lib/svelite"),
-                // client: path.resolve("./src/lib/client"),
                 server: path.resolve("./src/lib/server"),
                 vite: path.resolve("./src/lib/vite"),
             },
         }
+    },
+    ssr: {
+        noExternal: ['esm-env'],
+        external: ['svelte']
     },
     plugins: [svelte()]
 })
@@ -29,8 +32,10 @@ await build({
             entry: path.resolve("./src/lib/client"),
             name: "svelite-client",
             fileName: 'client',
-            rollupOptions: {
-            }
+            formats: ['es'],
+        },
+        rollupOptions: {
+            external: ['svelte']
         }
     },
     plugins: [svelte()]

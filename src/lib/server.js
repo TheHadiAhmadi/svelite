@@ -65,48 +65,32 @@ export async function respond(configObject, ctx) {
 
 export function sveliteDb(token, base_url) {
     return (table = "") => {
+        async function call(path, body) {
+            console.log('db call: ', path, body)
+            
+            const response = await fetch(`${base_url}/${token}/${table}/${path}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            }).then(res => res.json())
+            console.log({response})
+            return result;
+        }
+
         return {
             async query({filters, page, perPage}) {
-                console.log('query', {base_url, token, table, filters, page, perPage})
-                
-                return fetch(`${base_url}/${token}/${table}/query`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({filters, page, perPage})
-                }).then(res => res.json())
+                return call('query', {filters, page, perPage})
             },
             async insert(data) {
-                console.log('insert', {base_url, token, table, data})
-                const res = await fetch(`${base_url}/${token}/${table}/insert`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                }).then(res => res.json())
-                console.log(res)
+                return call('insert', data)
             },
             async update(data) {
-                console.log('update', {base_url, token, table, data})
-                return fetch(`${base_url}/${token}/${table}/update`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                }).then(res => res.json())
+                return call('update', data)
             },
             async remove(id) {
-                console.log('remove', {base_url, token, table, id})
-                return fetch(`${base_url}/${token}/${table}/update`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({id})
-                }).then(res => res.json())
+                return call('remove', {id})
             }
         }
     }

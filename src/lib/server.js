@@ -2,7 +2,7 @@ import { render } from "svelte/server";
 import { loadPageData, normalizeConfig } from "./svelite";
 import SvLayout from './components/SvLayout.svelte'
 
-async function handlePage(page, template) {
+function handlePage(page, template) {
   const { html, head } = render(SvLayout, {
     props: {
       page,
@@ -52,7 +52,10 @@ export async function respond(configObject, ctx) {
   const { page, route } = await loadPageData(url, config);
 
     if(page) {
-        return handlePage(page, template)
+        console.log({template})
+        const res = handlePage(page, template)
+        console.log('res: ', res)
+        return res
     }
   if(route) {
       if(ctx.server.db) {
@@ -66,7 +69,7 @@ export async function respond(configObject, ctx) {
 export function sveliteDb(token, base_url) {
     return (table = "") => {
         async function call(path, body) {
-            console.log('db call: ', path, body)
+            console.log('db: ', path, body)
             
             const response = await fetch(`${base_url}/${token}/${table}/${path}`, {
                 method: 'POST',

@@ -79,7 +79,7 @@ export function sveliteDb(token, base_url) {
                 body: JSON.stringify(body)
             }).then(res => res.json())
             console.log({response})
-            return result;
+            return response;
         }
 
         return {

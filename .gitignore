@@ -1,5 +1,5 @@
 legacy
-.svelite
+/.svelite
 node_modules
 dist
 /build

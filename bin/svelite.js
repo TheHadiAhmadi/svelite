@@ -33,7 +33,7 @@ if(mode === 'dev') {
 } else if(mode === 'build') {
     const isVercel = process.argv.includes('vercel')
     if(isVercel) {
-        cpSync(path.resolve('node_modules/svelitecms/files/.vercel'), './build/.vercel', {
+        cpSync(path.resolve('node_modules/svelitecms/files/.vercel'), './.vercel', {
             recursive: true
         })
     }
@@ -42,7 +42,7 @@ if(mode === 'dev') {
         plugins: [svelite()],
         build: {
             ssr: true,
-            outDir: isVercel ? 'build/.vercel/output/functions/fn.func/server' : 'build/server',
+            outDir: isVercel ? '.vercel/output/functions/fn.func/server' : 'build/server',
             rollupOptions: {
                 input: path.resolve('.svelite/server.js'),
             }
@@ -55,7 +55,7 @@ if(mode === 'dev') {
     })
     const result2 = await build({
         build: {
-            outDir: isVercel ? 'build/.vercel/output/static' : 'build/client',
+            outDir: isVercel ? '.vercel/output/static' : 'build/client',
             rollupOptions: {
                 input: '.svelite/index.html'
             }
@@ -66,9 +66,9 @@ if(mode === 'dev') {
     
     if(isVercel)
     {
-        renameSync('./build/.vercel/output/static/.svelite/index.html', './build/.vercel/output/functions/fn.func/index.html');
+        renameSync('./.vercel/output/static/.svelite/index.html', './.vercel/output/functions/fn.func/index.html');
     } else {
-        cpSync(path.resolve('node_modules/svelitecms/files/build/index.js'), './build/index.js')
+        cpSync(path.resolve('node_modules/svelitecms/files/build/index.js'), './index.js')
     }
 } else if(mode === 'deploy') {
     if(process.argv.includes('vercel')) {

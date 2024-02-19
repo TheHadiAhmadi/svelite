@@ -59,11 +59,58 @@ export async function respond(configObject, ctx) {
     }
   if(route) {
       if(ctx.server.db) {
-          ctx.request.db = sveliteDb(ctx.server.db.token, ctx.server.db.base_url)
-          console.log(ctx.request.db)
+	  if(ctx.server.db.token) {
+		  ctx.request.db = sveliteDb(ctx.server.db.token, ctx.server.db.base_url)
+	  } else {
+		  ctx.request.db = memoryDb(ctx.server.db.initial_data ?? {})
+	   }
       }
       return handleRoute(route, ctx.request);
   }
+}
+
+function memoryDb(initialData = {}) {
+	const _data = initialData 
+
+	return (table = "") => {
+		return {
+
+			async query({filters, page, perPage}) {
+				return (_data[table] ?? [])
+
+			},
+			async insert(data) {
+
+				_data[table] ??= []
+				_data.id = "id_" + Math.random()
+				_data[table].push(data)
+				return data
+			},
+			async update(data) {
+
+				if(!_data[table]) {
+					return;
+				}
+
+				_data[table] = _data[table].map(x => { 
+					
+					if(x.id === data.id)
+						return {...x, ...data}
+
+					return x
+				})
+
+				return {todo: true}
+
+			},
+			async remove(id) {
+				if(!_data[table]) return;
+
+				_data[table] = _data[table].filter(x => x.id !== id)
+				return true
+			}
+		}
+	}
 }
 
 export function sveliteDb(token, base_url) {

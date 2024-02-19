@@ -31,6 +31,7 @@ async function handleRoute(route, request) {
 
     try {
         const response = await method(request)
+	   console.log(response)
         return response
     } catch(err) {
         console.log(err)
@@ -76,7 +77,11 @@ function memoryDb(initialData = {}) {
 		return {
 
 			async query({filters, page, perPage}) {
-				return (_data[table] ?? [])
+				if(!_data[table]) return []
+
+				return {
+					data: _data[table]
+				}
 
 			},
 			async insert(data) {
@@ -84,6 +89,7 @@ function memoryDb(initialData = {}) {
 				_data[table] ??= []
 				_data.id = "id_" + Math.random()
 				_data[table].push(data)
+
 				return data
 			},
 			async update(data) {

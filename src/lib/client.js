@@ -1,5 +1,5 @@
 import { normalizeConfig, loadPageData} from "./svelite"
-import { createRoot } from "svelte"
+import { hydrate } from "svelte"
 
 export default async function (configObject, SvLayout) {
     const config = normalizeConfig(configObject)
@@ -15,5 +15,5 @@ export default async function (configObject, SvLayout) {
         }
     }
 
-    createRoot(SvLayout, options)
+    hydrate(SvLayout, options)
 }

@@ -1,11 +1,50 @@
 export function matchRoute(slug, pages, routes = []) {
     console.log('matchRoute', {slug, pages, routes})
+    const params = {}
     for(let page of pages ?? []) {
-        if(page.slug == slug) return {page};
+        if(page.slug == slug) return {page, params};
     }
     for(let route in routes ?? {}) {
         console.log({route, slug: slug.slice(1)})
-        if(route === slug.slice(1)) return {route: routes[route]};
+        if(route === slug.slice(1)) return {route: routes[route], params};
+
+        const routeSplitted = route.split('/')
+        const slugSplitted = slug.slice(1).split('/')
+
+
+        let resultRoute;
+
+        console.log(routeSplitted, slugSplitted)
+        if(routeSplitted.length === slugSplitted.length) {
+            for(let index in routeSplitted) {
+                console.log(routeSplitted[index])
+                if(routeSplitted[index].startsWith(':')) {
+                    params[routeSplitted[index].slice(1)] = slugSplitted[index]
+                    console.log('set param', params)
+
+
+                    resultRoute = route;
+                    continue
+                } else {
+
+                    if(routeSplitted[index] !== slugSplitted[index]) {
+                        resultRoute = null
+                        break;
+                    }
+                }
+
+                
+            }
+    
+            if(resultRoute) {
+                return {
+                    route: routes[resultRoute],
+                    params
+                }
+            }
+
+        }
+        
     }
     return {} 
 }
@@ -14,7 +53,7 @@ export async function loadPageData(url, config) {
     const slug = url.pathname
     const {page, route, params} = matchRoute(slug, config.pages, config.routes)
 
-    console.log({page, route})
+    console.log({page, route, params})
     function api(path) {
         return {
             async get(params) {
@@ -33,7 +72,7 @@ export async function loadPageData(url, config) {
     }
 
     if(!page) {
-        return { route }
+        return { route, params }
     }
 
     const resolvedLayouts = {}

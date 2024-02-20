@@ -3,7 +3,7 @@ import {svelte} from '@sveltejs/vite-plugin-svelte'
 import {svelite} from 'svelitecms/vite'
 import 'dotenv/config'
 
-import { existsSync, renameSync, cpSync} from 'fs'
+import { existsSync, renameSync, cpSync, writeFile, writeFileSync} from 'fs'
 import {readdir} from 'fs/promises'
 import path from 'path'
 import { createServer, build } from 'vite'
@@ -68,7 +68,8 @@ if(mode === 'dev') {
     {
         renameSync('./.vercel/output/static/.svelite/index.html', './.vercel/output/functions/fn.func/index.html');
     } else {
-        cpSync(path.resolve('node_modules/svelitecms/files/build/index.js'), './index.js')
+        cpSync(path.resolve('node_modules/svelitecms/files/build/index.js'), './build/index.js')
+        writeFileSync('./build/package.json', JSON.stringify({type: 'module'}))
     }
 } else if(mode === 'deploy') {
     if(process.argv.includes('vercel')) {

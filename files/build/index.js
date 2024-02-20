@@ -1,4 +1,4 @@
-import {render} from './server/server.js'
+import {render} from './server/server.mjs'
 import {readFileSync} from 'fs'
 import express from 'express'
 import sirv from 'sirv'
@@ -18,4 +18,5 @@ app.use('/', async (req, res) => {
     res.end(response)
 })
 
-app.listen(3000, () => console.log('server started at localhost:' + 3000))
+const {PORT = 3000} = process.env
+app.listen(PORT, () => console.log('server started at localhost:' + PORT))

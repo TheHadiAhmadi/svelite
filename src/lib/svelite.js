@@ -1,17 +1,17 @@
 export function matchRoute(slug, pages, routes = []) {
-    console.log('matchRoute', {slug, pages, routes})
+    console.log('matchRoute', { slug, pages, routes })
     const params = {}
-    for(let page of pages ?? []) {
-        if(page.slug == slug) return {page, params};
-        
+    for (let page of pages ?? []) {
+        if (page.slug == slug) return { page, params };
+
         const routeSplitted = page.slug.slice(1).split('/')
         const slugSplitted = slug.slice(1).split('/')
 
         let resultPage
 
-        if(routeSplitted.length === slugSplitted.length) {
-            for(let index in routeSplitted) {
-                if(routeSplitted[index].startsWith(':')) {
+        if (routeSplitted.length === slugSplitted.length) {
+            for (let index in routeSplitted) {
+                if (routeSplitted[index].startsWith(':')) {
                     params[routeSplitted[index].slice(1)] = slugSplitted[index]
 
 
@@ -19,16 +19,16 @@ export function matchRoute(slug, pages, routes = []) {
                     continue
                 } else {
 
-                    if(routeSplitted[index] !== slugSplitted[index]) {
+                    if (routeSplitted[index] !== slugSplitted[index]) {
                         resultPage = null
                         break;
                     }
                 }
 
-                
+
             }
-    
-            if(resultPage) {
+
+            if (resultPage) {
                 return {
                     page: resultPage,
                     params
@@ -36,10 +36,10 @@ export function matchRoute(slug, pages, routes = []) {
             }
         }
     }
-    
-    for(let route in routes ?? {}) {
-        console.log({route, slug: slug.slice(1)})
-        if(route === slug.slice(1)) return {route: routes[route], params};
+
+    for (let route in routes ?? {}) {
+        console.log({ route, slug: slug.slice(1) })
+        if (route === slug.slice(1)) return { route: routes[route], params };
 
         const routeSplitted = route.split('/')
         const slugSplitted = slug.slice(1).split('/')
@@ -47,10 +47,10 @@ export function matchRoute(slug, pages, routes = []) {
 
         let resultRoute;
 
-        if(routeSplitted.length === slugSplitted.length) {
-            for(let index in routeSplitted) {
+        if (routeSplitted.length === slugSplitted.length) {
+            for (let index in routeSplitted) {
                 console.log(routeSplitted[index])
-                if(routeSplitted[index].startsWith(':')) {
+                if (routeSplitted[index].startsWith(':')) {
                     params[routeSplitted[index].slice(1)] = slugSplitted[index]
                     console.log('set param', params)
 
@@ -59,16 +59,16 @@ export function matchRoute(slug, pages, routes = []) {
                     continue
                 } else {
 
-                    if(routeSplitted[index] !== slugSplitted[index]) {
+                    if (routeSplitted[index] !== slugSplitted[index]) {
                         resultRoute = null
                         break;
                     }
                 }
 
-                
+
             }
-    
-            if(resultRoute) {
+
+            if (resultRoute) {
                 return {
                     route: routes[resultRoute],
                     params
@@ -76,23 +76,25 @@ export function matchRoute(slug, pages, routes = []) {
             }
 
         }
-        
+
     }
-    return {} 
+    return {}
 }
 
 export async function loadPageData(url, config) {
     const slug = url.pathname
-    const {page, route, params} = matchRoute(slug, config.pages, config.routes)
+    const { page, route, params } = matchRoute(slug, config.pages, config.routes)
 
-    console.log({page, route, params})
+    console.log({ page, route, params })
+    const base_url = url.origin;
+
     function api(path) {
         return {
             async get(params) {
-                return fetch(url.origin + path).then(res => res.json())
+                return fetch(base_url + path).then(res => res.json())
             },
             async post(body) {
-                return fetch(url.origin + path, {
+                return fetch(base_url + path, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -103,7 +105,7 @@ export async function loadPageData(url, config) {
         }
     }
 
-    if(!page) {
+    if (!page) {
         return { route, params }
     }
 
@@ -111,17 +113,33 @@ export async function loadPageData(url, config) {
     // layout
     if (page.layout) {
         // layout component
-        if(!resolvedLayouts[page.layout.name])
+        if (!resolvedLayouts[page.layout.name])
             resolvedLayouts[page.layout.name] = await config.layouts[page.layout.name]
         page.layout.component = resolvedLayouts[page.layout.name].default
 
         // layout load
         if (resolvedLayouts[page.layout.name].load) {
             page.layout.props ??= {};
+
+            const paramsObject = {}
+
+            if (layout.params) {
+                for (let key in module.params) {
+                    if (module.params[key].startsWith(':')) {
+                        paramsObject[key] = params[module.params[key].slice(1)]
+                    } else {
+                        paramsObject[key] = module.params[key]
+                    }
+                }
+            } else {
+                paramsObject = params
+            }
+
             page.layout.props.data = await resolvedLayouts[page.layout.name].load({
                 props: page.layout.props,
                 api,
-                params
+                base_url,
+                params: paramsObject
             });
         }
     }
@@ -129,7 +147,7 @@ export async function loadPageData(url, config) {
     const resolvedModules = {}
     // Page (recursive)
     async function initializeModule(module) {
-        if(!resolvedModules[module.name])
+        if (!resolvedModules[module.name])
             resolvedModules[module.name] = await config.modules[module.name]
 
         // page component
@@ -139,7 +157,26 @@ export async function loadPageData(url, config) {
 
             console.log('load: ', resolvedModules)
             module.props ??= {}
-            module.props.data = await resolvedModules[module.name].load({props: module.props, api, params});
+
+            const paramsObject = {}
+
+            if (module.params) {
+                for (let key in module.params) {
+                    if (module.params[key].startsWith(':')) {
+                        paramsObject[key] = params[module.params[key].slice(1)]
+                    } else {
+                        paramsObject[key] = module.params[key]
+                    }
+                }
+            } else {
+                paramsObject = params
+            }
+            module.props.data = await resolvedModules[module.name].load({
+                props: module.props,
+                base_url,
+                api,
+                params: paramsObject
+            });
         }
 
         // initialize all modules of page recursively
@@ -167,34 +204,35 @@ export async function loadPageData(url, config) {
 }
 
 export function normalizeConfig(config) {
-    
+
     // enable modules Single component mode (no name, description, load...)
-	let modules = {};
-	let layouts = {};
-	let pages = [];
+    let modules = {};
+    let layouts = {};
+    let pages = [];
 
     function loadPlugin(plugin) {
-        if(plugin.plugins) {
+        if (plugin.plugins) {
             plugin.plugins.map(x => loadPlugin(x))
         }
 
-		modules = { ...modules, ...(plugin.modules ?? {}) };
-		layouts = { ...layouts, ...(plugin.layouts ?? {}) };
-		pages = [...pages, ...(plugin.pages ?? [])];
+        modules = { ...modules, ...(plugin.modules ?? {}) };
+        layouts = { ...layouts, ...(plugin.layouts ?? {}) };
+        pages = [...pages, ...(plugin.pages ?? [])];
     }
 
-	for (let plugin of config.plugins ?? []) {
+    for (let plugin of config.plugins ?? []) {
         loadPlugin(plugin)
-	}
+    }
 
-	modules = { ...modules, ...(config.modules ?? {}) };
-	layouts = { ...layouts, ...(config.layouts ?? {}) };
-	pages = [...pages, ...(config.pages ?? [])];
+    modules = { ...modules, ...(config.modules ?? {}) };
+    layouts = { ...layouts, ...(config.layouts ?? {}) };
+    pages = [...pages, ...(config.pages ?? [])];
 
     return {
         pages: pages.map(x => ({
-            ...x, 
-            slug: x.slug.startsWith('/') ? x.slug : '/' + x.slug})),
+            ...x,
+            slug: x.slug.startsWith('/') ? x.slug : '/' + x.slug
+        })),
         modules,
         layouts,
     }

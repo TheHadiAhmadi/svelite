@@ -3,7 +3,40 @@ export function matchRoute(slug, pages, routes = []) {
     const params = {}
     for(let page of pages ?? []) {
         if(page.slug == slug) return {page, params};
+        
+        const routeSplitted = page.slug.slice(1).split('/')
+        const slugSplitted = slug.slice(1).split('/')
+
+        let resultPage
+
+        if(routeSplitted.length === slugSplitted.length) {
+            for(let index in routeSplitted) {
+                if(routeSplitted[index].startsWith(':')) {
+                    params[routeSplitted[index].slice(1)] = slugSplitted[index]
+
+
+                    resultPage = page;
+                    continue
+                } else {
+
+                    if(routeSplitted[index] !== slugSplitted[index]) {
+                        resultPage = null
+                        break;
+                    }
+                }
+
+                
+            }
+    
+            if(resultPage) {
+                return {
+                    page: resultPage,
+                    params
+                }
+            }
+        }
     }
+    
     for(let route in routes ?? {}) {
         console.log({route, slug: slug.slice(1)})
         if(route === slug.slice(1)) return {route: routes[route], params};
@@ -14,7 +47,6 @@ export function matchRoute(slug, pages, routes = []) {
 
         let resultRoute;
 
-        console.log(routeSplitted, slugSplitted)
         if(routeSplitted.length === slugSplitted.length) {
             for(let index in routeSplitted) {
                 console.log(routeSplitted[index])

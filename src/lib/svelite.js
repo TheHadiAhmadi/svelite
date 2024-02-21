@@ -121,7 +121,7 @@ export async function loadPageData(url, config) {
         if (resolvedLayouts[page.layout.name].load) {
             page.layout.props ??= {};
 
-            const paramsObject = {}
+            let paramsObject = {}
 
             if (page.layout.params) {
                 for (let key in page.layout.params) {
@@ -158,7 +158,7 @@ export async function loadPageData(url, config) {
             console.log('load: ', resolvedModules)
             module.props ??= {}
 
-            const paramsObject = {}
+            let paramsObject = {}
 
             if (module.params) {
                 for (let key in module.params) {

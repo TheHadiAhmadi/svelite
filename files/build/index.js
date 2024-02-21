@@ -1,4 +1,4 @@
-import {render} from './server/server.mjs'
+import {render} from './server/server.js'
 import {readFileSync} from 'fs'
 import express from 'express'
 import sirv from 'sirv'

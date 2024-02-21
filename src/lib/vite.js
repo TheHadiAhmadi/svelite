@@ -16,8 +16,8 @@ export function svelite(config = {}) {
       return {
         resolve: {
           alias: {
-              '$modules': path.resolve('./modules'),
-              '$plugins': path.resolve('./plugins'),
+            '$modules': path.resolve('./modules'),
+            '$plugins': path.resolve('./plugins'),
           },
         },
         ssr: {
@@ -29,11 +29,11 @@ export function svelite(config = {}) {
       const template = readFileSync("./.svelite/index.html", "utf-8");
       console.log("configure middleware");
 
-        vite.middlewares.use(express.json())
+      vite.middlewares.use(express.json())
       vite.middlewares.use("/", async (req, res, next) => {
         const urlpath = req.url.split("?")[0]
         console.log("request: ", req.url, existsSync("." + urlpath));
-        
+
 
         if (existsSync("." + urlpath) && req.url !== '/') return next();
         console.log("passed one");
@@ -44,8 +44,8 @@ export function svelite(config = {}) {
         if (urlpath.startsWith("/@vite")) return next();
         console.log("passed three");
 
-        if(urlpath.includes('svelite.server') && req.method === 'GET') {
-            return res.end('export default {routes: {}}');
+        if (urlpath.includes('svelite.server') && req.method === 'GET') {
+          return res.end('export default {routes: {}}');
         }
 
         if (!sveliteConfig) {
@@ -63,21 +63,21 @@ export function svelite(config = {}) {
         const result = await render({ request: req, url, method: req.method, template });
 
         if (!result?.body && !result?.raw) {
-              return next();
+          return next();
         }
 
         console.log("Headers: ", result.headers);
         console.log("Status: ", result.status);
 
-	if(result.raw) {
-		return res.end(result.raw);
+        if (result.raw) {
+          return res.end(result.raw);
 
-	}
+        }
         return res.end(typeof result.body === 'object' ? JSON.stringify(result.body) : result.body);
       });
       // find current page
       // render page component
-      }
+    }
   };
 
   return [

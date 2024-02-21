@@ -1,15 +1,15 @@
-import {render} from './server/server.mjs'
+import {render} from './build/server/server.mjs'
 import {readFileSync} from 'fs'
 import express from 'express'
 import sirv from 'sirv'
 
 const app = express()
 
-app.use(sirv('./client'))
+app.use(sirv('./build/client'))
 app.use(express.json())
 
 app.use('/', async (req, res) => {
-    const template = await readFileSync('./client/.svelite/index.html', 'utf-8')
+    const template = await readFileSync('./build/client/.svelite/index.html', 'utf-8')
     const url = new URL(req.protocol + '://' + req.headers.host + req.url)
     const result = await render({request: req, url, method: req.method, body: req.body, template})
 

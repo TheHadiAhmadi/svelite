@@ -123,12 +123,12 @@ export async function loadPageData(url, config) {
 
             const paramsObject = {}
 
-            if (layout.params) {
-                for (let key in module.params) {
-                    if (module.params[key].startsWith(':')) {
-                        paramsObject[key] = params[module.params[key].slice(1)]
+            if (page.layout.params) {
+                for (let key in page.layout.params) {
+                    if (page.layout.params[key].startsWith(':')) {
+                        paramsObject[key] = params[page.layout.params[key].slice(1)]
                     } else {
-                        paramsObject[key] = module.params[key]
+                        paramsObject[key] = page.layout.params[key]
                     }
                 }
             } else {
@@ -171,6 +171,7 @@ export async function loadPageData(url, config) {
             } else {
                 paramsObject = params
             }
+            
             module.props.data = await resolvedModules[module.name].load({
                 props: module.props,
                 base_url,

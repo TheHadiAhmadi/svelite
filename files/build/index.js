@@ -13,6 +13,10 @@ app.use('/', async (req, res) => {
     const url = new URL(req.protocol + '://' + req.headers.host + req.url)
     const result = await render({request: req, url, method: req.method, body: req.body, template})
 
+	if(result?.raw) {
+		res.end(result.raw)
+	}
+
     const response = typeof result?.body == 'object' ? JSON.stringify(result.body) : result?.body ?? ""
     
     res.end(response)

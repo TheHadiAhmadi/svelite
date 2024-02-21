@@ -62,13 +62,17 @@ export function svelite(config = {}) {
         const url = new URL(protocol + '://' + req.headers.host + req.url)
         const result = await render({ request: req, url, method: req.method, template });
 
-        if (!result?.body) {
+        if (!result?.body && !result?.raw) {
               return next();
         }
 
         console.log("Headers: ", result.headers);
         console.log("Status: ", result.status);
 
+	if(result.raw) {
+		return res.end(result.raw);
+
+	}
         return res.end(typeof result.body === 'object' ? JSON.stringify(result.body) : result.body);
       });
       // find current page

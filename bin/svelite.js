@@ -69,7 +69,10 @@ if(mode === 'dev') {
         renameSync('./.vercel/output/static/.svelite/index.html', './.vercel/output/functions/fn.func/index.html');
     } else {
         cpSync(path.resolve('node_modules/svelitecms/files/build/index.js'), './build/index.js')
-        writeFileSync('./build/package.json', JSON.stringify({type: 'module'}))
+        writeFileSync('./build/package.json', JSON.stringify({type: 'module', dependencies: {
+            "express": "^4.18.2",
+            "sirv": "^2.0.4",
+        }}))
     }
 } else if(mode === 'deploy') {
     if(process.argv.includes('vercel')) {

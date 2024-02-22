@@ -10,7 +10,7 @@
             await page.layout.reload()
         }
         
-        for(let module of page.module) {
+        for(let module of page.modules) {
             if(module?.reload) {
                 await module.reload()
             }

@@ -6,12 +6,14 @@
     let reloadKey = $state(false)
  
     async function reload() {
-        if(page.layout) {
+        if(page.layout?.reload) {
             await page.layout.reload()
         }
         
         for(let module of page.module) {
-            await module.reload()
+            if(module?.reload) {
+                await module.reload()
+            }
         }
         reloadKey = !reloadKey
     }

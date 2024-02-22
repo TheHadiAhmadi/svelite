@@ -135,12 +135,16 @@ export async function loadPageData(url, config) {
                 paramsObject = params
             }
 
-            page.layout.props.data = await resolvedLayouts[page.layout.name].load({
-                props: page.layout.props,
-                api,
-                base_url,
-                params: paramsObject
-            });
+            page.layout.reload = async () => {
+
+                page.layout.props.data = await resolvedLayouts[page.layout.name].load({
+                    props: page.layout.props,
+                    api,
+                    base_url,
+                    params: paramsObject
+                });
+            }
+            await page.layout.reload()
         }
     }
 
@@ -172,12 +176,17 @@ export async function loadPageData(url, config) {
                 paramsObject = params
             }
             
-            module.props.data = await resolvedModules[module.name].load({
-                props: module.props,
-                base_url,
-                api,
-                params: paramsObject
-            });
+            module.reload = async () => {
+                module.props.data = await resolvedModules[module.name].load({
+                    props: module.props,
+                    base_url,
+                    api,
+                    params: paramsObject
+                });
+            }
+            
+            await module.reload()
+            
         }
 
         // initialize all modules of page recursively

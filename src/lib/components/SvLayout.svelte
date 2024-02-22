@@ -1,14 +1,31 @@
 <script>
+    import { setContext } from 'svelte';
     import SvPage from './SvPage.svelte'
 	let { page } = $props();
-    
-    console.log(page)
+
+    let reloadKey = $state(false)
+ 
+    async function reload() {
+        if(page.layout) {
+            await page.layout.reload()
+        }
+        
+        for(let module of page.module) {
+            await module.reload()
+        }
+        reloadKey = !reloadKey
+    }
+
+    setContext('SV_LAYOUT', {reload})
 </script>
 
-{#if page.layout?.component}
-	<svelte:component this={page.layout.component} {...page.layout.props}>
+{#key reloadKey}
+    {#if page.layout?.component}
+        <svelte:component this={page.layout.component} {...page.layout.props} {reload}>
+            <SvPage {page}/>
+        </svelte:component>
+    {:else}
         <SvPage {page}/>
-	</svelte:component>
-{:else}
-    <SvPage {page}/>
-{/if}
+    {/if}
+
+{/key}

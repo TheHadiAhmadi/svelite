@@ -31,7 +31,6 @@ async function handleRoute(route, request) {
 
   try {
     const response = await method(request)
-    console.log(response)
     return response
   } catch (err) {
     console.log(err)
@@ -61,16 +60,12 @@ export async function respond(configObject, ctx) {
 
   const { page, route, params, redirect } = await loadPageData(url, config);
 
-  console.log({ page, route, params, redirect })
-
   if(redirect) {
     return handleRedirect(redirect.path, redirect.status ?? 302)
   }
   
   if (page) {
-    console.log({ template })
     const res = handlePage(page, template)
-    console.log('res: ', res)
     return res
   }
   if (route) {
@@ -140,7 +135,6 @@ function memoryDb(initialData = {}) {
 export function sveliteDb(token, base_url) {
   return (table = "") => {
     async function call(path, body) {
-      console.log('db: ', path, body)
 
       const response = await fetch(`${base_url}/${token}/${table}/${path}`, {
         method: 'POST',
@@ -149,7 +143,6 @@ export function sveliteDb(token, base_url) {
         },
         body: JSON.stringify(body)
       }).then(res => res.json())
-      console.log({ response })
       return response;
     }
 

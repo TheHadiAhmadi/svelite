@@ -7,7 +7,6 @@ import { normalizeConfig } from "./svelite.js";
 export function svelite(config = {}) {
   const configFile = config.configFile ?? "./svelite.config.js";
 
-  console.log("plugin init");
   let sveliteConfig;
 
   const plugin = {
@@ -27,22 +26,17 @@ export function svelite(config = {}) {
     },
     async configureServer(vite) {
       const template = readFileSync("./.svelite/index.html", "utf-8");
-      console.log("configure middleware");
 
       vite.middlewares.use(express.json())
       vite.middlewares.use("/", async (req, res, next) => {
         const urlpath = req.url.split("?")[0]
-        console.log("request: ", req.url, existsSync("." + urlpath));
 
 
         if (existsSync("." + urlpath) && req.url !== '/') return next();
-        console.log("passed one");
         // TODO: find better ways
         if (urlpath.startsWith("/@fs")) return next();
         if (urlpath.startsWith("/favicon.ico")) return next();
-        console.log("passed two");
         if (urlpath.startsWith("/@vite")) return next();
-        console.log("passed three");
 
         if (urlpath.includes('svelite.server') && req.method === 'GET') {
           return res.end('export default {routes: {}}');
@@ -51,7 +45,6 @@ export function svelite(config = {}) {
         if (!sveliteConfig) {
           const configModule = await vite.ssrLoadModule(configFile);
           sveliteConfig = normalizeConfig(configModule.default);
-          console.log("load config: ", sveliteConfig);
         }
 
         const { render } = await vite.ssrLoadModule(
@@ -63,13 +56,11 @@ export function svelite(config = {}) {
         let result = await render({ request: req, url, method: req.method, template });
 
         if(!result) result = {}
-        // if (!result?.body && !result?.raw) {
-          // return next();
-        // }
+     
 
         console.log("Status: ", result.status);
         console.log("Headers: ", result.headers);
-        console.log("Body: ", result.body);
+        // console.log("Body: ", result.body);
 
         if (result.raw) {
           return res.end(result.raw);

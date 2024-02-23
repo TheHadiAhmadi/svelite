@@ -1,5 +1,4 @@
 export function matchRoute(slug, pages, routes = []) {
-    console.log('matchRoute', { slug, pages, routes })
     const params = {}
     for (let page of pages ?? []) {
         if (page.slug == slug) return { page, params };
@@ -40,7 +39,6 @@ export function matchRoute(slug, pages, routes = []) {
     }
 
     for (let route in routes ?? {}) {
-        console.log({ route, slug: slug.slice(1) })
         if (route === slug.slice(1)) return { route: routes[route], params };
     }
 
@@ -53,11 +51,8 @@ export function matchRoute(slug, pages, routes = []) {
 
         if (routeSplitted.length === slugSplitted.length) {
             for (let index in routeSplitted) {
-                console.log(routeSplitted[index])
                 if (routeSplitted[index].startsWith(':')) {
                     params[routeSplitted[index].slice(1)] = slugSplitted[index]
-                    console.log('set param', params)
-
 
                     resultRoute = route;
                     continue
@@ -89,7 +84,6 @@ export async function loadPageData(url, config) {
     const slug = url.pathname
     const { page, route, params } = matchRoute(slug, config.pages, config.routes)
 
-    console.log({ page, route, params })
     const base_url = url.origin;
 
     function api(path) {
@@ -188,7 +182,6 @@ export async function loadPageData(url, config) {
         // page load
         if (resolvedModules[module.name].load) {
 
-            console.log('load: ', resolvedModules)
             module.props ??= {}
 
             let paramsObject = {}

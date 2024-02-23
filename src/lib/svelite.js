@@ -3,7 +3,9 @@ export function matchRoute(slug, pages, routes = []) {
     const params = {}
     for (let page of pages ?? []) {
         if (page.slug == slug) return { page, params };
+    }
 
+    for (let page of pages ?? []) {
         const routeSplitted = page.slug.slice(1).split('/')
         const slugSplitted = slug.slice(1).split('/')
 
@@ -40,7 +42,9 @@ export function matchRoute(slug, pages, routes = []) {
     for (let route in routes ?? {}) {
         console.log({ route, slug: slug.slice(1) })
         if (route === slug.slice(1)) return { route: routes[route], params };
+    }
 
+    for (let route in routes ?? {}) {
         const routeSplitted = route.split('/')
         const slugSplitted = slug.slice(1).split('/')
 

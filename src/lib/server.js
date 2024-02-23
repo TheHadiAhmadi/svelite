@@ -61,6 +61,8 @@ export async function respond(configObject, ctx) {
 
   const { page, route, params, redirect } = await loadPageData(url, config);
 
+  console.log({ page, route, params, redirect })
+
   if(redirect) {
     return handleRedirect(redirect.path, redirect.status ?? 302)
   }

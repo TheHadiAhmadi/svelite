@@ -109,6 +109,15 @@ export async function loadPageData(url, config) {
         }
     }
 
+    function reload() {
+        page.layout?.reload?.()
+        for(let module of page.modules) {
+            module.reload()
+        }
+    }
+
+    let _redirect;
+
     function redirect(path, status = 302) {
        
         return {
@@ -156,15 +165,15 @@ export async function loadPageData(url, config) {
                     api,
                     base_url,
                     params: paramsObject,
+                    reload,
                     redirect
                 });
                 if(page.layout.props.data?.redirect?.path) {
-                    return {
-                        redirect: page.layout.props.data.redirect
-                    }
+                    _redirect = page.layout.props.data.redirect
                 }
             }
             await page.layout.reload()
+            
         }
     }
 
@@ -201,14 +210,12 @@ export async function loadPageData(url, config) {
                     props: module.props,
                     base_url,
                     api,
+                    reload,
                     params: paramsObject,
                     redirect
                 });
-
                 if(module.props.data?.redirect?.path) {
-                    return {
-                        redirect: module.props.data.redirect
-                    }
+                    _redirect = module.props.data.redirect
                 }
             }
             
@@ -236,6 +243,7 @@ export async function loadPageData(url, config) {
         await initializeModule(module);
     }
     return {
+        redirect: _redirect,
         page,
     };
 }

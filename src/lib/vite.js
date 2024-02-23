@@ -60,14 +60,16 @@ export function svelite(config = {}) {
 
         const protocol = req.connection.encrypted ? 'https' : 'http'
         const url = new URL(protocol + '://' + req.headers.host + req.url)
-        const result = await render({ request: req, url, method: req.method, template });
+        let result = await render({ request: req, url, method: req.method, template });
 
-        if (!result?.body && !result?.raw) {
-          return next();
-        }
+        if(!result) result = {}
+        // if (!result?.body && !result?.raw) {
+          // return next();
+        // }
 
-        console.log("Headers: ", result.headers);
         console.log("Status: ", result.status);
+        console.log("Headers: ", result.headers);
+        console.log("Body: ", result.body);
 
         if (result.raw) {
           return res.end(result.raw);

@@ -110,10 +110,11 @@ export async function loadPageData(url, config) {
     }
 
     function redirect(path, status = 302) {
+       
         return {
-            status,
-            headers: {
-                location: path
+            redirect: {
+                path,
+                status
             }
         }
     }
@@ -157,6 +158,11 @@ export async function loadPageData(url, config) {
                     params: paramsObject,
                     redirect
                 });
+                if(page.layout.props.data?.redirect?.path) {
+                    return {
+                        redirect: page.layout.props.data.redirect
+                    }
+                }
             }
             await page.layout.reload()
         }
@@ -198,6 +204,12 @@ export async function loadPageData(url, config) {
                     params: paramsObject,
                     redirect
                 });
+
+                if(module.props.data?.redirect?.path) {
+                    return {
+                        redirect: module.props.data.redirect
+                    }
+                }
             }
             
             await module.reload()

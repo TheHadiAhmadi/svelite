@@ -43,6 +43,15 @@ function handle404() {
   return { body: '404' }
 }
 
+function handleRedirect(path, status) {
+  return {
+    status,
+    headers: {
+      Location: path
+    }
+  }
+}
+
 export async function respond(configObject, ctx) {
   const url = ctx.url
   const template = ctx.template;
@@ -50,8 +59,12 @@ export async function respond(configObject, ctx) {
   const config = normalizeConfig(configObject);
   config.routes = ctx.server?.routes ?? []
 
-  const { page, route, params } = await loadPageData(url, config);
+  const { page, route, params, redirect } = await loadPageData(url, config);
 
+  if(redirect) {
+    return handleRedirect(redirect.path, redirect.status ?? 302)
+  }
+  
   if (page) {
     console.log({ template })
     const res = handlePage(page, template)
@@ -69,6 +82,8 @@ export async function respond(configObject, ctx) {
     ctx.request.params = params
     return handleRoute(route, ctx.request);
   }
+
+
 }
 
 function memoryDb(initialData = {}) {

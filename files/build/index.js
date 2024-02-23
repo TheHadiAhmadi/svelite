@@ -19,6 +19,8 @@ app.use('/', async (req, res) => {
 
     const response = typeof result?.body == 'object' ? JSON.stringify(result.body) : result?.body ?? ""
     
+    res.writeHead(response.status ?? 200, response.headers ?? {})
+
     res.end(response)
 })
 

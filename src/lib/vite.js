@@ -73,6 +73,7 @@ export function svelite(config = {}) {
           return res.end(result.raw);
 
         }
+        res.writeHead(result.status ?? 200, result.headers ?? {})
         return res.end(typeof result.body === 'object' ? JSON.stringify(result.body) : result.body);
       });
       // find current page

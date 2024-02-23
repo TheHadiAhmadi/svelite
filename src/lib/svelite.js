@@ -105,6 +105,15 @@ export async function loadPageData(url, config) {
         }
     }
 
+    function redirect(path, status = 302) {
+        return {
+            status,
+            headers: {
+                location: path
+            }
+        }
+    }
+
     if (!page) {
         return { route, params }
     }
@@ -141,7 +150,8 @@ export async function loadPageData(url, config) {
                     props: page.layout.props,
                     api,
                     base_url,
-                    params: paramsObject
+                    params: paramsObject,
+                    redirect
                 });
             }
             await page.layout.reload()
@@ -181,7 +191,8 @@ export async function loadPageData(url, config) {
                     props: module.props,
                     base_url,
                     api,
-                    params: paramsObject
+                    params: paramsObject,
+                    redirect
                 });
             }
             

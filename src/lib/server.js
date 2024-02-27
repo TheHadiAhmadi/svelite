@@ -50,10 +50,18 @@ function handleRedirect(path, status) {
     }
   }
 }
+function handleError(err) {
+  return {
+    status: 500,
+    body: err.message
+  }
+}
 
 export async function respond(configObject, ctx) {
   const url = ctx.url
   const template = ctx.template;
+
+  try {
 
   const config = normalizeConfig(configObject);
   config.routes = ctx.server?.routes ?? []
@@ -79,6 +87,13 @@ export async function respond(configObject, ctx) {
     ctx.request.params = params
     return handleRoute(route, ctx.request);
   }
+  return handle404()
+} catch(err) {
+  console.log(err)
+  return handleError(err)
+
+}
+
 
 
 }

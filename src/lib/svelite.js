@@ -174,6 +174,7 @@ export async function loadPageData(url, config) {
     const resolvedModules = {}
     // Page (recursive)
     async function initializeModule(module) {
+        console.log('initialize: ', module.name)
         if (!resolvedModules[module.name])
             resolvedModules[module.name] = await config.modules[module.name]
 
@@ -223,7 +224,7 @@ export async function loadPageData(url, config) {
                 Array.isArray(prop) &&
                 prop.length > 0 &&
                 typeof prop[0].props === 'object' &&
-                resolvedModules[prop[0].name]
+                config.modules[prop[0].name]
             ) {
                 for (let slot of prop) {
                     await initializeModule(slot);

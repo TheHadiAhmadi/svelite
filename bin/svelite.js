@@ -24,7 +24,10 @@ init()
  
 if(mode === 'dev') {
     const vite = await createServer({
-        plugins: [svelite()]
+        plugins: [svelite()],
+        css: {
+            postcss: './postcss.config.js'
+        }
     })
 
     await vite.listen()
@@ -40,6 +43,9 @@ if(mode === 'dev') {
 
     const result = await build({
         plugins: [svelite()],
+        css: {
+            postcss: './postcss.config.js'
+        },
         build: {
             ssr: true,
             outDir: isVercel ? '.vercel/output/functions/fn.func/server' : 'build/server',
@@ -59,6 +65,9 @@ if(mode === 'dev') {
             rollupOptions: {
                 input: '.svelite/index.html'
             }
+        },
+        css: {
+            postcss: './postcss.config.js'
         },
         plugins: [svelite()]
     }).then(res => {
@@ -90,6 +99,9 @@ if(mode === 'dev') {
 
         build({
             plugins: [svelte()],
+            css: {
+                postcss: './postcss.config.js'
+            },
             build: {
                 rollupOptions: {
                     output: {

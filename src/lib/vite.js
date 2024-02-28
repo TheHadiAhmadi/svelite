@@ -38,6 +38,9 @@ export function svelite(config = {}) {
         if (urlpath.startsWith("/favicon.ico")) return next();
         if (urlpath.startsWith("/@vite")) return next();
 
+        // TODO:
+        if (req.url.endsWith('.css')) return next()
+
         if (urlpath.includes('svelite.server') && req.method === 'GET') {
           return res.end('export default {routes: {}}');
         }

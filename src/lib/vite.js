@@ -3,6 +3,7 @@ import express from 'express'
 import path from "path";
 import { readFileSync, existsSync } from "fs";
 import { normalizeConfig } from "./svelite.js";
+import { removeServerCode } from "./helpers.js";
 
 export function svelite(config = {}) {
   const configFile = config.configFile ?? "./svelite.config.js";
@@ -31,7 +32,6 @@ export function svelite(config = {}) {
       vite.middlewares.use("/", async (req, res, next) => {
         const urlpath = req.url.split("?")[0]
 
-
         if (existsSync("." + urlpath) && req.url !== '/') return next();
         // TODO: find better ways
         if (urlpath.startsWith("/@fs")) return next();
@@ -58,8 +58,8 @@ export function svelite(config = {}) {
         const url = new URL(protocol + '://' + req.headers.host + req.url)
         let result = await render({ request: req, url, method: req.method, template });
 
-        if(!result) result = {}
-     
+        if (!result) result = {}
+
 
         console.log("Status: ", result.status);
         console.log("Headers: ", result.headers);
@@ -74,6 +74,13 @@ export function svelite(config = {}) {
       });
       // find current page
       // render page component
+    },
+    transform(code, id, {ssr} = {ssr: false}) {
+      if(ssr) return code;
+
+      if (existsSync(id) && (id.endsWith('.js') || id.endsWith('.ts')) && !id.includes('node_modules')) {
+        return removeServerCode(code)
+      }
     }
   };
 

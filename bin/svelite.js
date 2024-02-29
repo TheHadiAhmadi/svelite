@@ -126,11 +126,6 @@ async function init() {
         console.log('svelite.config.js created!')
     }
 
-    if(!existsSync('svelite.server.js')) {
-        cpSync(path.resolve('node_modules/svelitecms/files/svelite.server.js'), 'svelite.server.js');
-        console.log('svelite.server.js created!')
-    }
-
     if(existsSync('.svelite/client.js')) return;
 
     cpSync(path.resolve('node_modules/svelitecms/files/.svelite'), '.svelite', {recursive: true});

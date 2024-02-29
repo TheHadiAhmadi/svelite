@@ -4,10 +4,12 @@ export default {
     modules: {
         // module definitions
     },
-    layouts: {
-        // layout definitions
+    secrets: {
+        $name: 'VERY_SECRET',
+        nod: 'sdf'
     },
-    $routes: {
-        // api routes (backend only)
+    layouts: {
+
+        // layout definitions
     }
 }

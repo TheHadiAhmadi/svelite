@@ -9,9 +9,11 @@ function handlePage(page, template) {
     },
   });
 
+  const ssr = `<script type="application/json" id="svelite-ssr">${JSON.stringify({page})}</script>`
+
   return {
     status: 200,
-    body: template.replace("<!--head-->", head).replace("<!--body-->", html),
+    body: template.replace("<!--head-->", head).replace("<!--body-->", html).replace('<!--script-->', ssr),
     headers: {
       "Content-Type": "text/html",
     },
@@ -64,7 +66,6 @@ export async function respond(configObject, ctx) {
   try {
 
   const config = normalizeConfig(configObject);
-  config.routes = ctx.server?.routes ?? []
 
   const { page, route, params, redirect } = await loadPageData(url, config);
 

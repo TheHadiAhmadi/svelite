@@ -1,4 +1,4 @@
-export function matchRoute(slug, pages, routes = []) {
+export function matchRoute(slug, pages, routes = {}) {
     const params = {}
     for (let page of pages ?? []) {
         if (page.slug == slug) return { page, params };
@@ -82,7 +82,7 @@ export function matchRoute(slug, pages, routes = []) {
 
 export async function loadPageData(url, config) {
     const slug = url.pathname
-    const { page, route, params } = matchRoute(slug, config.pages, config.routes)
+    const { page, route, params } = matchRoute(slug, config.pages, config.$routes)
 
     const base_url = url.origin;
 
@@ -248,6 +248,7 @@ export function normalizeConfig(config) {
     let modules = {};
     let layouts = {};
     let pages = [];
+    let $routes = {};
 
     function loadPlugin(plugin) {
         if (plugin.plugins) {
@@ -257,6 +258,8 @@ export function normalizeConfig(config) {
         modules = { ...modules, ...(plugin.modules ?? {}) };
         layouts = { ...layouts, ...(plugin.layouts ?? {}) };
         pages = [...pages, ...(plugin.pages ?? [])];
+        $routes = {...$routes, ...(config.$routes ?? {})};
+
     }
 
     for (let plugin of config.plugins ?? []) {
@@ -266,6 +269,7 @@ export function normalizeConfig(config) {
     modules = { ...modules, ...(config.modules ?? {}) };
     layouts = { ...layouts, ...(config.layouts ?? {}) };
     pages = [...pages, ...(config.pages ?? [])];
+    $routes = {...$routes, ...(config.$routes ?? {})};
 
     return {
         pages: pages.map(x => ({
@@ -274,6 +278,7 @@ export function normalizeConfig(config) {
         })),
         modules,
         layouts,
+        $routes
     }
 }
 

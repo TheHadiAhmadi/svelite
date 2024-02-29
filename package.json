@@ -11,10 +11,12 @@
     },
     "dependencies": {
         "@sveltejs/vite-plugin-svelte": "^3.0.1",
+        "acorn": "^8.11.3",
         "dotenv": "^16.4.4",
+        "escodegen": "^2.1.0",
+        "estree-walker": "^3.0.3",
         "express": "^4.18.2",
         "sirv": "^2.0.4",
-        "svelitecms": "^0.0.6-next.52",
         "svelte": "^5.0.0-next.64",
         "vercel": "^33.5.1",
         "vite": "^5.1.0-beta.0"

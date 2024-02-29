@@ -9,11 +9,18 @@ export default {
     modules: {
         Test: {
             name: 'Test',
-            component: Test,
+            default: Test,
             async load(props) {
                 console.log('load inside test module', props)
                 return {a: 34}
             }
         }
+    },
+    $db: {
+        base_url: 'https://db.hadiahmadi.dev',
+        /* token: '<get a token from https://db.hadiahmadi.dev/create>' */
+    },
+    $routes: {
+        /* ... */
     }
 }

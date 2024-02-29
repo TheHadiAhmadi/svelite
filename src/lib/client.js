@@ -4,9 +4,11 @@ import { hydrate } from "svelte"
 export default async function (configObject, SvLayout) {
     const config = normalizeConfig(configObject)
 
-    const {page} = await loadPageData(window.location, config)
+    await loadPageData(window.location, config)
 
     const target = document.getElementById("app")
+
+    const {page} = JSON.parse(document.getElementById('svelite-ssr').textContent)
     
     const options = {
         target,

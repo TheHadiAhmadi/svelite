@@ -78,11 +78,11 @@ export async function respond(configObject, ctx) {
     return res
   }
   if (route) {
-    if (ctx.server.db) {
-      if (ctx.server.db.token) {
-        ctx.request.db = sveliteDb(ctx.server.db.token, ctx.server.db.base_url)
+    if (config.$db) {
+      if (config.$db.token) {
+        ctx.request.db = sveliteDb(config.$db.token, config.$db.base_url)
       } else {
-        ctx.request.db = memoryDb(ctx.server.db.initial_data ?? {})
+        ctx.request.db = memoryDb(config.$db.initial_data ?? {})
       }
     }
     ctx.request.params = params

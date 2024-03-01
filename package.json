@@ -17,7 +17,7 @@
         "estree-walker": "^3.0.3",
         "express": "^4.18.2",
         "sirv": "^2.0.4",
-        "svelte": "^5.0.0-next.64",
+        "svelte": "^5.0.0-next.69",
         "vercel": "^33.5.1",
         "vite": "^5.1.0-beta.0"
     },
@@ -37,6 +37,10 @@
         "./vite": {
             "import": "./dist/vite.js",
             "svelte": "./dist/vite.js"
+        },
+        "./db": {
+            "import": "./dist/db.js",
+            "svelte": "./dist/db.js"
         },
         "./client": {
             "import": "./dist/client.js",

@@ -13,6 +13,7 @@ await build({
                 svelite: path.resolve("./src/lib/svelite"),
                 server: path.resolve("./src/lib/server"),
                 vite: path.resolve("./src/lib/vite"),
+                db: path.resolve("./src/lib/db"),
             },
         }
     },

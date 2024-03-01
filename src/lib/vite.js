@@ -76,6 +76,7 @@ export function svelite(config = {}) {
       // render page component
     },
     transform(code, id, {ssr} = {ssr: false}) {
+      console.log(id, {ssr})
       if(ssr) return code;
 
       if (existsSync(id) && (id.endsWith('.js') || id.endsWith('.ts')) && !id.includes('node_modules')) {

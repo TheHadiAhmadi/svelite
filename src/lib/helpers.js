@@ -3,6 +3,7 @@ import { parse } from 'acorn'
 import { generate } from 'escodegen'
 import { walk } from "estree-walker";
 
+
 export function removeServerCode(file) {
     const ast = parse(file, { sourceType: 'module' })
 

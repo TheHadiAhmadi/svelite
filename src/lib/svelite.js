@@ -258,7 +258,7 @@ export function normalizeConfig(config) {
         modules = { ...modules, ...(plugin.modules ?? {}) };
         layouts = { ...layouts, ...(plugin.layouts ?? {}) };
         pages = [...pages, ...(plugin.pages ?? [])];
-        $routes = {...$routes, ...(config.$routes ?? {})};
+        $routes = {...$routes, ...(plugin.$routes ?? {})};
 
     }
 
@@ -278,7 +278,8 @@ export function normalizeConfig(config) {
         })),
         modules,
         layouts,
-        $routes
+        $routes,
+        $ctx: config.$ctx ?? {}
     }
 }
 

@@ -61,11 +61,6 @@ export function svelite(config = {}) {
 
         if (!result) result = {}
 
-
-        console.log("Status: ", result.status);
-        console.log("Headers: ", result.headers);
-        // console.log("Body: ", result.body);
-
         if (result.raw) {
           return res.end(result.raw);
 
@@ -77,11 +72,9 @@ export function svelite(config = {}) {
       // render page component
     },
     transform(code, id, {ssr} = {ssr: false}) {
-      console.log(id, {ssr})
       if(ssr) return code;
 
       if (existsSync(id) && (id.endsWith('.js') || id.endsWith('.ts')) && !id.includes('node_modules')) {
-        console.log('remove server code from: ', id)
         return removeServerCode(code)
       }
     }

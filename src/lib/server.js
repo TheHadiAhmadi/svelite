@@ -21,8 +21,15 @@ function handlePage(page, template) {
 }
 
 async function handleRoute(route, request) {
+  console.log('handleRoute: ', route, request)
   // static 
-  const method = route[request.method ?? 'GET']
+  let method;
+  if(typeof route === 'function' && request.method === 'POST') {
+    // only POST
+    method = route
+  } else {
+    method = route[request.method ?? 'GET']
+  }
 
   if (!method) {
     return {
@@ -65,9 +72,9 @@ export async function respond(configObject, ctx) {
 
   try {
 
-    const config = normalizeConfig(configObject);
+    const config = await normalizeConfig(configObject);
 
-    console.log(config)
+    console.log(config.$routes)
     const { page, route, params, redirect } = await loadPageData(url, config);
 
     if (redirect) {
@@ -80,8 +87,14 @@ export async function respond(configObject, ctx) {
     }
     if (route) {
       ctx.request.params = params
-      console.log(config.$ctx)
-      ctx.request = {...config.$ctx, ...ctx}
+      
+      if(config.$ctx) {
+        ctx.request = {
+          ...config.$ctx, 
+          ...ctx.request
+        }
+
+      }
 
       return handleRoute(route, ctx.request);
     }

@@ -2,7 +2,6 @@ import { svelte, vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 import express from 'express'
 import path from "path";
 import { readFileSync, existsSync } from "fs";
-import { normalizeConfig } from "./svelite.js";
 import { removeServerCode } from "./helpers.js";
 
 export function svelite(config = {}) {
@@ -33,6 +32,8 @@ export function svelite(config = {}) {
         const urlpath = req.url.split("?")[0]
 
         if (existsSync("." + urlpath) && req.url !== '/') return next();
+        if (existsSync("public" + urlpath) && req.url !== '/') return next();
+        
         // TODO: find better ways
         if (urlpath.startsWith("/@fs")) return next();
         if (urlpath.startsWith("/favicon.ico")) return next();
@@ -47,7 +48,7 @@ export function svelite(config = {}) {
 
         if (!sveliteConfig) {
           const configModule = await vite.ssrLoadModule(configFile);
-          sveliteConfig = normalizeConfig(configModule.default);
+          sveliteConfig = configModule.default;
         }
 
         const { render } = await vite.ssrLoadModule(
@@ -80,6 +81,7 @@ export function svelite(config = {}) {
       if(ssr) return code;
 
       if (existsSync(id) && (id.endsWith('.js') || id.endsWith('.ts')) && !id.includes('node_modules')) {
+        console.log('remove server code from: ', id)
         return removeServerCode(code)
       }
     }

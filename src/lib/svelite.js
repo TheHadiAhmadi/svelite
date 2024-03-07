@@ -1,4 +1,7 @@
+import { getContext } from "svelte";
+
 export function matchRoute(slug, pages, routes = {}) {
+    console.log('matchRoute: ', slug, pages, routes)
     const params = {}
     for (let page of pages ?? []) {
         if (page.slug == slug) return { page, params };
@@ -73,17 +76,17 @@ export function matchRoute(slug, pages, routes = {}) {
                     params
                 }
             }
-
         }
-
     }
     return {}
 }
 
 export async function loadPageData(url, config) {
+    console.log('loadPageData', url)
     const slug = url.pathname
     const { page, route, params } = matchRoute(slug, config.pages, config.$routes)
 
+    console.log({page, route})
     const base_url = url.origin;
 
     function api(path) {
@@ -242,35 +245,64 @@ export async function loadPageData(url, config) {
     };
 }
 
-export function normalizeConfig(config) {
-
+let _ctx;
+export async function normalizeConfig(config) {
     // enable modules Single component mode (no name, description, load...)
     let modules = {};
     let layouts = {};
     let pages = [];
     let $routes = {};
 
-    function loadPlugin(plugin) {
+    async function loadPlugin(plugin) {
         if (plugin.plugins) {
-            plugin.plugins.map(x => loadPlugin(x))
+            for(let p of plugin.plugins) {
+                await loadPlugin(p)
+            }
         }
 
         modules = { ...modules, ...(plugin.modules ?? {}) };
         layouts = { ...layouts, ...(plugin.layouts ?? {}) };
         pages = [...pages, ...(plugin.pages ?? [])];
-        $routes = {...$routes, ...(plugin.$routes ?? {})};
+
+        if(plugin.$routes) {
+            console.log('load routes of plugin')
+            const routes = await plugin.$routes;            
+            console.log('routes: ', {$routes, routes})
+            
+
+
+            if(routes.default) {
+                $routes = {...$routes, ...routes.default}
+            } else {
+                $routes = {...$routes, ...routes}
+            }
+            console.log({$routes})
+        }
 
     }
 
     for (let plugin of config.plugins ?? []) {
-        loadPlugin(plugin)
+        await loadPlugin(plugin)
     }
 
     modules = { ...modules, ...(config.modules ?? {}) };
     layouts = { ...layouts, ...(config.layouts ?? {}) };
     pages = [...pages, ...(config.pages ?? [])];
-    $routes = {...$routes, ...(config.$routes ?? {})};
 
+    if(config.$routes) {
+        const routes = await config.$routes;            
+
+        if(routes.default) {
+            $routes = {...$routes, ...routes.default}
+        } else {
+            $routes = {...$routes, ...routes}
+        }
+    }
+
+    if(!_ctx && config.$ctx) {
+        _ctx = await config.$ctx()
+    }
+    
     return {
         pages: pages.map(x => ({
             ...x,
@@ -279,7 +311,12 @@ export function normalizeConfig(config) {
         modules,
         layouts,
         $routes,
-        $ctx: config.$ctx ?? {}
+        $ctx: _ctx,
     }
+
+    return _config
 }
 
+export function getRouter() {
+    return getContext('SV_LAYOUT')
+}

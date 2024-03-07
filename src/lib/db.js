@@ -14,7 +14,6 @@ export function createMemoryDb(initialData = {}) {
 
     return (table = "") => {
         return {
-
             async query({ filters, page, perPage }) {
                 if (!_data[table]) return []
 
@@ -25,8 +24,16 @@ export function createMemoryDb(initialData = {}) {
             },
             async insert(data) {
 
-                _data[table] ??= []
-                _data.id = getId()
+                console.log('insert: ', data)
+                if(!_data[table])
+                    _data[table] = []
+                
+                data.id ??= getId();
+                data.createdAt = new Date().valueOf()
+                data.updatedAt = 0
+
+                console.log('insert: ', data)
+
                 _data[table].push(data)
 
                 return data
@@ -40,6 +47,7 @@ export function createMemoryDb(initialData = {}) {
                 _data[table] = _data[table].map(x => {
 
                     if (x.id === data.id)
+                        data.updatedAt = new Date().valueOf()
                         return { ...x, ...data }
 
                     return x
@@ -113,9 +121,9 @@ export function createFileDb(path) {
                 await adapter.remove(collectionName, id)
                 return true;
 			},
-			async update(id, data) {
+			async update(data) {
                 data.updatedAt = new Date().valueOf()
-				const result = await adapter.update(collectionName, id, data);
+				const result = await adapter.update(collectionName, data.id, data);
                 return result
 			}
 		};

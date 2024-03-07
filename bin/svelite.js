@@ -8,6 +8,8 @@ import {readdir} from 'fs/promises'
 import path from 'path'
 import { createServer, build } from 'vite'
 import { spawn } from 'child_process'
+import tailwindcss from 'tailwindcss'
+
 let mode = 'dev'
 
 if(process.argv.includes('build')) {
@@ -22,12 +24,35 @@ if(process.argv.includes('build')) {
 
 init()
  
+
+let tailwindConfig = { config: path.resolve('tailwind.config.js')}
+
+if(!existsSync(tailwindConfig.config)) {
+    tailwindConfig = {
+        config: {
+            content: [
+                './modules/**/*.{svelte,css}', 
+                './plugins/**/*.{svelte,css}', 
+                './layouts/**/*.{svelte,css}', 
+                './components/**/*.{svelte,css}'
+            ],
+            darkMode: "class",
+        }
+    }
+}
+const css = {
+    postcss: {
+        plugins: [
+            tailwindcss(tailwindConfig)
+        ]
+    }
+}
+
 if(mode === 'dev') {
+    
     const vite = await createServer({
         plugins: [svelite()],
-        css: {
-            postcss: './postcss.config.js'
-        }
+        css 
     })
 
     await vite.listen()
@@ -43,9 +68,7 @@ if(mode === 'dev') {
 
     const result = await build({
         plugins: [svelite()],
-        css: {
-            postcss: './postcss.config.js'
-        },
+        css,
         build: {
             ssr: true,
             outDir: isVercel ? '.vercel/output/functions/fn.func/server' : 'build/server',
@@ -66,9 +89,7 @@ if(mode === 'dev') {
                 input: '.svelite/index.html'
             }
         },
-        css: {
-            postcss: './postcss.config.js'
-        },
+        css,
         plugins: [svelite()]
     }).then(res => {
     })
@@ -99,9 +120,7 @@ if(mode === 'dev') {
 
         build({
             plugins: [svelte()],
-            css: {
-                postcss: './postcss.config.js'
-            },
+            css,
             build: {
                 rollupOptions: {
                     output: {

@@ -7,49 +7,6 @@ npx svelite preview => cd dist && node index.js
 
 ## write readme
 
-## Tailwind config
-```js
-writeFileSync('tailwind.config.js', message + `
-export default {
-    content: [
-        "./modules/**/*.svelte", 
-        "./plugins/**/*.svelte",
-        "node_modules/svelitecms/dist/core/**/*.{svelte,css}",
-        "node_modules/svelitecms/dist/svelite/**/*.svelte",
-        ${deps.map(x => `"node_modules/${x}/dist/**/*.svelte"`).join(',\n')}
-    ],
-    darkMode: "class",
-}
-`)
-```
-
-```js
-export default {
-	content: [
-        './modules/**/*.{svelte,css}',
-        './layouts/**/*.{svelte,css}',
-        './plugins/**/*.{svelte,css}',
-		'./node_modules/svelitecms/dist/**/*.svelte'
-	],
-	darkMode: 'class'
-};
-
-
-```
-
-```js
-/** @type {import('tailwindcss').Config} */
-export default {
-	content: ['./src/**/*.{html,js,svelte,ts}'],
-	darkMode: 'class',
-	theme: {
-		extend: {}
-	},
-	plugins: []
-};
-
-
-```
 
 ## Typescript types
 ```ts
@@ -196,4 +153,20 @@ function matchRoute(url, pages) {
 	</body>
 </html>
 
+```
+
+## Layout client side routing 
+in client side routing we should not load layout's data if layout is same as previous layout. also don't load data if page is same.
+
+Write something like cachedLoad, which first find page based on pathname, then check if we can use previously cached data. (also support invalidate prop which can force load data).
+
+
+## Move routing related codes to another file. (Cleanup SvLayout component)
+
+## Move SV_LAYOUT Context contents to somewhere else. (importable)
+```svelte
+<script>
+	import {goto, navigating, reload} from '$app'
+
+</script>
 ```

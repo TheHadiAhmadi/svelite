@@ -1,5 +1,5 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
-// import {MongoClient} from 'mongodb'
+import {MongoClient} from 'mongodb'
 
 import {customAlphabet} from 'nanoid';
 
@@ -239,116 +239,116 @@ function applyComparison(value, operator, compareValue) {
     }
 }
 
-// const createMongoAdapter = async (uri, dbName) => {
-//     const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-//     await client.connect();
-//     const db = client.db(dbName);
+const createMongoAdapter = async (uri, dbName) => {
+    const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    await client.connect();
+    const db = client.db(dbName);
 
-//     return {
-//         async insert(collectionName, data) {
-//             const collection = db.collection(collectionName);
-//             const result = await collection.insertOne(data);
-//             return result.insertedId
-//         },
+    return {
+        async insert(collectionName, data) {
+            const collection = db.collection(collectionName);
+            const result = await collection.insertOne(data);
+            return result.insertedId
+        },
 
-//         async query(collectionName, { pagination: { page = 1, perPage = 0 }, filters = {} }) {
-//             const collection = db.collection(collectionName);
+        async query(collectionName, { pagination: { page = 1, perPage = 0 }, filters = {} }) {
+            const collection = db.collection(collectionName);
 
-//             // TODO: filters
-//             let query = {}
+            // TODO: filters
+            let query = {}
 
-//             for (const filter of filters) {
-//                 query[filter.field] = {};
-//                 switch (filter.operator) {
-//                     case '=':
-//                         query[filter.field] = filter.value;
-//                         break;
-//                     case '<':
-//                         query[filter.field]['$lt'] = filter.value;
-//                         break;
-//                     case '<=':
-//                         query[filter.field]['$lte'] = filter.value;
-//                         break;
-//                     case '>':
-//                         query[filter.field]['$gt'] = filter.value;
-//                         break;
-//                     case '>=':
-//                         query[filter.field]['$gte'] = filter.value;
-//                         break;
-//                     // Add other conditions as needed
-//                     default:
-//                         break;
-//                 }
-//             }
+            for (const filter of filters) {
+                query[filter.field] = {};
+                switch (filter.operator) {
+                    case '=':
+                        query[filter.field] = filter.value;
+                        break;
+                    case '<':
+                        query[filter.field]['$lt'] = filter.value;
+                        break;
+                    case '<=':
+                        query[filter.field]['$lte'] = filter.value;
+                        break;
+                    case '>':
+                        query[filter.field]['$gt'] = filter.value;
+                        break;
+                    case '>=':
+                        query[filter.field]['$gte'] = filter.value;
+                        break;
+                    // Add other conditions as needed
+                    default:
+                        break;
+                }
+            }
 
-//             query = collection.find(query)
+            query = collection.find(query)
 
-//             let total = query.countDocuments;
-//             let data;
-//             if (perPage > 0) {
-//                 data = await query.skip((page - 1) * perPage)
-//                                    .limit(perPage)
-//                                    .toArray();
-//             } else {
-//                 data = await query.toArray();
-//             }
+            let total = query.countDocuments;
+            let data;
+            if (perPage > 0) {
+                data = await query.skip((page - 1) * perPage)
+                                   .limit(perPage)
+                                   .toArray();
+            } else {
+                data = await query.toArray();
+            }
 
-//             return {
-//                 data,
-//                 total,
-//                 page: page,
-//                 perPage: perPage === 0 ? total : Math.min(total, perPage)
-//             };
-//         },
+            return {
+                data,
+                total,
+                page: page,
+                perPage: perPage === 0 ? total : Math.min(total, perPage)
+            };
+        },
 
-//         async update(collectionName, id, data) {
-//             const collection = db.collection(collectionName);
-//             const result = await collection.findOneAndUpdate(
-//                 { _id: id },
-//                 { $set: data },
-//                 { returnOriginal: false }
-//             );
-//             return result.value;
-//         },
+        async update(collectionName, id, data) {
+            const collection = db.collection(collectionName);
+            const result = await collection.findOneAndUpdate(
+                { _id: id },
+                { $set: data },
+                { returnOriginal: false }
+            );
+            return result.value;
+        },
 
-//         async remove(collectionName, id) {
-//             const collection = db.collection(collectionName);
-//             const result = await collection.findOneAndDelete({ _id: id });
-//             return result.value;
-//         }
-//     };
-// };
+        async remove(collectionName, id) {
+            const collection = db.collection(collectionName);
+            const result = await collection.findOneAndDelete({ _id: id });
+            return result.value;
+        }
+    };
+};
 
-// export async function createMongoDb(uri, db) {
+export async function createMongoDb(uri, db) {
 
-//     let adapter = await createMongoAdapter(uri, db)
+    let adapter = await createMongoAdapter(uri, db)
   
-//     console.log({adapter})
-// 	return (collectionName) => {
-// 		return {
-// 			query({filters = [], page = 1, perPage= 0} = {}) {
+    console.log({adapter})
+	return (collectionName) => {
+		return {
+			query({filters = [], page = 1, perPage= 0} = {}) {
                 
-//                 return adapter.query(collectionName, {
-//                     filters, 
-//                     pagination: {page, perPage}
-//                 })
-// 			},
-// 			async insert(data) {
-//                 data.id ??= getId();
-//                 data.createdAt = new Date().valueOf()
-//                 data.updatedAt = 0
-//                 const result = await adapter.insert(collectionName, data);
-// 				return result;
-// 			},
-// 			async remove(id) {
-//                 await adapter.remove(collectionName, id)
-//                 return true;
-// 			},
-// 			async update(data) {
-//                 data.updatedAt = new Date().valueOf()
-// 				const result = await adapter.update(collectionName, data.id, data);
-//                 return result
-// 			}
-// 		};
-// 	};
-// }
+                return adapter.query(collectionName, {
+                    filters, 
+                    pagination: {page, perPage}
+                })
+			},
+			async insert(data) {
+                data.id ??= getId();
+                data.createdAt = new Date().valueOf()
+                data.updatedAt = 0
+                const result = await adapter.insert(collectionName, data);
+				return result;
+			},
+			async remove(id) {
+                await adapter.remove(collectionName, id)
+                return true;
+			},
+			async update(data) {
+                data.updatedAt = new Date().valueOf()
+				const result = await adapter.update(collectionName, data.id, data);
+                return result
+			}
+		};
+	};
+}

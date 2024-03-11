@@ -1,8 +1,7 @@
-import { render } from "svelte/server";
 import { loadPageData, normalizeConfig } from "./svelite";
-import SvLayout from './components/SvLayout.svelte'
+// import {SvLayout} from 'svelitecms/components'
 
-function handlePage(page, template) {
+function handlePage(page, template, render, SvLayout) {
   const { html, head } = render(SvLayout, {
     props: {
       page,
@@ -66,7 +65,7 @@ function handleError(err) {
   }
 }
 
-export async function respond(configObject, ctx) {
+export async function respond(configObject, ctx, render, SvLayout) {
   const url = ctx.url
   const template = ctx.template;
 
@@ -82,7 +81,7 @@ export async function respond(configObject, ctx) {
     }
 
     if (page) {
-      const res = handlePage(page, template)
+      const res = handlePage(page, template, render, SvLayout)
       return res
     }
     if (route) {

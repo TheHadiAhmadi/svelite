@@ -1,14 +1,13 @@
 #!/usr/bin/env node
-import {svelte} from '@sveltejs/vite-plugin-svelte'
-import {svelite} from 'svelitecms/vite'
 import 'dotenv/config'
 
-import { existsSync, renameSync, cpSync, writeFile, writeFileSync} from 'fs'
+import { existsSync, renameSync, cpSync, writeFileSync} from 'fs'
 import {readdir} from 'fs/promises'
 import path from 'path'
 import { createServer, build } from 'vite'
 import { spawn } from 'child_process'
-import tailwindcss from 'tailwindcss'
+import tailwindcss from '@tailwindcss/vite'
+import {svelite} from 'svelitecms/vite'
 
 let mode = 'dev'
 
@@ -24,35 +23,15 @@ if(process.argv.includes('build')) {
 
 init()
  
-
-let tailwindConfig = { config: path.resolve('tailwind.config.js')}
-
-if(!existsSync(tailwindConfig.config)) {
-    tailwindConfig = {
-        config: {
-            content: [
-                './modules/**/*.{svelte,css}', 
-                './plugins/**/*.{svelte,css}', 
-                './layouts/**/*.{svelte,css}', 
-                './components/**/*.{svelte,css}'
-            ],
-            darkMode: "class",
-        }
-    }
-}
-const css = {
-    postcss: {
-        plugins: [
-            tailwindcss(tailwindConfig)
-        ]
-    }
-}
+const plugins = [
+    svelite(),
+    tailwindcss()
+]
 
 if(mode === 'dev') {
     
     const vite = await createServer({
-        plugins: [svelite()],
-        css 
+        plugins
     })
 
     await vite.listen()
@@ -66,9 +45,8 @@ if(mode === 'dev') {
         })
     }
 
-    const result = await build({
-        plugins: [svelite()],
-        css,
+    await build({
+        plugins,
         build: {
             ssr: true,
             outDir: isVercel ? '.vercel/output/functions/fn.func/server' : 'build/server',
@@ -77,21 +55,18 @@ if(mode === 'dev') {
             }
         },
         ssr: {
-            noExternal: ['esm-env']
+            target: 'webworker',
         }
-    }).then(res => {
-        // res.write()
     })
-    const result2 = await build({
+    
+    await build({
         build: {
             outDir: isVercel ? '.vercel/output/static' : 'build/client',
             rollupOptions: {
-                input: '.svelite/index.html'
+                input: '.svelite/index.html',
             }
         },
-        css,
-        plugins: [svelite()]
-    }).then(res => {
+        plugins
     })
     
     if(isVercel)
@@ -119,8 +94,7 @@ if(mode === 'dev') {
         const hasServer = existsSync('./plugins/' + plugin + '/server.js') || existsSync('./plugins/' + plugin + '/server.ts')
 
         build({
-            plugins: [svelte()],
-            css,
+            plugins,
             build: {
                 rollupOptions: {
                     output: {

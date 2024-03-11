@@ -8,6 +8,8 @@
 
     let layout = $state(page.layout)
 
+    const navigating = writable(false)
+
     async function reload(reloadLayout = false) {
         if (reloadLayout) {
             if (page.layout?.reload) {
@@ -53,7 +55,9 @@
 
     };
 
-    onMount(() => {
+    setContext("SV_LAYOUT", { reload, navigating, goto });
+
+    $effect(() => {
         const handleNavigation = async (event) => {
             let target = event.target
             while (target && target.tagName !== 'A' && target.tagName !== 'HTML') {
@@ -77,9 +81,6 @@
             document.removeEventListener("click", handleNavigation);
         };
     });
-
-    const navigating = writable(false)
-    setContext("SV_LAYOUT", { reload, navigating, goto });
 </script>
 
 {#if layout}

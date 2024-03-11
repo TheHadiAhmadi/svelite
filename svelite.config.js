@@ -7,14 +7,7 @@ export default {
         ]}
     ],
     modules: {
-        Test: {
-            name: 'Test',
-            default: Test,
-            async load(props) {
-                console.log('load inside test module', props)
-                return {a: 34}
-            }
-        }
+        Test: import('./modules/Test.svelte')
     },
     $db: {
         base_url: 'https://db.hadiahmadi.dev',

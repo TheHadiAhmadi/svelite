@@ -1,4 +1,4 @@
-import { getContext } from "svelte";
+// import { getContext } from "svelte";
 
 export function matchRoute(slug, pages, routes = {}) {
     console.log('matchRoute: ', slug, pages, routes)
@@ -317,6 +317,6 @@ export async function normalizeConfig(config) {
     return _config
 }
 
-export function getRouter() {
-    return getContext('SV_LAYOUT')
-}
+// export function getRouter() {
+//     return getContext('SV_LAYOUT')
+// }

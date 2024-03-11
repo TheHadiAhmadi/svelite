@@ -1,5 +1,4 @@
 import {build} from 'vite'
-import {svelte} from '@sveltejs/vite-plugin-svelte'
 import path from 'path'
 import {cpSync} from 'fs'
 
@@ -9,6 +8,7 @@ await build({
         ssr: true,
         outDir: 'dist',
         rollupOptions: {
+            external: ['svelte'],
             input: {
                 svelite: path.resolve("./src/lib/svelite"),
                 server: path.resolve("./src/lib/server"),
@@ -16,12 +16,7 @@ await build({
                 db: path.resolve("./src/lib/db"),
             },
         }
-    },
-    ssr: {
-        noExternal: ['esm-env'],
-        external: ['svelte']
-    },
-    plugins: [svelte()]
+    }
 })
 
 await build({
@@ -35,11 +30,7 @@ await build({
             fileName: 'client',
             formats: ['es'],
         },
-        rollupOptions: {
-            external: ['svelte']
-        }
-    },
-    plugins: [svelte()]
+    }
 })
 
 

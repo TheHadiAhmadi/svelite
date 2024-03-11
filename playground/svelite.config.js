@@ -1,8 +1,14 @@
 export default {
     plugins: [/* List of plugins */],
-    pages: [/* List of pages */],
+    pages: [
+        {
+            slug: '/test',
+            title: 'Test',
+            modules: [{name: 'Test'}]
+        }
+    ],
     modules: {
-        // module definitions
+        Test: import('./modules/Test.svelte')
     },
     secrets: {
         $name: 'VERY_SECRET',

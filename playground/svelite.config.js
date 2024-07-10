@@ -1,15 +1,14 @@
-export default {
-    plugins: [/* List of plugins */],
-    pages: [/* List of pages */],
-    modules: {
-        // module definitions
-    },
-    secrets: {
-        $name: 'VERY_SECRET',
-        nod: 'sdf'
-    },
-    layouts: {
+export * from './svelite.js'
 
-        // layout definitions
-    }
+function svelite() {
+    let mode = 'dev'
+
+    console.log(process.argv[1])
 }
+
+const config = {
+    views: './src/views',
+    pages: './src/pages',
+}
+
+svelite(config)
